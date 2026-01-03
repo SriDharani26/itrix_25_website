@@ -16,7 +16,7 @@ const MobileNavbar = () => {
     }
 
     return (
-        <div className="w-full h-12 flex items-center px-3 border">
+        <div className="w-full h-12 flex items-center px-3 ">
             <div>
                 <Menu
                     className='cursor-pointer'
@@ -26,7 +26,7 @@ const MobileNavbar = () => {
 
             {menuOpen && 
                 <div 
-                    className='fixed inset-0 bg-black/30 flex flex-col gap-4 backdrop-blur-2xl'
+                    className='fixed inset-0 z-50 bg-black/30 flex flex-col gap-4 backdrop-blur-2xl'
                 >
                     <X 
                         onClick={() => setMenuOpen(prev => !prev)}

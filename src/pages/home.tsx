@@ -1,5 +1,6 @@
 import SponsorCard from "../components/sponsorCard";
 import Animation from "../components/Animation";
+import Countdown from "../components/countdown";
 const Home = () => {
     return (
         <div
@@ -7,21 +8,20 @@ const Home = () => {
         >
             {/* Title */}
 
-            <div className="relative flex flex-col min-h-screen">
-                <div className="h-screen">
-                    <Animation />
+            <div className="relative flex flex-col h-[80%]">
+                <div className="h-full">
+                    {/* <Animation /> */}
                 </div>
-                <div className="absolute z-50 inset-0 bg-white/10 ">
-                    <p className="text-6xl">ITRIX</p>
-                    <p className="text-6xl">ITRIX</p>
-                    <p className="text-6xl">ITRIX</p>
-                    <p className="text-6xl">ITRIX</p>
+                <div className="absolute z-20 inset-0 flex flex-col gap-16 justify-center items-center">
+                    <p className="max-[350px]:text-3xl text-6xl md:text-7xl lg:text-8xl">ITRIX'26</p>
+                    <p className="max-[350px]:text-2xl text-4xl lg:text-5xl">February 22-24</p>
+                    <Countdown targetDate="2026-02-10T00:00:00" />
 
                 </div>
             </div>
                
             {/* About  */}
-            <div className="mt-4 flex flex-col justify-center items-center">
+            <div className="my-10 flex flex-col gap-8 justify-center items-center">
                 <p
                     className="text-center text-3xl font-bold"
                 >ABOUT</p>
@@ -45,7 +45,7 @@ const Home = () => {
                 </div>
             </div>
             {/* Sponsors */}
-            <div className="mt-4 flex flex-col justify-center items-center">
+            <div className="my-10 flex flex-col gap-8 justify-center items-center">
                 <p
                     className="text-center text-3xl font-bold"
                 >SPONSORS</p>
