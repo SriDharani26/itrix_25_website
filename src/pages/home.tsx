@@ -10,14 +10,14 @@ const Home = () => {
 
             <div className="relative flex flex-col h-[80%]">
                 <div className="h-full">
-                    {/* <Animation /> */}
+                    <Animation />
                 </div>
-                <div className="absolute z-20 inset-0 flex flex-col gap-16 justify-center items-center">
+                {/* <div className="absolute z-20 inset-0 flex flex-col gap-16 justify-center items-center">
                     <p className="max-[350px]:text-3xl text-6xl md:text-7xl lg:text-8xl">ITRIX'26</p>
                     <p className="max-[350px]:text-2xl text-4xl lg:text-5xl">February 22-24</p>
                     <Countdown targetDate="2026-02-10T00:00:00" />
 
-                </div>
+                </div> */}
             </div>
                
             {/* About  */}

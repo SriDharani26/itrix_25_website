@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three'
 // import { GLTFLoader } from 'three/examples/jsm/Addons.js';
+import { OrbitControls } from 'three/examples/jsm/Addons.js';
+import getStarfield from './stars';
 
 const Animation = () => {
 
@@ -21,29 +23,21 @@ const Animation = () => {
         renderer.setPixelRatio(window.devicePixelRatio)
         doc.current.appendChild(renderer.domElement)
 
+        const controls = new OrbitControls(camera, renderer.domElement)
+        controls.enableDamping = true;
+        controls.enableZoom = false
   
-//   const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-//         const material = new THREE.MeshBasicMaterial( { color: 0xffffff } );
-//         const cube = new THREE.Mesh( geometry, material );
-//         scene.add( cube );
-        const geometry = new THREE.SphereGeometry(2, 48, 48);
+        const sphereGeometry = new THREE.SphereGeometry(2)
+        const lineMaterial = new THREE.LineBasicMaterial({
+            color : '#fff'
+        })
+        const edges = new THREE.EdgesGeometry(sphereGeometry, 10)
+        const lines = new THREE.LineSegments(edges, lineMaterial)
+        scene.add(lines)
+        scene.background = new THREE.Color('#000');
 
-        const material = new THREE.MeshStandardMaterial({
-            color: 0x111111,
-            metalness: 0.1,
-            roughness: 0.3,
-            emissive: 0x00ffff,
-            emissiveIntensity: 0.4,
-        });
-
-        
-
-        const sphere = new THREE.Mesh(geometry, material);
-        scene.add(sphere);
-
-
-        camera.position.z = 5;
-
+        const stars = getStarfield()
+        scene.add(stars)
         const ambientLight = new THREE.AmbientLight(0xffffff, 1);
         scene.add(ambientLight);
 
@@ -53,21 +47,18 @@ const Animation = () => {
 
 
         console.log(width, height)
-        const clock = new THREE.Clock();
+        // const clock = new THREE.Clock();
 
         
         const animate = () => {
-            const t = clock.getElapsedTime();
+            // const t = clock.getElapsedTime();
 
-            directionalLight.position.x = Math.sin(t) * 5;
-            directionalLight.position.z = Math.cos(t) * 5;
-            const s = 1 + Math.sin(t) * 0.1;
-            sphere.scale.set(s, s, s);
+            // directionalLight.position.x = Math.sin(t) * 5;
+            // directionalLight.position.z = Math.cos(t) * 5;
 
-
-            sphere.rotation.x += 0.01;
-            sphere.rotation.y += 0.01;
-
+            lines.rotation.z += 0.01
+            lines.rotation.y += 0.01
+            
             renderer.render(scene, camera);
         };
 
@@ -76,8 +67,10 @@ const Animation = () => {
         return () => {
             renderer.setAnimationLoop(null)
             renderer.dispose()
-            geometry.dispose()
-            material.dispose()
+            lineMaterial.dispose()
+            sphereGeometry.dispose()
+            edges.dispose()
+            lines.remove()
             doc.current?.removeChild(renderer.domElement)
         }
     }, [])
