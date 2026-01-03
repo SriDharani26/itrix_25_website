@@ -10,7 +10,7 @@ const DesktopNavbar = () => {
     }
 
     return (
-        <div className="w-full h-16 flex justify-center py-1 px-3 border">
+        <div className="w-full h-16 flex justify-center py-1 px-3">
 
             <div className="w-full h-full bg-white/10 rounded-2xl flex items-center px-2">
                 <div className="w-[30%] ml-4">
