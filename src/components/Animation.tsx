@@ -1,8 +1,11 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three'
-// import { GLTFLoader } from 'three/examples/jsm/Addons.js';
-import { OrbitControls } from 'three/examples/jsm/Addons.js';
 import getStarfield from './stars';
+import { degToRad } from 'three/src/math/MathUtils.js';
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
+
 
 const Animation = () => {
 
@@ -23,17 +26,71 @@ const Animation = () => {
         renderer.setPixelRatio(window.devicePixelRatio)
         doc.current.appendChild(renderer.domElement)
 
-        const controls = new OrbitControls(camera, renderer.domElement)
-        controls.enableDamping = true;
-        controls.enableZoom = false
-  
-        const sphereGeometry = new THREE.SphereGeometry(2)
-        const lineMaterial = new THREE.LineBasicMaterial({
-            color : '#fff'
+        const composer = new EffectComposer(renderer)
+        composer.addPass(new RenderPass(scene, camera))
+
+        const bloomPass = new UnrealBloomPass(
+            new THREE.Vector2(width, height),
+            1,   // strength
+            0.5,   // radius (blur)
+            0.1   // threshold,
+            
+        )
+
+        composer.addPass(bloomPass)
+
+        //1 0x00ffff
+        //2 0x3399ff
+        //3 0xcc66ff
+
+        //4 0xf0ffe6
+        //5 0xe6fff2
+        //6 0xeaffea
+        
+        //7 0xf0f7ff
+
+        //8 0xd9ffea -- fixed
+
+        const sphereGeometry = new THREE.SphereGeometry(1.6)
+        const material = new THREE.MeshBasicMaterial({
+            color :  0xd9ffea,
+            transparent: true,
+            opacity : 1,
+            blending: THREE.AdditiveBlending
         })
-        const edges = new THREE.EdgesGeometry(sphereGeometry, 10)
-        const lines = new THREE.LineSegments(edges, lineMaterial)
-        scene.add(lines)
+        const sphere = new THREE.Mesh(sphereGeometry, material)
+        scene.add(sphere)
+        
+        const lineMaterial = new THREE.LineBasicMaterial({
+            color :  0xd9ffea,
+            transparent: true,
+            opacity: 1,
+            blending: THREE.AdditiveBlending
+        })
+    
+
+        const wing1 = new THREE.CircleGeometry(2.5)
+
+        const edge1 = new THREE.EdgesGeometry(wing1, 1)
+        const line1 = new THREE.LineSegments(edge1, lineMaterial)
+        line1.rotation.y = degToRad(60)
+        scene.add(line1)
+
+        const wing2 = new THREE.CircleGeometry(2.5)
+
+        const edge2 = new THREE.EdgesGeometry(wing2, 1)
+        const line2 = new THREE.LineSegments(edge2, lineMaterial)
+        line2.rotation.y = degToRad(120)
+        scene.add(line2)
+
+
+        const wing3 = new THREE.CircleGeometry(2.5)
+
+        const edge3 = new THREE.EdgesGeometry(wing3, 1)
+        const line3 = new THREE.LineSegments(edge3, lineMaterial)
+        line3.rotation.y = degToRad(180)
+        scene.add(line3)
+
         scene.background = new THREE.Color('#000');
 
         const stars = getStarfield()
@@ -46,20 +103,28 @@ const Animation = () => {
         scene.add(directionalLight);
 
 
-        console.log(width, height)
-        // const clock = new THREE.Clock();
+        const clock = new THREE.Clock();
 
         
         const animate = () => {
-            // const t = clock.getElapsedTime();
+            const t = clock.getElapsedTime();
 
-            // directionalLight.position.x = Math.sin(t) * 5;
-            // directionalLight.position.z = Math.cos(t) * 5;
-
-            lines.rotation.z += 0.01
-            lines.rotation.y += 0.01
+            sphere.scale.z = Math.sin(t) * 1.5
             
-            renderer.render(scene, camera);
+            const pulse = 1 + Math.sin(t * 2) * 0.5
+            bloomPass.strength = pulse
+      
+            line1.rotation.x += 0.01
+            line1.rotation.y += 0.01
+
+            line2.rotation.x += 0.012
+            line2.rotation.y += 0.012
+
+            line3.rotation.x += 0.014
+            line3.rotation.y += 0.014
+         
+            composer.render()
+
         };
 
         renderer.setAnimationLoop(animate)
@@ -69,8 +134,13 @@ const Animation = () => {
             renderer.dispose()
             lineMaterial.dispose()
             sphereGeometry.dispose()
-            edges.dispose()
-            lines.remove()
+            material.dispose()
+            edge1.dispose()
+            line1.remove()
+            edge2.dispose()
+            line2.remove() 
+            edge3.dispose()
+            line3.remove()
             doc.current?.removeChild(renderer.domElement)
         }
     }, [])

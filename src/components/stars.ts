@@ -25,8 +25,8 @@ export default function getStarfield({ numStars = 1500 } = {}) {
     const p = randomSpherePoint();
     const { pos } = p;
     positions.push(p);
-    // col = new THREE.Color().setHSL(hue, 0.2, Math.random());
-    col = new THREE.Color('#008000')
+
+    col = new THREE.Color(0xd9ffea)
     verts.push(pos.x, pos.y, pos.z);
     colors.push(col.r, col.g, col.b);
   }
@@ -34,7 +34,7 @@ export default function getStarfield({ numStars = 1500 } = {}) {
   geo.setAttribute("position", new THREE.Float32BufferAttribute(verts, 3));
   geo.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
   const mat = new THREE.PointsMaterial({
-    size: 0.2,
+    size: 0.18,
     vertexColors: true,
     fog: false,
     // map: sprite,
