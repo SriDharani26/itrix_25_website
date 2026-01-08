@@ -8,7 +8,7 @@ const Home = () => {
         >
             {/* Title */}
 
-            <div className="relative flex flex-col h-[80%]">
+            <div className="relative flex flex-col h-full">
                 <div className="h-full">
                     <Animation />
                 </div>
@@ -26,17 +26,19 @@ const Home = () => {
             {/* About  */}
             <div className="my-10 flex flex-col gap-8 justify-center items-center">
                 <p
-                    className="text-center text-3xl font-bold"
+                    className="text-center text-3xl font-bold text3 underline"
                 >ABOUT</p>
                 <div
-                    className="p-4 flex flex-col gap-4 items-center md:flex-row md:w-[90%] lg:w-[75%]"
+                    className="p-4 md:p-6 flex flex-col gap-4 items-center md:flex-row md:w-[90%] lg:w-[75%]
+                                bg-gradient-to-tr from-[#d9ffea]/30 via-[#d9ffea]/20 to-[#d9ffea]/30 
+                                rounded-2xl backdrop-blur-2xl shadow-2xl"
                 >
                     <img 
                         src="/itrix-about.png" alt="ITRIX-IMAGE" 
                         className="w-[350px] h-87.5"
                     />
                     <p className="text-lg p-2">
-                        <span className="font-bold text-xl">ITRIX</span> stands as Anna University's Department of Information Science and Technology's flagship 
+                        <span className="font-bold text3 text-2xl">ITRIX</span> stands as Anna University's Department of Information Science and Technology's flagship 
                         inter-college symposium, held annually in March at the College of Engineering, Guindy. 
                         With a robust turnout of nearly 4000 participants, ITRIX serves as a melting pot of talent and ideas, 
                         offering a diverse array of technical and non-technical events, workshops, and competitions. 

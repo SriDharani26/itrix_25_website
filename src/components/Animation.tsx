@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three'
-import getStarfield from './stars';
+// import getStarfield from './stars';
 import { degToRad } from 'three/src/math/MathUtils.js';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
@@ -32,7 +32,7 @@ const Animation = () => {
         const bloomPass = new UnrealBloomPass(
             new THREE.Vector2(width, height),
             1,   // strength
-            0.5,   // radius (blur)
+            0.1,   // radius (blur)
             0.1   // threshold,
             
         )
@@ -93,8 +93,8 @@ const Animation = () => {
 
         scene.background = new THREE.Color('#000');
 
-        const stars = getStarfield()
-        scene.add(stars)
+        // const stars = getStarfield()
+        // scene.add(stars)
         const ambientLight = new THREE.AmbientLight(0xffffff, 1);
         scene.add(ambientLight);
 
