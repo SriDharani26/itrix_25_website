@@ -18,7 +18,7 @@ const DesktopNavbar = () => {
                     ITRIX 26
                 </div>
 
-                <div className="w-[70%] flex gap-4 justify-center text-lg">
+                <div className="w-[70%] flex gap-4 justify-center text-lg globe">
                     {PageLinks.map((page, idx) => (
                         <Link
                             key={idx} 

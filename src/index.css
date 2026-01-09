@@ -1,8 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 @import "tailwindcss";
+
+@font-face {
+    font-family: 'Globe';
+    src: url('./assets/fonts/GLOBE_FONT.ttf') ;
+}
+
+@font-face {
+    font-family: 'CookCounty';
+    src: url('./assets//fonts/CookCounty_Font.ttf');
+}
+
+@font-face {
+    font-family: 'DiryHeadline';
+    src: url('./assets/fonts/DirtyHeadline_Font.ttf');
+}
 
 body{
     background: #000000;
     color : #cafae0;
+    font-family: "Roboto", sans-serif;
 }
 
 /* #cafae0 -text1 greenish white*/
@@ -17,4 +34,13 @@ body{
 }
 .text3{
     color:#65eea3;
+}
+
+.globe{
+    font-family: "Globe", sans-serif;
+     font-variant-numeric: normal;
+}
+
+.dh{
+    font-family: "DiryHeadline";
 }

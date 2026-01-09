@@ -15,9 +15,10 @@ const Home = () => {
                 <div className="absolute z-20 inset-0 flex flex-col gap-16 justify-center items-center ">
                     <div className="text-black/70 flex flex-col gap-16 justify-center items-center p-6 bg-transparent backdrop-blur-[1px] h-full max-md:w-full">
 
-                        <p className="max-[350px]:text-3xl text-6xl md:text-7xl lg:text-8xl">ITRIX'26</p>
-                        <p className="max-[350px]:text-2xl text-4xl lg:text-5xl">February 22-24</p>
+                        <p className="max-[350px]:text-3xl text-6xl md:text-7xl lg:text-8xl dh"><span className="globe">ITRIX'</span>26</p>
+                        <p className="max-[350px]:text-2xl text-4xl lg:text-5xl dh">February 22-24</p>
                         <Countdown targetDate="2026-02-10T00:00:00" />
+                        {/* <p className="max-[350px]:text-xl text-3xl lg:text-4xl">Happening Now</p> */}
                     </div>
 
                 </div>
@@ -26,12 +27,12 @@ const Home = () => {
             {/* About  */}
             <div className="my-10 flex flex-col gap-8 justify-center items-center">
                 <p
-                    className="text-center text-3xl font-bold text3 underline"
+                    className="text-center text-3xl font-bold text3 underline globe"
                 >ABOUT</p>
                 <div
                     className="p-4 md:p-6 flex flex-col gap-4 items-center md:flex-row md:w-[90%] lg:w-[75%]
                                 bg-gradient-to-tr from-[#d9ffea]/30 via-[#d9ffea]/20 to-[#d9ffea]/30 
-                                rounded-2xl backdrop-blur-2xl shadow-2xl"
+                                rounded-2xl backdrop-blur-2xl shadow-2xl border border-[#d9ffea]/10"
                 >
                     <img 
                         src="/itrix-about.png" alt="ITRIX-IMAGE" 
@@ -52,7 +53,7 @@ const Home = () => {
             {/* Sponsors */}
             <div className="my-10 flex flex-col gap-8 justify-center items-center">
                 <p
-                    className="text-center text-3xl font-bold"
+                    className="text-center text-3xl font-bold text3 underline globe"
                 >SPONSORS</p>
 
                 <div className="w-full md:w-[70%] lg:w-[80%]

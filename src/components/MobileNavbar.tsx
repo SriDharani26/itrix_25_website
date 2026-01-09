@@ -26,7 +26,7 @@ const MobileNavbar = () => {
 
             {menuOpen && 
                 <div 
-                    className='fixed inset-0 z-50 bg-black/30 flex flex-col gap-4 backdrop-blur-2xl'
+                    className='fixed inset-0 z-50 bg-black/30 flex flex-col gap-4 backdrop-blur-2xl globe'
                 >
                     <X 
                         onClick={() => setMenuOpen(prev => !prev)}
@@ -34,7 +34,7 @@ const MobileNavbar = () => {
                     />
 
                     <div
-                        className='w-full h-full flex flex-col gap-4 justify-center items-center'
+                        className='w-full h-full flex flex-col gap-4 justify-center items-center text-2xl'
                     >
                         {PageLinks.map((page, idx) => (
                             <Link
