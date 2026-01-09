@@ -51,7 +51,20 @@ const Animation = () => {
 
         //8 0xd9ffea -- fixed
 
-        const sphereGeometry = new THREE.SphereGeometry(1.6)
+        let sphereRadius = 1.6
+        let circleRadius = 2.3
+
+        if(width < 475){
+            console.log('hi')
+            sphereRadius = 1.1
+            circleRadius = 1.6
+            
+        }
+        else if(width < 670){
+            sphereRadius = 1.3
+            circleRadius = 1.8
+        }
+        const sphereGeometry = new THREE.SphereGeometry(sphereRadius)
         const material = new THREE.MeshBasicMaterial({
             color :  0xd9ffea,
             transparent: true,
@@ -67,16 +80,16 @@ const Animation = () => {
             opacity: 1,
             blending: THREE.AdditiveBlending
         })
-    
-
-        const wing1 = new THREE.CircleGeometry(2.5)
+        
+        
+        const wing1 = new THREE.CircleGeometry(circleRadius)
 
         const edge1 = new THREE.EdgesGeometry(wing1, 1)
         const line1 = new THREE.LineSegments(edge1, lineMaterial)
         line1.rotation.y = degToRad(60)
         scene.add(line1)
 
-        const wing2 = new THREE.CircleGeometry(2.5)
+        const wing2 = new THREE.CircleGeometry(circleRadius)
 
         const edge2 = new THREE.EdgesGeometry(wing2, 1)
         const line2 = new THREE.LineSegments(edge2, lineMaterial)
@@ -84,14 +97,14 @@ const Animation = () => {
         scene.add(line2)
 
 
-        const wing3 = new THREE.CircleGeometry(2.5)
+        const wing3 = new THREE.CircleGeometry(circleRadius)
 
         const edge3 = new THREE.EdgesGeometry(wing3, 1)
         const line3 = new THREE.LineSegments(edge3, lineMaterial)
         line3.rotation.y = degToRad(180)
         scene.add(line3)
 
-        scene.background = new THREE.Color('#000');
+        scene.background = new THREE.Color('#161616');
 
         // const stars = getStarfield()
         // scene.add(stars)
@@ -129,6 +142,22 @@ const Animation = () => {
 
         renderer.setAnimationLoop(animate)
 
+        const handleResize = () => {
+            if (!doc.current) return
+
+            const newWidth = doc.current.clientWidth
+            const newHeight = doc.current.clientHeight
+
+            camera.aspect = newWidth / newHeight
+            camera.updateProjectionMatrix()
+
+            renderer.setSize(newWidth, newHeight)
+            composer.setSize(newWidth, newHeight)
+        }
+
+        window.addEventListener('resize', handleResize)
+
+
         return () => {
             renderer.setAnimationLoop(null)
             renderer.dispose()
@@ -142,6 +171,9 @@ const Animation = () => {
             edge3.dispose()
             line3.remove()
             doc.current?.removeChild(renderer.domElement)
+
+            window.removeEventListener('resize', handleResize)
+
         }
     }, [])
 

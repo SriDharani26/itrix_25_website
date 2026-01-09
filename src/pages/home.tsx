@@ -13,7 +13,8 @@ const Home = () => {
                     <Animation />
                 </div>
                 <div className="absolute z-20 inset-0 flex flex-col gap-16 justify-center items-center ">
-                    <div className="text-black/70 flex flex-col gap-16 justify-center items-center p-6 bg-transparent backdrop-blur-[1px] h-full max-md:w-full">
+                    <div className="text-black/70 flex flex-col gap-16 justify-center items-center p-6 
+                                    bg-transparent backdrop-blur-[1px] h-full max-md:w-full">
 
                         <p className="max-[350px]:text-3xl text-6xl md:text-7xl lg:text-8xl dh"><span className="globe">ITRIX'</span>26</p>
                         <p className="max-[350px]:text-2xl text-4xl lg:text-5xl dh">February 22-24</p>
@@ -25,7 +26,7 @@ const Home = () => {
             </div>
                
             {/* About  */}
-            <div className="my-10 flex flex-col gap-8 justify-center items-center">
+            <div className="my-10 flex flex-col gap-8 justify-center items-center p-4">
                 <p
                     className="text-center text-3xl font-bold text3 underline globe"
                 >ABOUT</p>
