@@ -12,12 +12,12 @@ const Home = () => {
                 <div className="h-full">
                     <Animation />
                 </div>
-                <div className="absolute z-20 inset-0 flex flex-col gap-16 justify-center items-center ">
+                <div className="absolute z-20 inset-0 flex flex-col gap-16 justify-center items-center top-30">
                     <div className="text-black/70 flex flex-col gap-16 justify-center items-center p-6 
                                     bg-transparent backdrop-blur-[1px] h-full max-md:w-full">
 
-                        <p className="max-[350px]:text-3xl text-6xl md:text-7xl lg:text-8xl dh"><span className="globe">ITRIX'</span>26</p>
-                        <p className="max-[350px]:text-2xl text-4xl lg:text-5xl dh">February 22-24</p>
+                        <p className="max-[350px]:text-3xl text-6xl md:text-7xl lg:text-8xl z-30 dh"><span className="globe1">Itrix'</span><span className="numfont1">26</span></p>
+                        <p className="max-[350px]:text-2xl text-4xl lg:text-5xl dh"><span>February</span> <span className="numfont1">22-24</span></p>
                         <Countdown targetDate="2026-02-10T00:00:00" />
                         {/* <p className="max-[350px]:text-xl text-3xl lg:text-4xl">Happening Now</p> */}
                     </div>
@@ -28,7 +28,7 @@ const Home = () => {
             {/* About  */}
             <div className="my-10 flex flex-col gap-8 justify-center items-center p-4">
                 <p
-                    className="text-center text-3xl font-bold text3 underline globe"
+                    className="text-center text-3xl  text3 underline globe"
                 >ABOUT</p>
                 <div
                     className="p-4 md:p-6 flex flex-col gap-4 items-center md:flex-row md:w-[90%] lg:w-[75%]
@@ -40,7 +40,7 @@ const Home = () => {
                         className="w-[350px] h-87.5"
                     />
                     <p className="text-lg p-2">
-                        <span className="font-bold text3 text-2xl">ITRIX</span> stands as Anna University's Department of Information Science and Technology's flagship 
+                        <span className="font-bold text3 text-2xl ab">ITRIX</span> stands as Anna University's Department of Information Science and Technology's flagship 
                         inter-college symposium, held annually in March at the College of Engineering, Guindy. 
                         With a robust turnout of nearly 4000 participants, ITRIX serves as a melting pot of talent and ideas, 
                         offering a diverse array of technical and non-technical events, workshops, and competitions. 
@@ -54,7 +54,7 @@ const Home = () => {
             {/* Sponsors */}
             <div className="my-10 flex flex-col gap-8 justify-center items-center">
                 <p
-                    className="text-center text-3xl font-bold text3 underline globe"
+                    className="text-center text-3xl text3 underline globe"
                 >SPONSORS</p>
 
                 <div className="w-full md:w-[70%] lg:w-[80%]

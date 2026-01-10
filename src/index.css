@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
 @import "tailwindcss";
 
 @font-face {
@@ -16,6 +17,15 @@
     src: url('./assets/fonts/DirtyHeadline_Font.ttf');
 }
 
+@font-face {
+    font-family: 'Monday';
+    src: url('./assets/fonts/Monday.ttf');
+}
+
+@font-face {
+    font-family: 'Neo';
+    src: url('./assets/fonts/Neo.ttf');
+}
 body{
     background: #161616;
     color : #cafae0;
@@ -36,10 +46,44 @@ body{
     color:#65eea3;
 }
 
+.globe1{
+    font-family: "Neo", sans-serif;
+    font-weight: bold;
+    font-size: 200px;
+
+    text-shadow:
+        0 4px 8px rgba(0, 60, 30, 0.9),
+        0 0 12px rgba(0, 120, 60, 0.6),
+        0 0 28px rgba(5, 29, 0, 0.45);
+}
+
 .globe{
-    font-family: "Globe", sans-serif;
+    font-family: "Monday", sans-serif;
 }
 
 .dh{
-    font-family: "DiryHeadline";
+    font-family: "Monday", sans-serif;
+    font-weight: bold;
+    text-shadow:
+        0 4px 8px rgba(0, 60, 30, 0.9),
+        0 0 12px rgba(0, 120, 60, 0.6),
+        0 0 28px rgba(5, 29, 0, 0.45);
+}
+
+.numfont1{
+    font-family: "Orbitron", sans-serif;
+    font-weight: bold;
+    text-shadow:
+        0 4px 8px rgba(0, 60, 30, 0.9),
+        0 0 12px rgba(0, 120, 60, 0.6),
+        0 0 28px rgba(5, 29, 0, 0.45);
+}
+
+.numfont{
+    font-family: "Orbitron", sans-serif;
+    font-weight: bold;
+}
+
+.tag{
+    font-family: "Neo",sans-serif;
 }
