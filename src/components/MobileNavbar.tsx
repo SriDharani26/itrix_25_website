@@ -26,7 +26,7 @@ const MobileNavbar = () => {
 
             {menuOpen && 
                 <div 
-                    className='fixed inset-0 z-50 bg-black/10 flex flex-col gap-4 backdrop-blur-2xl globe'
+                    className='fixed inset-0 z-50 bg-black/10 flex flex-col gap-4 backdrop-blur-2xl monday'
                 >
                     <X 
                         onClick={() => setMenuOpen(prev => !prev)}

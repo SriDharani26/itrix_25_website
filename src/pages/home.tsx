@@ -16,8 +16,8 @@ const Home = () => {
                     <div className="text-black/70 flex flex-col gap-16 justify-center items-center p-6 
                                     bg-transparent backdrop-blur-[1px] h-full max-md:w-full">
 
-                        <p className="max-[350px]:text-3xl text-6xl md:text-7xl lg:text-8xl z-30 dh"><span className="globe1">Itrix'</span><span className="numfont1">26</span></p>
-                        <p className="max-[350px]:text-2xl text-4xl lg:text-5xl dh"><span>February</span> <span className="numfont1">22-24</span></p>
+                        <p className="max-[350px]:text-3xl text-6xl md:text-7xl lg:text-8xl z-30 monday-glow"><span className="neo-glow">Itrix'</span><span className="numfont1">26</span></p>
+                        <p className="max-[350px]:text-2xl text-4xl lg:text-5xl monday-glow"><span>February</span> <span className="numfont1">22-24</span></p>
                         <Countdown targetDate="2026-02-10T00:00:00" />
                         {/* <p className="max-[350px]:text-xl text-3xl lg:text-4xl">Happening Now</p> */}
                     </div>
@@ -28,7 +28,7 @@ const Home = () => {
             {/* About  */}
             <div className="my-10 flex flex-col gap-8 justify-center items-center p-4">
                 <p
-                    className="text-center text-3xl  text3 underline globe"
+                    className="text-center text-3xl  text3 underline monday"
                 >ABOUT</p>
                 <div
                     className="p-4 md:p-6 flex flex-col gap-4 items-center md:flex-row md:w-[90%] lg:w-[75%]
@@ -54,7 +54,7 @@ const Home = () => {
             {/* Sponsors */}
             <div className="my-10 flex flex-col gap-8 justify-center items-center">
                 <p
-                    className="text-center text-3xl text3 underline globe"
+                    className="text-center text-3xl text3 underline monday"
                 >SPONSORS</p>
 
                 <div className="w-full md:w-[70%] lg:w-[80%]

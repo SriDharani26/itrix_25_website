@@ -46,7 +46,15 @@ body{
     color:#65eea3;
 }
 
-.globe1{
+.globe{
+    font-family: "Globe", sans-serif;
+}
+
+.neo{
+    font-family: "Neo",sans-serif;
+}
+
+.neo-glow{
     font-family: "Neo", sans-serif;
     font-weight: bold;
     font-size: 200px;
@@ -57,17 +65,21 @@ body{
         0 0 28px rgba(5, 29, 0, 0.45);
 }
 
-.globe{
+.monday{
     font-family: "Monday", sans-serif;
 }
 
-.dh{
+.monday-glow{
     font-family: "Monday", sans-serif;
     font-weight: bold;
     text-shadow:
         0 4px 8px rgba(0, 60, 30, 0.9),
         0 0 12px rgba(0, 120, 60, 0.6),
         0 0 28px rgba(5, 29, 0, 0.45);
+}
+
+.dh{
+    font-family: "DirtyHeadline", sans-serif;
 }
 
 .numfont1{
@@ -84,6 +96,3 @@ body{
     font-weight: bold;
 }
 
-.tag{
-    font-family: "Neo",sans-serif;
-}

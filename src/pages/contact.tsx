@@ -6,7 +6,7 @@ const Contact = () => {
       <div className="max-w-2xl mx-auto grid grid-cols-1 gap-16 mt-10">
         <div>
           <h2 className="text-4xl text-center mb-10 
-                         text-[#65eea3] underline globe">
+                         text-[#65eea3] underline monday">
             CONTACTS
           </h2>
 
@@ -34,7 +34,7 @@ const Contact = () => {
                             text-3xl text-[#65eea3]
                             transition-all duration-300
                             group-hover:opacity-0
-                            group-hover:-translate-y-4 tag"
+                            group-hover:-translate-y-4 neo"
                 >
                 <span>{person.tag || "Contact"}</span>
 
