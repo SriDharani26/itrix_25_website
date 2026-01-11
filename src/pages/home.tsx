@@ -7,17 +7,16 @@ const Home = () => {
             className="h-screen"
         >
             {/* Title */}
-
-            <div className="relative flex flex-col h-full">
+            <div className="relative flex flex-col h-full max-md:h-[75%]">
                 <div className="h-full">
                     <Animation />
                 </div>
-                <div className="absolute z-20 inset-0 flex flex-col gap-16 justify-center items-center top-30">
-                    <div className="text-black/70 flex flex-col gap-16 justify-center items-center p-6 
+                <div className="absolute z-20 inset-0">
+                    <div className="text-black/70 flex flex-col gap-6 justify-center items-center max-md:gap-6
                                     bg-transparent backdrop-blur-[1px] h-full max-md:w-full">
 
-                        <p className="max-[350px]:text-3xl text-6xl md:text-7xl lg:text-8xl z-30 monday-glow"><span className="neo-glow">Itrix'</span><span className="numfont1">26</span></p>
-                        <p className="max-[350px]:text-2xl text-4xl lg:text-5xl monday-glow"><span>February</span> <span className="numfont1">22-24</span></p>
+                        <p className="max-[350px]:text-3xl text-6xl md:text-7xl lg:text-8xl z-30 monday-glow"><span className="neo-glow">Itrix' </span><span className="numfont1">26</span></p>
+                        <p className="max-[350px]:text-2xl text-3xl lg:text-5xl monday-glow"><span>February</span> <span className="numfont1">22-24</span></p>
                         <Countdown targetDate="2026-02-10T00:00:00" />
                         {/* <p className="max-[350px]:text-xl text-3xl lg:text-4xl">Happening Now</p> */}
                     </div>

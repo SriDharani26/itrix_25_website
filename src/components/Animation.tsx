@@ -66,7 +66,7 @@ const Animation = () => {
         }
         const sphereGeometry = new THREE.SphereGeometry(sphereRadius)
         const material = new THREE.MeshBasicMaterial({
-            color :  0xd9ffea,
+            color :  0xf0ffe6,
             transparent: true,
             opacity : 1,
             blending: THREE.AdditiveBlending
@@ -75,7 +75,7 @@ const Animation = () => {
         scene.add(sphere)
         
         const lineMaterial = new THREE.LineBasicMaterial({
-            color :  0xd9ffea,
+            color :  0xf0ffe6,
             transparent: true,
             opacity: 1,
             blending: THREE.AdditiveBlending
@@ -104,7 +104,7 @@ const Animation = () => {
         line3.rotation.y = degToRad(180)
         scene.add(line3)
 
-        scene.background = new THREE.Color('#161616');
+        scene.background = new THREE.Color('#000');
 
         // const stars = getStarfield()
         // scene.add(stars)

@@ -37,28 +37,29 @@ const Countdown: React.FC<CountdownProps> = ({ targetDate }) => {
     }, [targetDate]);
 
   return (
-    <div className="flex gap-4 max-[450px]:gap-2 text-center p-4 rounded-2xl
-                    text-xl max-[325px]:text-sm max-[450px]:text-lg md:text-2xl lg:text-3xl lg:gap-6
+    <div className="flex gap-4 max-[450px]:gap-4 text-center p-4 rounded-2xl justify-center items-center
+                    text-xl max-[400px]:text-md max-[450px]:text-lg md:text-2xl lg:text-3xl lg:gap-6
                     bg-white/10 backdrop-blur-3xl shadow-2xl border border-black/10 monday-glow
-                    text-black/80 numfont1">
+                    text-black/80 numfont1 max-[400px]:w-[300px]
+                    max-[470px]:w-[380px]">
         <div className="flex flex-col gap-2">
             <span>{timeLeft.days}</span>
-            <p className="monday">Days</p>
+            <p className="monday">{window.innerWidth < 470 ? 'D': "Days"}</p>
         </div>
         :
         <div className="flex flex-col gap-2">
             <span>{timeLeft.hours}</span>
-            <p className="monday">Hours</p>
+            <p className="monday">{window.innerWidth < 470 ? "H" : "Hours"}</p>
         </div>
         :
         <div className="flex flex-col gap-2">
             <span>{timeLeft.minutes}</span>
-            <p className="monday">Minutes</p>
+            <p className="monday">{window.innerWidth < 470 ? "M" : "Minutes"}</p>
         </div>
         :
         <div className="flex flex-col gap-2">
             <span>{timeLeft.seconds}</span>
-            <p className="monday">Seconds</p>
+            <p className="monday">{window.innerWidth < 470 ? "S" : "Seconds"}</p>
         </div>
     </div>
   );
