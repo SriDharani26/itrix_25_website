@@ -4,7 +4,7 @@ import Countdown from "../components/countdown";
 const Home = () => {
     return (
         <div
-            className="h-screen"
+            className="h-screen ani"
         >
             {/* Title */}
             <div className="relative flex flex-col h-full max-md:h-[75%]">
@@ -39,7 +39,7 @@ const Home = () => {
                         className="w-[350px] h-87.5"
                     />
                     <p className="text-lg p-2">
-                        <span className="font-bold text3 text-2xl ab">ITRIX</span> stands as Anna University's Department of Information Science and Technology's flagship 
+                        <span className="font-bold text3 text-2xl ab monday">ITRIX</span> stands as Anna University's Department of Information Science and Technology's flagship 
                         inter-college symposium, held annually in March at the College of Engineering, Guindy. 
                         With a robust turnout of nearly 4000 participants, ITRIX serves as a melting pot of talent and ideas, 
                         offering a diverse array of technical and non-technical events, workshops, and competitions. 

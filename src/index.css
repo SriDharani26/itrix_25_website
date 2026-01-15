@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 @import "tailwindcss";
 
 @font-face {
@@ -26,10 +26,14 @@
     font-family: 'Neo';
     src: url('./assets/fonts/Neo.ttf');
 }
+
 body{
     background: #000;
     color : #cafae0;
-    font-family: "Roboto", sans-serif;
+    font-family: "DM Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-weight: 500;
 }
 
 /* #cafae0 -text1 greenish white*/
@@ -86,7 +90,7 @@ body{
     font-weight: bold;
     text-shadow:
         0 4px 8px rgba(0, 60, 30, 0.9),
-        0 0 12px rgba(0, 120, 60, 0.6),
+        0 0 12px rgba(78, 96, 87, 0.6),
         0 0 28px rgba(5, 29, 0, 0.45);
 }
 
@@ -95,3 +99,16 @@ body{
     font-weight: bold;
 }
 
+.ani{
+    animation: fade 1s ease-in-out;
+}
+
+
+@keyframes fade {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
