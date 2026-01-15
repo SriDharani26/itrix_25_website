@@ -17,8 +17,8 @@ const SponsorCard : React.FC<sponsorProps> = (props) => {
                 className='w-[95%] h-[70%]' 
                 alt="sponsor-image" 
             />
-            <p className='text-xl font-bold text3'>{props.name}</p>
-            <p className='text-sm font-light text2'>{props.type}</p>
+            <p className='text-xl font-bold text3 monday'>{props.name}</p>
+            <p className='text-md text2'>{props.type}</p>
         </div>
     );
 }

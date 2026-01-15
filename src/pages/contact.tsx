@@ -1,89 +1,84 @@
-import { Tag } from "lucide-react"
+import { useState } from "react";
+import { contacts } from "../utils/contact";
 
 const Contact = () => {
-  return (
-    <div className="min-h-screen px-10 py-16">
-      <div className="max-w-2xl mx-auto grid grid-cols-1 gap-16 mt-10">
-        <div>
-          <h2 className="text-4xl text-center mb-10 
-                         text-[#65eea3] underline monday">
-            CONTACTS
-          </h2>
 
-          <div className="space-y-6">
-            {[
-              { name: "ABC", phone: "+91 1234567890", tag: "President" },
-              { name: "ABC", phone: "+91 1234567890", tag: "Vice President" },
-              { name: "ABC", phone: "+91 1234567890", tag: "Event Coordinator" },
-              { name: "ABC", phone: "+91 1234567890", tag: "Treasurer" },
-              { name: "ABC", phone: "+91 1234567890", tag: "Coordinator" },
-            ].map((person, i) => (
-              <div
-                key={i}
-                className="group relative overflow-hidden
-                           bg-[#0a1e16]/70
-                           border border-[#65eea3]/20
-                           rounded-xl px-6 py-6
-                           transition-all duration-300
-                           hover:scale-[1.03]
-                           hover:shadow-[0_0_25px_rgba(0,255,140,0.25)]"
-              >
-                {/* TAG (VISIBLE INITIALLY) */}
-                <div
-                className="flex items-center justify-between
-                            text-3xl text-[#65eea3]
-                            transition-all duration-300
-                            group-hover:opacity-0
-                            group-hover:-translate-y-4 neo"
-                >
-                <span>{person.tag || "Contact"}</span>
+	const [clicked, setClicked] = useState<number>(-1);
 
-                <img
-                    src="/avenger.png"
-                    alt="tag-icon"
-                    className="w-10 h-10 object-contain"
-                />
-                </div>
+  	return (
+		<div className="min-h-screen px-8 md:py-16 ani">
+			<div className="max-w-2xl mx-auto grid grid-cols-1 gap-16 md:mt-10">
+				<div>
+					<h2 className="text-4xl text-center mb-10 
+									text-[#65eea3] underline monday">
+						CONTACTS
+					</h2>
 
-                {/* DETAILS (VISIBLE ON HOVER) */}
-                <div
-                  className="absolute inset-0
-                             flex justify-between items-center
-                             px-6
-                             opacity-0
-                             translate-y-4
-                             transition-all duration-300
-                             group-hover:opacity-100
-                             group-hover:translate-y-0"
-                >
-                  <div>
-                    <p className="text-lg font-semibold text-[#e6fff2]">
-                      {person.name}
-                    </p>
-                    <p className="text-sm text-[#9eeec8] mt-1">
-                      {person.phone}
-                    </p>
-                  </div>
+					<div className="space-y-6">
+						{contacts.map((person, i) => (
+							<div
+								key={i}
+								className="group relative overflow-hidden
+											bg-gradient-to-tr from-[#d9ffea]/30 via-[#d9ffea]/20 to-[#d9ffea]/30 
+											border border-[#d9ffea]/10
+											rounded-xl px-6 py-6 hover:cursor-pointer
+											transition-all duration-300"
+								onClick={() => setClicked(clicked === i ? -1 : i)}
+							>
+								<div
+									className={`flex items-center justify-between
+												text-3xl text1 neo
+												transition-all duration-300
+												${clicked === i ? "opacity-0" : "opacity-100"}
+											`}
+								>
+									<span>{person.tag || "Contact"}</span>
 
-                  {/* CALL ICON */}
-                  <a
-                    href={`tel:${person.phone.replace(/\s/g, "")}`}
-                    className="w-12 h-12 flex items-center justify-center
-                               rounded-full
-                               border border-[#65eea3]
-                               text-[#3dff9e]
-                               hover:bg-[#65eea3]/10
-                               transition"
-                  >
-                    <img src="/phone/phone.png" className="w-7" />
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
+									<img
+										src="/avenger.png"
+										alt="tag-icon"
+										className="w-10 h-10 object-contain"
+									/>
+								</div>
+
+								
+								<div
+									className={`absolute inset-0
+												flex justify-between items-center
+												px-6
+												opacity-0
+												transition-all duration-300
+												${clicked === i ? "opacity-100" : "opacity-0"}
+											`}
+								>
+									<div>
+										<p className="text-lg font-semibold text1 monday">
+											{person.name}
+										</p>
+										<p className="text-md mt-1 text2 numfont1">
+											{person.phone}
+										</p>
+									</div>
+
+									{/* CALL ICON */}
+									<a
+										href={`tel:${person.phone.replace(/\s/g, "")}`}
+										className="w-12 h-12 flex items-center justify-center
+												rounded-full
+												border border-[#cafae0]
+												text1
+												hover:bg-[#cafae0]/10
+												transition"
+									>
+										<img src="/phone/phone.png" className="w-7" />
+									</a>
+								</div>
+							</div>
+						))}
+					</div>
+				</div>
+			</div>
+		</div>
   );
 };
 
