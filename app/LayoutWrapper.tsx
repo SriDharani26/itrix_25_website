@@ -2,6 +2,7 @@
 import React from 'react';
 import Navbar from '@/components/Navbar';
 import { useState, useEffect } from 'react';
+import MobileNavbar from '@/components/MobileNavbar';
 
 const LayoutWrapper = ({
     children
@@ -21,13 +22,21 @@ const LayoutWrapper = ({
 
 		return () => window.addEventListener("resize", handleResize)
 	}, [])
-    
+
+
+
     return (
         <div className='h-screen w-full flex'>
-            <div className="w-[30%] h-full">
-                <Navbar/>
-            </div>
-            <div className="w-[70%] overflow-y-scroll">
+            {width < 800 ?
+                <div className='fixed bottom-0 w-full z-50'>
+                    <MobileNavbar/>
+                </div>
+                :
+                <div className="w-[30%] h-full">
+                    <Navbar/>
+                </div>
+            }
+            <div className="overflow-y-scroll min-[800px]:w-[70%] w-full">
                 {children}
             </div>
         
