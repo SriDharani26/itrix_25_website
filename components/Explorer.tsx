@@ -1,0 +1,54 @@
+import React, {useState} from 'react';
+import { ChevronDown, ChevronRight, House } from "lucide-react";
+import Link from 'next/link';
+import { Page } from '@/utils/NavbarUtils';
+
+const pages: Page[] = [
+    { name: "Home", path: "/", icon : <House/> },
+    { name: "About us", path: "/#about", icon : <House/> },
+    { name: "Sponsors", path: "/#sponsor", icon : <House/> },
+    { name: "Accommodation", path: "/#accomodation", icon : <House/> },
+];
+
+interface propsType {
+    setShowExplorer ?: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const Explorer = ({
+    setShowExplorer
+} : propsType ) => {
+    
+    const [showPages, setShowPages] = useState<boolean>(true);
+
+    return (
+        <>
+             <p className="text-[11px] uppercase tracking-wide text-[#8f8f8f] px-2 pb-2">Explorer</p>
+
+            {/* // Pages  */}
+            <button
+                type="button"
+                className="w-full cursor-pointer px-2 py-1.5 flex items-center gap-1 hover:bg-white/10 rounded text-left mb-2"
+                onClick={() => setShowPages((prev) => !prev)}
+            >
+                {showPages ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                <span className="text-md font-semibold uppercase tracking-wide">Pages</span>
+            </button>
+            <div className={`${showPages ? "flex" : "hidden"} flex-col gap-1`}>
+                {pages.map((page) => (
+                    <Link
+                        key={page.name}
+                        href={page.path}
+                        className="block ml-5 px-2 py-1.5 text-md rounded transition-colors border-transparent hover:bg-white/2"
+                        onClick={() => { if(setShowExplorer) setShowExplorer(false) }}
+                    >
+                        <span className="flex gap-2 items-center">
+                            {page.icon}{page.name}
+                        </span>
+                    </Link>
+                ))}
+            </div>
+        </>
+    );
+}
+
+export default Explorer;
