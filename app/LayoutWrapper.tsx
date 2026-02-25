@@ -32,11 +32,11 @@ const LayoutWrapper = ({
                     <MobileNavbar/>
                 </div>
                 :
-                <div className="w-[30%] h-full">
+                <div className="w-[30%] h-full min-[1024px]:w-[25%]">
                     <Navbar/>
                 </div>
             }
-            <div className="overflow-y-scroll min-[800px]:w-[70%] w-full">
+            <div className="overflow-y-scroll min-[800px]:w-[70%] min-[1024px]:w-[75%] w-full">
                 {children}
             </div>
         
