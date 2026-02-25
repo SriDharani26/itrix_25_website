@@ -15,25 +15,27 @@ const Navbar = () => {
     
     const pages: Page[] = [
         { name: "Home", path: "/", icon : <House/> },
-        { name: "About us", path: "/", icon : <House/> },
-        { name: "Sponsors", path: "/", icon : <House/> },
-        { name: "Acommdation", path: "/", icon : <House/> },
+        { name: "About us", path: "/#about", icon : <House/> },
+        { name: "Sponsors", path: "/#sponsor", icon : <House/> },
+        { name: "Accommodation", path: "/#accomodation", icon : <House/> },
     ];
 
     const [showPages, setShowPages] = useState<boolean>(true);
 
+    // const [activeTab, setActiveTab]
+
     return (
         <aside className="h-full w-full flex bg-black/30 backdrop-blur-3xl text-[#cccccc] border-r border-white/50">
             <div className="w-16 bg-black/50 border-r border-[#2f2f2f] flex flex-col items-center py-3 gap-8">
-                <button type="button" className="text-[#c5c5c5]">
+                <Link type="button" className="text-[#c5c5c5]" href='/'>
                     <Files size={24} />
-                </button>
+                </Link>
                 <button type="button" className="text-[#858585] hover:text-[#c5c5c5] transition-colors">
                     <Search size={24}/>
                 </button>
-                <button type="button" className="text-[#858585] hover:text-[#c5c5c5] transition-colors">
+                <Link type="button" className="text-[#858585] hover:text-[#c5c5c5] transition-colors" href='/team'>
                     <GitBranch size={24}/>
-                </button>
+                </Link>
                 <button type="button" className=" text-[#858585] hover:text-[#c5c5c5] transition-colors">
                     <MdOutlineEmojiEvents size={24} />
                 </button>

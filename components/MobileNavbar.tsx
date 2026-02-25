@@ -14,9 +14,9 @@ type Page = {
 const MobileNavbar = () => {
       const pages: Page[] = [
         { name: "Home", path: "/", icon : <House/> },
-        { name: "About us", path: "/", icon : <House/> },
-        { name: "Sponsors", path: "/", icon : <House/> },
-        { name: "Acommdation", path: "/", icon : <House/> },
+        { name: "About us", path: "/#about", icon : <House/> },
+        { name: "Sponsors", path: "/#sponsor", icon : <House/> },
+        { name: "Accommodation", path: "/#accomodation", icon : <House/> },
     ];
 
     const [showPages, setShowPages] = useState<boolean>(true);
@@ -26,16 +26,17 @@ const MobileNavbar = () => {
         <div className="h-full w-full flex flex-col-reverse bg-black/30 backdrop-blur-3xl text-[#cccccc] 
                         border-t border-white/50">
             <div className="w-full h-14 bg-black/50 border-r border-[#2f2f2f] flex items-center gap-8 px-4 max-[320px]:gap-4">
-                <button type="button" className="text-[#c5c5c5]" 
-                        onClick={() => setShowExplorer(prev => !prev)}>
+                <Link type="button" className="text-[#c5c5c5]" 
+                        onClick={() => setShowExplorer(prev => !prev)}
+                        href="/">
                     <Files size={24} />
-                </button>
+                </Link>
                 <button type="button" className="text-[#858585] hover:text-[#c5c5c5] transition-colors">
                     <Search size={24}/>
                 </button>
-                <button type="button" className="text-[#858585] hover:text-[#c5c5c5] transition-colors">
+                <Link type="button" className="text-[#858585] hover:text-[#c5c5c5] transition-colors" href="/team">
                     <GitBranch size={24}/>
-                </button>
+                </Link>
                 <button type="button" className=" text-[#858585] hover:text-[#c5c5c5] transition-colors">
                     <MdOutlineEmojiEvents size={24} />
                 </button>
