@@ -1,11 +1,8 @@
-import React from 'react';
+import EventsTab from "@/components/EventsTab";
+import { eventsData } from "./eventsData";
 
-const Page = () => {
-    return (
-        <div>
-            Events
-        </div>
-    );
-}
+const EventsPage = () => {
+  return <EventsTab eventsData={eventsData} />;
+};
 
-export default Page;
+export default EventsPage;
