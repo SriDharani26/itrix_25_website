@@ -50,8 +50,8 @@ export const domains = [
     'Design',
     'Web development',
     'Contents',
+    'Logistics',
     'Courses',
     'Placement Training Coordinators',
     'Internship Training Coordinators',
-    'Logistics'
 ]
