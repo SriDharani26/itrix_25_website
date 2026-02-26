@@ -39,3 +39,19 @@ export type Page = {
     path: string;
     icon : React.ReactNode
 };
+
+
+export const domains = [
+    'Staff',
+    'Core',
+    'Coordinators',
+    'Events',
+    'Marketing and Media',
+    'Design',
+    'Web development',
+    'Contents',
+    'Courses',
+    'Placement Training Coordinators',
+    'Internship Training Coordinators',
+    'Logistics'
+]
