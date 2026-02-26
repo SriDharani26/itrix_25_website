@@ -42,16 +42,16 @@ export type Page = {
 
 
 export const domains = [
-    'Staff',
-    'Core',
-    'Coordinators',
-    'Events',
-    'Marketing and Media',
-    'Design',
-    'Web development',
-    'Contents',
-    'Logistics',
-    'Courses',
-    'Placement Training Coordinators',
-    'Internship Training Coordinators',
-]
+  { name: "Staff", path: "#staff" },
+  { name: "Core", path: "#core" },
+  { name: "Coordinators", path: "#coordinators" },
+  { name: "Events", path: "#events" },
+  { name: "Marketing and Media", path: "#marketing-and-media" },
+  { name: "Design", path: "#design" },
+  { name: "Web development", path: "#web-development" },
+  { name: "Contents", path: "#contents" },
+  { name: "Logistics", path: "#logistics" },
+  { name: "Courses", path: "#courses" },
+  { name: "Placement Training Coordinators", path: "#placement-training-coordinators" },
+  { name: "Internship Training Coordinators", path: "#internship-training-coordinators" },
+];

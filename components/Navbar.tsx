@@ -48,7 +48,7 @@ const Navbar = () => {
                 </button>
             </div>
 
-            <div className="flex-1 p-2">
+            <div className="flex-1 p-2 overflow-y-scroll">
                 
 
                 {activeTab[activeTab.findIndex(obj => obj.isActive === true)].page === 'Explorer' && <Explorer/> }
