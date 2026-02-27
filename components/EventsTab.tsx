@@ -81,9 +81,9 @@ const SidebarEventItem = ({
     }`}
   >
     <div className="flex gap-3">
-      <img src={event.thumbnailImage} alt={event.title} className="h-10 w-10 rounded-sm bg-[#313234] p-1" />
+      <img src={event.thumbnailImage} alt={event.title} className="h-10 w-10 rounded-sm bg-[#1e1e1e] p-1" />
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-semibold">{event.title}</p>
+        <p className="truncate text-sm font-semibold text-cyan-400">{event.title}</p>
         <p className="truncate text-xs text-gray-300">{event.organizer}</p>
         <p className="truncate text-xs text-gray-400">{event.shortDescription}</p>
         <div className="mt-1 flex flex-wrap items-center gap-2 text-[11px] text-gray-300">
@@ -433,11 +433,11 @@ const EventsTab = ({ eventsData = [] }: EventsTabProps) => {
                 <img
                   src={displayedEvent.bannerImage}
                   alt={`${displayedEvent.title} banner`}
-                  className="h-full w-full rounded-sm bg-[#313234] object-contain p-4"
+                  className="h-full w-full rounded-sm bg-[#1e1e1e] object-contain p-4"
                 />
               </div>
               <div className="px-6 py-4">
-                <h1 className="text-2xl font-semibold">{displayedEvent.title}</h1>
+                <h1 className="text-2xl font-semibold text-cyan-400">{displayedEvent.title}</h1>
                 <p className="mt-1 text-sm text-gray-300">{displayedEvent.organizer}</p>
                 <div className="mt-3 flex flex-wrap items-center gap-3 text-sm text-gray-300">
                   <span className="text-[rgba(6,130,165,1)]">{fixedFiveStars}</span>
