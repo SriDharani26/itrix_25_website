@@ -1,7 +1,13 @@
-import ProfileCard from '@/components/ProfileCard';
 import React from 'react';
+import TeamPageHelper from '@/components/TeamPage';
 
-const sections = [
+type sectionType = {
+    id : string,
+    title : string,
+    profiles : Array<number>
+}
+
+const sections : Array<sectionType> = [
     {
         id: "events",
         title: "Events",
@@ -56,47 +62,7 @@ const sections = [
 
 const Page = () => {
     return (
-        <div className="flex flex-col p-6">
-
-            {sections.map((section, idx) => (
-                
-                <div key={section.id} className="flex gap-6">
-
-                    <div className="flex flex-col items-center w-6">
-
-                        <div className="w-4 h-4 rounded-full border-4 border-[#4EC9B0] bg-black z-10" />
-
-                        {idx !== sections.length - 1 && (
-                            <div className="flex-1 w-px bg-[#8f8f8f]" />
-                        )}
-
-                    </div>
-
-                    <div
-                        id={section.id}
-                        className="flex flex-col gap-4 pb-12 flex-1"
-                    >
-                        <p className="text-xl font-semibold">
-                            {section.title}
-                        </p>
-
-                        <div className="flex flex-wrap gap-6">
-                            {section.profiles.map((_, i) => (
-                                <ProfileCard
-                                    key={i}
-                                    name="Gogul"
-                                    profile="hello"
-                                    position="President"
-                                />
-                            ))}
-                        </div>
-
-                    </div>
-
-                </div>
-
-            ))}
-        </div>
+        <TeamPageHelper sections={sections} path='Associates' />
     );
 }
 
