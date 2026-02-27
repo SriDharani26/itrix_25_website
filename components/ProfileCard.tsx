@@ -12,7 +12,7 @@ interface propsType {
 
 const ProfileCard = (props : propsType) => {
     return (
-        <div>
+        <div className='flex flex-col items-center'>
             <div
                 className='bg-white/10 w-68 rounded-2xl
                         flex flex-col items-center gap-3 p-4'
@@ -32,6 +32,7 @@ const ProfileCard = (props : propsType) => {
                     <Linkedin />
                 </Link>
             </div>
+            <div className='h-6 border w-px border-white/30'/>
         </div>
     );
 }

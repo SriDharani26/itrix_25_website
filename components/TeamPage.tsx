@@ -16,10 +16,10 @@ interface propsType {
 
 const TeamPageHelper = (props : propsType) => {
     return (
-        <div className="flex flex-col p-6">
+        <div className="flex flex-col py-6 px-3">
 
             {props.sections.map((section, idx) => (
-                <div key={section.id} className="flex gap-6">
+                <div key={section.id} className="flex gap-6 overflow-auto no-scrollbar">
 
                     <div className="flex flex-col items-center w-6">
 
@@ -33,13 +33,14 @@ const TeamPageHelper = (props : propsType) => {
 
                     <div
                         id={section.id}
-                        className="flex flex-col gap-4 pb-12"
+                        className="flex flex-col pb-12"
                     >
-                        <p className="text-xl font-semibold">
+                        <p className="text-xl font-semibold mb-4">
                             {section.title}
                         </p>
 
-                        <div className="flex flex-wrap gap-6">
+                        
+                        <div className="flex gap-6 overflow-auto no-scrollbar">
                             {section.profiles.map((_, i) => (
                                 <ProfileCard
                                     key={i}
@@ -50,10 +51,11 @@ const TeamPageHelper = (props : propsType) => {
                             ))}
                         </div>
 
-                        <hr  className='border-2 rounded-r-2xl  border-white/30 relative -left-8.5'/>
+                        <div className='border-2 rounded-r-2xl flex-1 self-stretch border-white/30 relative -left-8.5'/>
                     </div>
                 </div>
             ))}
+
             {props.path && <Link 
                 className='text-3xl font-bold italic mt-2'
                 href={`/team/${props.path.toLowerCase()}`}
