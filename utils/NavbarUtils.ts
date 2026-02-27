@@ -48,6 +48,7 @@ export const domains = [
   { name: "Events", path: "#events" },
   { name: "Marketing and Media", path: "#marketing-and-media" },
   { name: "Design", path: "#design" },
+  { name: "External Relations", path: "#external-relations" },
   { name: "Web development", path: "#web-development" },
   { name: "Contents", path: "#contents" },
   { name: "Logistics", path: "#logistics" },

@@ -64,7 +64,7 @@ const MobileNavbar = () => {
 
                     {activeTab[activeTab.findIndex(obj => obj.isActive === true)].page === 'Explorer' && <Explorer setShowExplorer={setShowExplorer}/> }
 
-                    {activeTab[activeTab.findIndex(obj => obj.isActive === true)].page === 'Team' && <GitGraph/> }
+                    {activeTab[activeTab.findIndex(obj => obj.isActive === true)].page === 'Team' && <GitGraph setShowExplorer={setShowExplorer}/> }
 
                     {activeTab[activeTab.findIndex(obj => obj.isActive === true)].page === 'Events' && <EventsTab/> }
                 </div>

@@ -3,7 +3,13 @@ import React from 'react';
 import { domains } from '@/utils/NavbarUtils';
 import Link from 'next/link';
 
-const GitGraph = () => {
+interface propsType {
+    setShowExplorer ?: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const GitGraph = ({
+    setShowExplorer
+}:propsType) => {
     return (
         <div className='flex flex-col p-2'>
             
@@ -16,12 +22,14 @@ const GitGraph = () => {
                 >
                     <div className='flex flex-col items-center w-4'>
                         <Link
-                            href={`/team/${domain.path}`}
-                            className='w-4 h-4 rounded-2xl border-4 bg-black cursor-pointer'/>
+                            href={`${domain.path === '#coordinators' ? `/team/deputies/${domain.path}`: `/team/${domain.path}`}`}
+                            className='w-4 h-4 rounded-2xl border-4 bg-black cursor-pointer'
+                            onClick={() => { if(setShowExplorer) setShowExplorer(false) }}
+                        />
                         {idx !== domains.length  &&  <div className='h-14 border w-0'/> }
                     </div>
                     <div className='underline flex flex-col gap-2'>
-                        <p className='max-w-32 truncate text-xs'>
+                        <p className='max-w-32 truncate text-sm'>
                             {domain.name}
                         </p>
                         
@@ -31,8 +39,10 @@ const GitGraph = () => {
                                 {['heads', 'associates', 'deputies'].map((role, idx) => (
                                     <div key={idx} className='flex items-center'>
                                         <Link
-                                            href={`/team/${domain.path}-${role}`}
-                                            className='w-4 h-4 rounded-2xl border-4 bg-black cursor-pointer'/>
+                                            href={`/team/${role}/${domain.path}`}
+                                            className='w-4 h-4 rounded-2xl border-4 bg-black cursor-pointer'
+                                            onClick={() => { if(setShowExplorer) setShowExplorer(false) }}
+                                        />
                                         {idx !== 2 && <div className='w-6 border h-0'/> }
                                     </div>
                                 ))}
