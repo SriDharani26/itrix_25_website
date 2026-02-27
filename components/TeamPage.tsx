@@ -21,12 +21,12 @@ const TeamPageHelper = (props : propsType) => {
             {props.sections.map((section, idx) => (
                 <div key={section.id} className="flex gap-6 overflow-auto no-scrollbar">
 
-                    <div className="flex flex-col items-center w-6">
+                    <div className="flex flex-col items-center w-6 sticky left-0 z-20 ">
 
                         <div className="w-4 h-4 rounded-full border-4 border-[#4EC9B0] bg-black z-10" />
 
                         {idx !== props.sections.length && (
-                            <div className="flex-1 w-px border-2 rounded-2xl border-white/30" />
+                            <div className="flex-1 w-px border-2 rounded-2xl border-white/30 bg-transparent backdrop-blur-2xl" />
                         )}
 
                     </div>
