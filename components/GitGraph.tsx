@@ -1,5 +1,5 @@
 'use client'
-import React from 'react';
+import React, { useState } from 'react';
 import { domains } from '@/utils/NavbarUtils';
 import Link from 'next/link';
 
@@ -10,6 +10,9 @@ interface propsType {
 const GitGraph = ({
     setShowExplorer
 }:propsType) => {
+
+    const[showCard, setShowCard] = useState<boolean>(false)
+
     return (
         <div className='flex flex-col p-2'>
             
@@ -18,17 +21,17 @@ const GitGraph = ({
             {domains.map((domain, idx) => (
                 <div 
                     key={idx}
-                    className='flex gap-4 min-h-16 items-start '
+                    className='flex gap-4 min-h-20 items-start '
                 >
                     <div className='flex flex-col items-center self-stretch w-4'>
                         <Link
-                            href={`${domain.path === '#coordinators' ? `/team/deputies/${domain.path}`: `/team/${domain.path}`}`}
+                            href={`${idx < 2 ? domain.path === '#coordinators' ? `/team/deputies/${domain.path}`: `/team/${domain.path}` : '/team'}`}
                             className='w-4 h-4 rounded-2xl border-4 bg-black cursor-pointer'
                             onClick={() => { if(setShowExplorer) setShowExplorer(false) }}
                         />
                         {idx !== domains.length  &&  <div className='flex-1 border w-0'/> }
                     </div>
-                    <div className='underline flex flex-col gap-2'>
+                    <div className='flex flex-col gap-2'>
                         <p className='text-md'>
                             {domain.name}
                         </p>
@@ -44,6 +47,16 @@ const GitGraph = ({
                                             onClick={() => { if(setShowExplorer) setShowExplorer(false) }}
                                         />
                                         {idx !== 2 && <div className='w-6 border h-0'/> }
+                                    </div>
+                                ))}
+                            </div>
+                        }
+
+                         {idx > 2 && 
+                            <div className='flex items-center relative gap-8 left-2'>
+                                {['H', 'A', 'D'].map((role, idx) => (                                   
+                                    <div key={idx} className='flex items-center'>
+                                            <p>{role}</p>
                                     </div>
                                 ))}
                             </div>
