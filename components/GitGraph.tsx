@@ -18,18 +18,18 @@ const GitGraph = ({
             {domains.map((domain, idx) => (
                 <div 
                     key={idx}
-                    className='flex gap-4 h-18 items-start '
+                    className='flex gap-4 min-h-16 items-start '
                 >
-                    <div className='flex flex-col items-center w-4'>
+                    <div className='flex flex-col items-center self-stretch w-4'>
                         <Link
                             href={`${domain.path === '#coordinators' ? `/team/deputies/${domain.path}`: `/team/${domain.path}`}`}
                             className='w-4 h-4 rounded-2xl border-4 bg-black cursor-pointer'
                             onClick={() => { if(setShowExplorer) setShowExplorer(false) }}
                         />
-                        {idx !== domains.length  &&  <div className='h-14 border w-0'/> }
+                        {idx !== domains.length  &&  <div className='flex-1 border w-0'/> }
                     </div>
                     <div className='underline flex flex-col gap-2'>
-                        <p className='max-w-32 truncate text-sm'>
+                        <p className='text-md'>
                             {domain.name}
                         </p>
                         
