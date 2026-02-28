@@ -19,9 +19,9 @@ const TeamPageHelper = (props : propsType) => {
         <div className="flex flex-col py-6 px-3">
 
             {props.sections.map((section, idx) => (
-                <div key={section.id} className="flex gap-6 overflow-auto no-scrollbar">
+                <div key={section.id} className="flex gap-6 ">
 
-                    <div className="flex flex-col items-center w-6 sticky left-0 z-20">
+                    <div className="flex flex-col items-center w-6">
 
                         <div className="w-4 h-4 rounded-full border-4 bg-black z-10 border-2-cp animate-pulse" />
 
@@ -39,8 +39,9 @@ const TeamPageHelper = (props : propsType) => {
                             {section.title}
                         </p>
 
+                        <div className='border-2 rounded-r-2xl border-4-cp relative -left-8.5'/>
                         
-                        <div className="flex gap-6 overflow-auto no-scrollbar">
+                        <div className="flex flex-wrap">
                             {section.profiles.map((_, i) => (
                                 <ProfileCard
                                     key={i}
@@ -51,7 +52,6 @@ const TeamPageHelper = (props : propsType) => {
                             ))}
                         </div>
 
-                        <div className='border-2 rounded-r-2xl flex-1 self-stretch border-4-cp relative -left-8.5'/>
                     </div>
                 </div>
             ))}
