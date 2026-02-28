@@ -22,12 +22,12 @@ const Explorer = ({
 
     return (
         <div className='p-2 flex flex-col'>
-             <p className="text-[11px] uppercase tracking-wide px-2 pb-2 color-4-cp">Explorer</p>
+             <p className="text-[11px] uppercase tracking-wide px-2 pb-2 text-ten">Explorer</p>
 
             {/* // Pages  */}
             <button
                 type="button"
-                className="w-full cursor-pointer px-2 py-1.5 flex items-center gap-1 rounded text-left mb-2 color-2-cp"
+                className="w-full cursor-pointer px-2 py-1.5 flex items-center gap-1 rounded text-left mb-2 text-six"
                 onClick={() => setShowPages((prev) => !prev)}
             >
                 {showPages ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
@@ -38,7 +38,7 @@ const Explorer = ({
                     <Link
                         key={page.name}
                         href={page.path}
-                        className="block ml-5 px-2 py-1.5 text-md rounded transition-colors border-transparent color-1-cp"
+                        className="block ml-5 px-2 py-1.5 text-md rounded transition-colors border-transparent text-five"
                         onClick={() => { if(setShowExplorer) setShowExplorer(false) }}
                     >
                         <span className="flex gap-2 items-center">

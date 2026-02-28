@@ -14,7 +14,7 @@ const ProfileCard = (props : propsType) => {
     return (
         <div className='flex flex-col items-center mx-2'>
             
-            <div className='h-6 border-2 w-px border-4-cp'/>
+            <div className='h-6 border-2 w-px border-twelve'/>
 
             <div
                 className='w-68 rounded-2xl bg-2-cp
@@ -28,11 +28,11 @@ const ProfileCard = (props : propsType) => {
                     className=' border'
                 />
 
-                <p className='text-lg font-semibold color-1-cp'>{props.name}</p>
+                <p className='text-xl font-semibold text-five'>{props.name}</p>
                 {/* <p className='text-lg font-bold color-3-cp'>{props.position}</p> */}
                 
                 <Link href={props.profile}>
-                    <Linkedin className='color-2-cp'/>
+                    <Linkedin className='text-eleven'/>
                 </Link>
             </div>
         </div>

@@ -14,36 +14,36 @@ const Navbar = () => {
     const [activeTab, setActiveTab] = useState<ActiveTabType[]>(defaultActiveTab)
 
     return (
-        <aside className="h-full w-full flex backdrop-blur-3xl border-r border-1-cp">
-            <div className="w-16 bg-2-cp border-r flex flex-col items-center py-3 gap-8 border-1-cp">
-                <Link className="color-1-cp"
+        <aside className="h-full w-full flex backdrop-blur-3xl border-r border-three">
+            <div className="w-16 border-r flex flex-col items-center py-3 gap-8 bg-one border-three">
+                <Link className="text-seven"
                         href='/'
                         onClick={() => setActiveTab(prev => changeActiveTab(prev, 'Explorer'))}
                 >
                     <Files size={24} />
                 </Link>
-                <Link className="color-1-cp"
+                <Link className="text-seven"
                         href='/contact'
                 >
                     <Search size={24}/>
                 </Link>
-                <Link className="color-1-cp" 
+                <Link className="text-seven" 
                         href='/team'
                         onClick={() => setActiveTab(prev => changeActiveTab(prev, 'Team'))}
                 >
                     <GitBranch size={24}/>
                 </Link>
-                <Link href='/events' className="color-1-cp"
+                <Link href='/events' className="text-seven"
                         onClick={() => setActiveTab(prev => changeActiveTab(prev, 'Events'))}
                 >
                     <MdOutlineEmojiEvents size={24} />
                 </Link>
-                <Link className="color-1-cp"
+                <Link className="text-seven"
                         href='/chatbot'
                 >
                     <BsRobot size={24}/>
                 </Link>
-                <button type="button" className="mt-auto color-1-cp ransition-colors">
+                <button type="button" className="mt-auto text-seven ransition-colors">
                     <Settings size={24} />
                 </button>
             </div>
