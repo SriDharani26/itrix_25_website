@@ -3,10 +3,73 @@
 
 
 body{
-    background-image: radial-gradient( circle farthest-corner at -24.7% -47.3%,  rgba(6,130,165,1) 0%, rgba(34,48,86,1) 66.8%, rgba(15,23,42,1) 100.2% );    
-    color: white;
+    background: #0D0D1A;  /* fallback for old browsers */
+    color: #E6E6E6;
     font-family: "JetBrains Mono", monospace;
 }
+
+.bg-2-cp{
+  background-color: #141429;
+}
+
+.color-1-cp{
+  color : #FF007F;
+}
+.color-2-cp{
+  color : #00F5FF;
+}
+.color-3-cp{
+  color : #8A2BE2;
+}
+.color-4-cp{
+  color: #00FF9F;
+}
+.color-5-cp{
+  color : #6B7280;
+}
+.text-1-cp{
+  color : #9CA3AF;
+}
+.text-2-cp{
+  color : #E6E6E6;
+}
+
+.border-1-cp { border-color: #FF007F; }
+.border-2-cp { border-color: #00F5FF; }
+.border-3-cp { border-color: #8A2BE2; }
+.border-4-cp { border-color: #00FF9F; }
+.border-5-cp { border-color: #6B7280; }
+
+.color-1-cp:hover {
+  text-shadow: 0 0 5px #FF007F,
+               0 0 10px #FF007F,
+               0 0 20px #FF007F;
+}
+
+.color-2-cp:hover {
+  text-shadow: 0 0 5px #00F5FF,
+               0 0 10px #00F5FF,
+               0 0 20px #00F5FF;
+}
+
+.color-3-cp:hover {
+  text-shadow: 0 0 5px #8A2BE2,
+               0 0 10px #8A2BE2,
+               0 0 20px #8A2BE2;
+}
+
+.color-4-cp:hover {
+  text-shadow: 0 0 5px #00FF9F,
+               0 0 10px #00FF9F,
+               0 0 20px #00FF9F;
+}
+
+.color-5-cp:hover {
+  text-shadow: 0 0 5px #6B7280,
+               0 0 10px #6B7280,
+               0 0 20px #6B7280;
+}
+
 
 /* Entire scrollbar */
 ::-webkit-scrollbar {

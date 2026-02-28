@@ -14,41 +14,41 @@ const Navbar = () => {
     const [activeTab, setActiveTab] = useState<ActiveTabType[]>(defaultActiveTab)
 
     return (
-        <aside className="h-full w-full flex bg-black/30 backdrop-blur-3xl text-[#cccccc] border-r border-white/50">
-            <div className="w-16 bg-black/50 border-r border-[#2f2f2f] flex flex-col items-center py-3 gap-8">
-                <Link className="text-[#c5c5c5]"
+        <aside className="h-full w-full flex backdrop-blur-3xl border-r border-1-cp">
+            <div className="w-16 bg-2-cp border-r flex flex-col items-center py-3 gap-8 border-1-cp">
+                <Link className="color-1-cp"
                         href='/'
                         onClick={() => setActiveTab(prev => changeActiveTab(prev, 'Explorer'))}
                 >
                     <Files size={24} />
                 </Link>
-                <Link className="text-[#858585] hover:text-[#c5c5c5] transition-colors"
+                <Link className="color-1-cp"
                         href='/contact'
                 >
                     <Search size={24}/>
                 </Link>
-                <Link className="text-[#858585] hover:text-[#c5c5c5] transition-colors" 
+                <Link className="color-1-cp" 
                         href='/team'
                         onClick={() => setActiveTab(prev => changeActiveTab(prev, 'Team'))}
                 >
                     <GitBranch size={24}/>
                 </Link>
-                <Link href='/events' className=" text-[#858585] hover:text-[#c5c5c5] transition-colors"
+                <Link href='/events' className="color-1-cp"
                         onClick={() => setActiveTab(prev => changeActiveTab(prev, 'Events'))}
                 >
                     <MdOutlineEmojiEvents size={24} />
                 </Link>
-                <Link className=" text-[#858585] hover:text-[#c5c5c5] transition-colors"
+                <Link className="color-1-cp"
                         href='/chatbot'
                 >
                     <BsRobot size={24}/>
                 </Link>
-                <button type="button" className="mt-auto text-[#858585] hover:text-[#c5c5c5] transition-colors">
+                <button type="button" className="mt-auto color-1-cp ransition-colors">
                     <Settings size={24} />
                 </button>
             </div>
 
-            <div className="flex-1 p-2 overflow-y-scroll">
+            <div className="flex-1 p-2 overflow-y-scroll  no-scrollbar">
                 
 
                 {activeTab[activeTab.findIndex(obj => obj.isActive === true)].page === 'Explorer' && <Explorer/> }
