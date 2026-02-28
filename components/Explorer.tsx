@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { ChevronDown, ChevronRight, House } from "lucide-react";
 import Link from 'next/link';
 import { Page } from '@/utils/NavbarUtils';
+import usePageStore from '@/stores/pageStore';
 
 const pages: Page[] = [
     { name: "Home", path: "/", icon : <House/> },
@@ -19,6 +20,7 @@ const Explorer = ({
 } : propsType ) => {
     
     const [showPages, setShowPages] = useState<boolean>(true);
+    const updatePageStore = usePageStore((state) => state.update)
 
     return (
         <div className='p-2 flex flex-col'>
@@ -39,7 +41,12 @@ const Explorer = ({
                         key={page.name}
                         href={page.path}
                         className="block ml-5 px-2 py-1.5 text-md rounded transition-colors border-transparent text-five"
-                        onClick={() => { if(setShowExplorer) setShowExplorer(false) }}
+                        onClick={() => { 
+                                if(setShowExplorer) {
+                                    setShowExplorer(false) 
+                                }
+                                updatePageStore(page.name, page.path)
+                            }}
                     >
                         <span className="flex gap-2 items-center">
                             {page.icon}{page.name}

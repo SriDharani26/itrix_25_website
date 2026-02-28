@@ -8,38 +8,56 @@ import GitGraph from "./GitGraph";
 import { ActiveTabType, changeActiveTab, defaultActiveTab } from "@/utils/NavbarUtils";
 import Explorer from "./Explorer";
 import EventsTab from "./EventsTab";
+import usePageStore from "@/stores/pageStore";
 
 const Navbar = () => {
 
     const [activeTab, setActiveTab] = useState<ActiveTabType[]>(defaultActiveTab)
+
+    const updatePageStore = usePageStore((state) => state.update)
 
     return (
         <aside className="h-full w-full flex backdrop-blur-3xl border-r border-three">
             <div className="w-16 border-r flex flex-col items-center py-3 gap-8 bg-one border-three">
                 <Link className="text-seven"
                         href='/'
-                        onClick={() => setActiveTab(prev => changeActiveTab(prev, 'Explorer'))}
+                        onClick={() => {
+                            setActiveTab(prev => changeActiveTab(prev, 'Explorer'))
+                            updatePageStore('Home', '/')
+                        }}
                 >
                     <Files size={24} />
                 </Link>
                 <Link className="text-seven"
                         href='/contact'
+                        onClick={() => {
+                            updatePageStore('Contact', '/contact')
+                        }}
                 >
                     <Search size={24}/>
                 </Link>
                 <Link className="text-seven" 
                         href='/team'
-                        onClick={() => setActiveTab(prev => changeActiveTab(prev, 'Team'))}
+                        onClick={() => {
+                            setActiveTab(prev => changeActiveTab(prev, 'Team'))
+                            updatePageStore('Team', '/team')
+                        }}
                 >
                     <GitBranch size={24}/>
                 </Link>
                 <Link href='/events' className="text-seven"
-                        onClick={() => setActiveTab(prev => changeActiveTab(prev, 'Events'))}
+                        onClick={() => {
+                            setActiveTab(prev => changeActiveTab(prev, 'Events'))
+                            updatePageStore('Events', '/events')
+                        }}
                 >
                     <MdOutlineEmojiEvents size={24} />
                 </Link>
                 <Link className="text-seven"
                         href='/chatbot'
+                        onClick={() => {
+                            updatePageStore('Chatbot', '/chatbot')
+                        }}
                 >
                     <BsRobot size={24}/>
                 </Link>

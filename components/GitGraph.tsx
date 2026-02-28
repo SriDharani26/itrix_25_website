@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { domains } from '@/utils/NavbarUtils';
 import Link from 'next/link';
 import { domainDetails } from '@/utils/NavbarUtils';
+import usePageStore from '@/stores/pageStore';
 
 interface propsType {
     setShowExplorer ?: React.Dispatch<React.SetStateAction<boolean>>
@@ -18,6 +19,7 @@ const GitGraph = ({
 }:propsType) => {
 
     const[showCard, setShowCard] = useState<showCardType>({isActive : false, idx : 0})
+    const updatePageStore = usePageStore((state) => state.update)
 
     return (
         <div className='flex flex-col p-2'>
@@ -43,9 +45,12 @@ const GitGraph = ({
                 >
                     <div className='flex flex-col items-center self-stretch w-4'>
                         <Link
-                            href={`${idx <= 2 ? domain.path === '#coordinators' ? `/team/deputies/${domain.path}`: `/team/${domain.path}` : '/team'}`}
+                            href={`${idx <= 2 ? domain.path === '#coordinators' ? `/team/deputies/${domain.path}`: `/team/${domain.path}` : `/team/heads/${domain.path}`}`}
                             className='w-4 h-4 rounded-2xl border-3  cursor-pointer border-six'
-                            onClick={() => { if(setShowExplorer) setShowExplorer(false) }}
+                            onClick={() => { 
+                                if(setShowExplorer) setShowExplorer(false) 
+                                updatePageStore(domain.name, domain.path)
+                            }}
                         />
                         {idx !== domains.length  &&  <div className='flex-1 border w-0 border-twelve'/> }
                     </div>
@@ -62,7 +67,10 @@ const GitGraph = ({
                                         <Link
                                             href={`/team/${role}/${domain.path}`}
                                             className='w-4 h-4 rounded-2xl border-4 bg-black cursor-pointer border-seven'
-                                            onClick={() => { if(setShowExplorer) setShowExplorer(false) }}
+                                            onClick={() => { 
+                                                if(setShowExplorer) setShowExplorer(false) 
+                                                updatePageStore(`${domain.name} ${role}`, `/team/${role}/${domain.path}`)
+                                            }}
                                         />
                                         {idx !== 2 && <div className='w-6 border h-0 border-twelve'/> }
                                     </div>

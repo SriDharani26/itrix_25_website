@@ -8,11 +8,13 @@ import { ActiveTabType, changeActiveTab, defaultActiveTab, Page } from "@/utils/
 import GitGraph from "./GitGraph";
 import Explorer from "./Explorer";
 import EventsTab from "./EventsTab";
+import usePageStore from "@/stores/pageStore";
 
 const MobileNavbar = () => {
     
     const [showExplorer, setShowExplorer] = useState<boolean>(false);
     const [activeTab, setActiveTab] = useState<ActiveTabType[]>(defaultActiveTab)
+    const updatePageStore = usePageStore((state) => state.update)
     
     
     return (
@@ -23,12 +25,16 @@ const MobileNavbar = () => {
                         onClick={() => {
                             setShowExplorer(prev => !prev)
                             setActiveTab(prev => changeActiveTab(prev, 'Explorer', setShowExplorer))
+                            updatePageStore('Home', '/')
                         }}
                         href="/">
                     <Files size={24} />
                 </Link>
                 <Link href='/contact' className="text-seven"
-                    onClick={() => setShowExplorer(false)}
+                    onClick={() => {
+                        setShowExplorer(false)
+                        updatePageStore('Contact', '/contact')
+                    }}
                 >
                     <Search size={24}/>
                 </Link>
@@ -37,6 +43,7 @@ const MobileNavbar = () => {
                         onClick={() => {
                             setShowExplorer(prev => !prev)
                             setActiveTab(prev => changeActiveTab(prev, 'Team', setShowExplorer))
+                            updatePageStore('Team', '/team')
                         }}
                 >
                     <GitBranch size={24}/>
@@ -45,12 +52,16 @@ const MobileNavbar = () => {
                         onClick={() => {
                             setShowExplorer(prev => !prev)
                             setActiveTab(prev => changeActiveTab(prev, 'Events', setShowExplorer))
+                            updatePageStore('Events', '/events')
                         }}
                 >
                     <MdOutlineEmojiEvents size={24} />
                 </Link>
                 <Link href='/chatbot' className=" text-seven"
-                    onClick={() => setShowExplorer(false)}
+                    onClick={() => {
+                        setShowExplorer(false)
+                        updatePageStore('Chatbot', '/chatbot')
+                    }}
                 >
                     <BsRobot size={24}/>
                 </Link>

@@ -3,6 +3,7 @@ import React from 'react';
 import Navbar from '@/components/Navbar';
 import { useState, useEffect } from 'react';
 import MobileNavbar from '@/components/MobileNavbar';
+import Topbar from '@/components/Topbar';
 
 const LayoutWrapper = ({
     children
@@ -36,7 +37,8 @@ const LayoutWrapper = ({
                     <Navbar/>
                 </div>
             }
-            <div className="overflow-y-scroll min-[800px]:w-[70%] min-[1024px]:w-[75%] w-full  max-[800px]:pb-16">
+            <div className="overflow-y-scroll min-[800px]:w-[70%] min-[1024px]:w-[75%] w-full  max-[800px]:mb-20">
+                <Topbar/>
                 {children}
             </div>
         
