@@ -21,12 +21,12 @@ const TeamPageHelper = (props : propsType) => {
             {props.sections.map((section, idx) => (
                 <div key={section.id} className="flex gap-6 overflow-auto no-scrollbar">
 
-                    <div className="flex flex-col items-center w-6 sticky left-0 z-20 ">
+                    <div className="flex flex-col items-center w-6 sticky left-0 z-20">
 
-                        <div className="w-4 h-4 rounded-full border-4 border-[#4EC9B0] bg-black z-10" />
+                        <div className="w-4 h-4 rounded-full border-4 bg-black z-10 border-2-cp animate-pulse" />
 
                         {idx !== props.sections.length && (
-                            <div className="flex-1 w-px border-2 rounded-2xl border-white/30 bg-transparent backdrop-blur-2xl" />
+                            <div className="flex-1 w-px border-2 rounded-2xl border-4-cp bg-transparent backdrop-blur-2xl" />
                         )}
 
                     </div>
@@ -35,7 +35,7 @@ const TeamPageHelper = (props : propsType) => {
                         id={section.id}
                         className="flex flex-col pb-12"
                     >
-                        <p className="text-xl font-semibold mb-4">
+                        <p className="text-xl font-semibold mb-4 color-1-cp">
                             {section.title}
                         </p>
 
@@ -51,13 +51,13 @@ const TeamPageHelper = (props : propsType) => {
                             ))}
                         </div>
 
-                        <div className='border-2 rounded-r-2xl flex-1 self-stretch border-white/30 relative -left-8.5'/>
+                        <div className='border-2 rounded-r-2xl flex-1 self-stretch border-4-cp relative -left-8.5'/>
                     </div>
                 </div>
             ))}
 
             {props.path && <Link 
-                className='text-3xl font-bold italic mt-2'
+                className='text-3xl font-bold italic mt-2 color-1-cp'
                 href={`/team/${props.path.toLowerCase()}`}
             >{props.path}</Link>}
         </div>
