@@ -38,7 +38,21 @@ export interface Event {
   featured: boolean;
 }
 
-const accentColor = "rgba(6,130,165,1)";
+const accentColor = "#00FF9F";
+const theme = {
+  one: "#1A1B26",
+  two: "#24283B",
+  three: "#414868",
+  four: "#C0CAF5",
+  five: "#7AA2F7",
+  six: "#8A2BE2",
+  seven: "#7DCFFF",
+  eight: "#9ECE6A",
+  nine: "#E0AF68",
+  ten: "#F7768E",
+  eleven: "#FF9E64",
+  twelve: "#00FF9F",
+};
 const detailTabs: DetailTab[] = ["DETAILS", "SCHEDULE"];
 
 const formatDate = (value: string) =>
@@ -60,7 +74,7 @@ const getEventStatus = (eventDate: string): "Upcoming" | "Live" | "Completed" =>
 const fixedFiveStars = "*****";
 
 const SectionHeader = ({ label }: { label: string }) => (
-  <div className="px-4 py-2 text-[11px] font-semibold tracking-wider uppercase" style={{ color: accentColor }}>
+  <div className="px-4 py-2 text-[11px] font-semibold tracking-wider uppercase" style={{ color: theme.seven }}>
     {label}
   </div>
 );
@@ -80,21 +94,22 @@ const SidebarEventItem = ({
     className={`w-full border-l-2 px-3 py-3 text-left transition-all duration-200 ${
       isSelected ? "border-l-[rgba(6,130,165,1)] bg-[#2a2d2e]" : "border-l-transparent hover:bg-[#2a2d2e]"
     }`}
+    style={{ borderLeftColor: isSelected ? theme.twelve : "transparent", backgroundColor: isSelected ? theme.two : undefined }}
   >
     <div className="flex gap-3">
-      <img src={event.thumbnailImage} alt={event.title} className="h-10 w-10 rounded-sm bg-[#1e1e1e] p-1" />
+      <img src="/itrix'26-logo.png" alt={event.title} className="h-10 w-10 rounded-sm p-1" style={{ backgroundColor: theme.one }} />
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-semibold text-cyan-400">{event.title}</p>
-        <p className="truncate text-xs text-gray-300">{event.organizer}</p>
-        <p className="truncate text-xs text-gray-400">{event.shortDescription}</p>
-        <div className="mt-1 flex flex-wrap items-center gap-2 text-[11px] text-gray-300">
-          <span className="text-[rgba(6,130,165,1)]">{fixedFiveStars}</span>
+        <p className="truncate text-sm font-semibold" style={{ color: theme.five }}>{event.title}</p>
+        <p className="truncate text-xs" style={{ color: theme.four }}>{event.organizer}</p>
+        <p className="truncate text-xs" style={{ color: theme.three }}>{event.shortDescription}</p>
+        <div className="mt-1 flex flex-wrap items-center gap-2 text-[11px]" style={{ color: theme.four }}>
+          <span style={{ color: theme.twelve }}>{fixedFiveStars}</span>
           <span>{formatDate(event.eventDate)}</span>
-          <span className="text-orange-300">trend {event.trendingScore}</span>
+          <span style={{ color: theme.eleven }}>trend {event.trendingScore}</span>
         </div>
         <div className="mt-1 flex flex-wrap gap-1">
           {event.tags.slice(0, 3).map((tag) => (
-            <span key={tag} className="rounded-sm bg-[#313234] px-1.5 py-0.5 text-[10px] text-gray-200">
+            <span key={tag} className="rounded-sm px-1.5 py-0.5 text-[10px]" style={{ backgroundColor: theme.three, color: theme.four }}>
               {tag}
             </span>
           ))}
@@ -133,18 +148,20 @@ const DetailsTabs = ({
   activeTab: DetailTab;
   setActiveTab: (tab: DetailTab) => void;
 }) => (
-  <div className="border-b border-gray-700 px-6">
-    <div className="flex flex-wrap gap-6">
-      {detailTabs.map((tab) => (
+    <div className="border-b border-gray-700 px-6">
+      <div className="flex flex-wrap gap-6">
+        {detailTabs.map((tab) => (
         <button
           key={tab}
           type="button"
           onClick={() => setActiveTab(tab)}
           className={`border-b-2 py-3 text-sm font-medium transition-colors duration-200 ${
-            activeTab === tab
-              ? "border-b-[rgba(6,130,165,1)] text-[rgba(6,130,165,1)]"
-              : "border-b-transparent text-gray-300 hover:text-gray-100"
+            activeTab === tab ? "border-b-[rgba(6,130,165,1)] text-[rgba(6,130,165,1)]" : "border-b-transparent"
           }`}
+          style={{
+            borderBottomColor: activeTab === tab ? theme.twelve : "transparent",
+            color: activeTab === tab ? theme.twelve : theme.four,
+          }}
         >
           {tab}
         </button>
@@ -167,10 +184,12 @@ const UserStars = ({
         type="button"
         onClick={() => onRate(star)}
         className={`rounded-sm border px-2 py-1 text-xs transition-colors duration-150 ${
-          star <= value
-            ? "border-[rgba(6,130,165,1)] text-[rgba(6,130,165,1)]"
-            : "border-gray-600 text-gray-300 hover:border-[rgba(6,130,165,1)]"
+          star <= value ? "border-[rgba(6,130,165,1)] text-[rgba(6,130,165,1)]" : "border-gray-600"
         }`}
+        style={{
+          borderColor: star <= value ? theme.twelve : theme.three,
+          color: star <= value ? theme.twelve : theme.four,
+        }}
       >
         *
       </button>
@@ -183,18 +202,18 @@ const DetailsPanel = ({ event, activeTab }: { event: Event; activeTab: DetailTab
     {activeTab === "DETAILS" ? (
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1fr_280px]">
         <div className="space-y-4">
-          <p className="text-sm leading-7 text-gray-200">{event.fullDescription}</p>
+          <p className="text-sm leading-7" style={{ color: theme.four }}>{event.fullDescription}</p>
           <div>
-            <p className="mb-2 text-sm font-semibold text-gray-100">Location</p>
-            <p className="text-sm text-gray-300 break-words">{event.location}</p>
+            <p className="mb-2 text-sm font-semibold" style={{ color: theme.four }}>Location</p>
+            <p className="text-sm break-words" style={{ color: theme.four }}>{event.location}</p>
           </div>
         </div>
 
-        <aside className="h-fit rounded-sm border border-gray-700 bg-[#252526] p-4">
-          <h3 className="mb-3 text-sm font-semibold" style={{ color: accentColor }}>
+        <aside className="h-fit rounded-sm border p-4" style={{ borderColor: theme.three, backgroundColor: theme.two }}>
+          <h3 className="mb-3 text-sm font-semibold" style={{ color: theme.seven }}>
             EVENT METADATA
           </h3>
-          <div className="space-y-2 text-sm text-gray-200">
+          <div className="space-y-2 text-sm" style={{ color: theme.four }}>
             <p>Category: {event.category}</p>
             <p>Mode: {event.mode}</p>
             <p>Duration: {event.duration}</p>
@@ -208,7 +227,7 @@ const DetailsPanel = ({ event, activeTab }: { event: Event; activeTab: DetailTab
         </aside>
       </div>
     ) : (
-      <div className="rounded-sm border border-gray-700 bg-[#252526] p-5 text-sm text-gray-300">
+      <div className="rounded-sm border p-5 text-sm" style={{ borderColor: theme.three, backgroundColor: theme.two, color: theme.four }}>
         {activeTab} content placeholder.
       </div>
     )}
@@ -265,14 +284,15 @@ const EventsTab = ({ eventsData = allEventsData, setShowExplorer }: EventsTabPro
   };
 
   return (
-    <div className="h-full w-full bg-[#1e1e1e] text-gray-100">
-      <div className="border-b border-gray-700 p-3">
+    <div className="h-full w-full" style={{ backgroundColor: theme.one, color: theme.four }}>
+      <div className="border-b p-3" style={{ borderColor: theme.three }}>
         <input
           type="text"
           placeholder="Search events"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="w-full rounded-sm border border-gray-600 bg-[#252526] px-3 py-2 text-sm text-gray-100 outline-none transition-colors duration-200 placeholder:text-gray-400 focus:border-[rgba(6,130,165,1)]"
+          className="w-full rounded-sm border px-3 py-2 text-sm outline-none transition-colors duration-200 placeholder:text-gray-400 focus:border-[rgba(6,130,165,1)]"
+          style={{ borderColor: theme.three, backgroundColor: theme.two, color: theme.four }}
         />
       </div>
       <div
@@ -337,28 +357,29 @@ export const EventsDetailsView = ({ event }: { event: Event }) => {
   const userRating = userRatings[event.id] ?? 0;
 
   return (
-    <div className="h-full min-h-[calc(100vh-4rem)] w-full bg-[#1e1e1e] text-gray-100">
+    <div className="h-full min-h-[calc(100vh-4rem)] w-full" style={{ backgroundColor: theme.one, color: theme.four }}>
       <div className="h-full overflow-y-auto">
-        <div className="border-b border-gray-700">
-          <div className="h-48 w-full bg-[#252526] p-6">
+        <div className="border-b" style={{ borderColor: theme.three }}>
+          <div className="h-48 w-full p-6" style={{ backgroundColor: theme.two }}>
             <img
-              src={event.bannerImage}
+              src="/itrix'26-logo.png"
               alt={`${event.title} banner`}
-              className="h-full w-full rounded-sm bg-[#1e1e1e] object-contain p-4"
+              className="h-full w-full rounded-sm object-contain p-4"
+              style={{ backgroundColor: theme.one }}
             />
           </div>
           <div className="px-6 py-4">
-            <h1 className="text-2xl font-semibold text-cyan-400">{event.title}</h1>
-            <p className="mt-1 text-sm text-gray-300">{event.organizer}</p>
-            <div className="mt-3 flex flex-wrap items-center gap-3 text-sm text-gray-300">
-              <span className="text-[rgba(6,130,165,1)]">{fixedFiveStars}</span>
+            <h1 className="text-2xl font-semibold" style={{ color: theme.five }}>{event.title}</h1>
+            <p className="mt-1 text-sm" style={{ color: theme.four }}>{event.organizer}</p>
+            <div className="mt-3 flex flex-wrap items-center gap-3 text-sm" style={{ color: theme.four }}>
+              <span style={{ color: theme.twelve }}>{fixedFiveStars}</span>
               <span>{event.rating.toFixed(1)}</span>
               <span>({event.reviewCount} reviews)</span>
-              <span className="text-gray-500">|</span>
+              <span style={{ color: theme.three }}>|</span>
               <span>{displayedRegistrations} Registrations</span>
             </div>
             <div className="mt-3 flex items-center gap-2">
-              <span className="text-xs text-gray-300">Your Rating:</span>
+              <span className="text-xs" style={{ color: theme.four }}>Your Rating:</span>
               <UserStars value={userRating} onRate={(value) => setUserRatings((prev) => ({ ...prev, [event.id]: value }))} />
             </div>
             <div className="mt-4 flex flex-wrap gap-2">
@@ -366,14 +387,15 @@ export const EventsDetailsView = ({ event }: { event: Event }) => {
                 type="button"
                 onClick={() => handleRegister(event)}
                 className="rounded-sm px-4 py-2 text-sm font-medium text-white transition-colors duration-200"
-                style={{ backgroundColor: accentColor }}
+                style={{ backgroundColor: "#F7768E" }}
               >
                 {registered[event.id] ? "Registered" : "Register"}
               </button>
               <button
                 type="button"
                 onClick={() => void handleShare(event)}
-                className="rounded-sm border border-gray-600 px-4 py-2 text-sm text-gray-200 transition-colors duration-200 hover:border-[rgba(6,130,165,1)] hover:text-[rgba(6,130,165,1)]"
+                className="rounded-sm border px-4 py-2 text-sm transition-colors duration-200 hover:border-[rgba(6,130,165,1)] hover:text-[rgba(6,130,165,1)]"
+                style={{ borderColor: theme.three, color: theme.four }}
               >
                 {shareStatus || "Share"}
               </button>
