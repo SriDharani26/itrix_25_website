@@ -28,7 +28,7 @@ const LayoutWrapper = ({
 
 
     return (
-        <div className='h-screen w-full flex min-[800px]:pt-8'>
+        <div className='h-screen w-full flex min-[800px]:pt-14'>
             {width < 800 ?
                 <div className='fixed bottom-0 w-full z-50'>
                     <MobileNavbar/>

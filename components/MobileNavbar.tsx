@@ -9,9 +9,10 @@ import GitGraph from "./GitGraph";
 import Explorer from "./Explorer";
 import EventsTab from "./EventsTab";
 import usePageStore from "@/stores/pageStore";
+import { ArrowBigUpDash } from 'lucide-react';
 
 const MobileNavbar = () => {
-    
+    const [openEventsExplorer ,setOpenEventsExplorer] = useState<boolean>(false);
     const [showExplorer, setShowExplorer] = useState<boolean>(false);
     const [activeTab, setActiveTab] = useState<ActiveTabType[]>(defaultActiveTab)
     const updatePageStore = usePageStore((state) => state.update)
@@ -24,6 +25,7 @@ const MobileNavbar = () => {
                 <Link type="button" className="text-seven" 
                         onClick={() => {
                             setShowExplorer(prev => !prev)
+                            setOpenEventsExplorer(false);
                             setActiveTab(prev => changeActiveTab(prev, 'Explorer', setShowExplorer))
                             updatePageStore('Home', '/')
                         }}
@@ -70,17 +72,36 @@ const MobileNavbar = () => {
                 </button>
             </div>
 
-            {showExplorer && 
+            
+            {showExplorer && (
                 <div className="flex flex-col bg-one/10 overflow-y-scroll max-h-[500px] backdrop-blur-xl p-2">
+                    {activeTab[activeTab.findIndex(obj => obj.isActive === true)].page === 'Explorer' &&
+                        <Explorer setShowExplorer={setShowExplorer} />
+                    }
 
-                    {activeTab[activeTab.findIndex(obj => obj.isActive === true)].page === 'Explorer' && <Explorer setShowExplorer={setShowExplorer}/> }
+                    {activeTab[activeTab.findIndex(obj => obj.isActive === true)].page === 'Team' &&
+                        <GitGraph setShowExplorer={setShowExplorer} />
+                    }
 
-                    {activeTab[activeTab.findIndex(obj => obj.isActive === true)].page === 'Team' && <GitGraph setShowExplorer={setShowExplorer}/> }
+                    {activeTab[activeTab.findIndex(obj => obj.isActive === true)].page === 'Events' && (
+                        <>
+                            <div 
+                                className="flex justify-center gap-4"
+                                onClick={() => setOpenEventsExplorer(prev => !prev)}
+                            >
+                                <ArrowBigUpDash className={`${openEventsExplorer ? "rotate-180": ""}`}/>
+                                Explore
+                            </div>
 
-                    {activeTab[activeTab.findIndex(obj => obj.isActive === true)].page === 'Events' && <EventsTab setShowExplorer={setShowExplorer} /> }
+                            {openEventsExplorer && (
+                                <div className="mt-2">
+                                    <EventsTab setShowExplorer={setShowExplorer} />
+                                </div>
+                            )}
+                        </>
+                    )}
                 </div>
-            } 
-
+            )}
         </div>
     );
 }

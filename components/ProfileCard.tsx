@@ -18,7 +18,7 @@ const ProfileCard = (props : propsType) => {
 
             <div
                 className='w-68 rounded-2xl bg-2-cp
-                        flex flex-col items-center gap-3 p-4'
+                        flex flex-col items-center gap-3 p-4 border-2 border-three bg-two/50'
             >
                 <Image 
                     src={props.path ?? '/vercel.svg'}
