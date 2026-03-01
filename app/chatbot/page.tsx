@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { BsRobot } from "react-icons/bs";
-import {User} from "lucide-react";
+import { User } from "lucide-react";
 
 type Message = {
   id: string;
@@ -50,49 +50,58 @@ export default function ChatbotPage() {
   }
 
   return (
-    <div className="h-[calc(100vh-3.5rem)] md:h-full w-full bg-[#1e1e1e] text-gray-100 flex flex-col">
-        <div className="h-10 border-b border-gray-700 px-4 flex items-center justify-between bg-[#1f1f1f]">
+    <div className="h-[calc(100vh-3.5rem)] w-full bg-one flex flex-col">
+
+      {/* ───────── Sticky Header ───────── */}
+      <div className="h-10 mt-10 sticky top-10 z-30 border-b border-three bg-[--color-two] px-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="text-cyan-400 font-semibold">iBotrix</span>
-          <span className="text-xs text-gray-400">Chat</span>
+          <span className="text-seven font-semibold tracking-wide">
+            iBotrix
+          </span>
+          <span className="text-xs text-six">Chat</span>
         </div>
-        <span className="text-[11px] bg-[#1e1e1e] text-gray-400">
+        <span className="text-[11px] text-seven">
           {isTyping ? "iBotrix is typing…" : "Ready"}
         </span>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-6 py-6 space-y-5">
+      {/* ───────── Messages Area ───────── */}
+      <div className="flex-1 overflow-y-auto px-6 py-6 space-y-6">
         {messages.length === 0 && (
-            <div className="flex h-full flex-col items-center justify-center text-center">
-                <BsRobot size={48} className="mb-4 text-cyan-600" />
-                <p className="text-sm text-gray-400">
-                Ask <span className="font-medium text-cyan-400">iBotrix</span> to get started…
-                </p>
-            </div>
+          <div className="flex h-full flex-col items-center justify-center text-center">
+            <BsRobot size={48} className="mb-4 text-seven" />
+            <p className="text-sm text-four/70">
+              Ask{" "}
+              <span className="font-medium text-seven">
+                iBotrix
+              </span>{" "}
+              to get started…
+            </p>
+          </div>
         )}
 
         {messages.map((msg) => (
           <div
             key={msg.id}
-            className={`flex items-start gap-3 ${
+            className={`flex gap-3 ${
               msg.role === "user" ? "justify-end" : "justify-start"
             }`}
           >
             {msg.role === "assistant" && (
-              <div className="h-8 w-8 rounded-full bg-cyan-600 flex items-center justify-center text-xs font-bold">
-                <BsRobot size={20}/>
+              <div className="h-8 w-8 shrink-0 rounded-full bg-six flex items-center justify-center">
+                <BsRobot size={18} className="text-black" />
               </div>
             )}
 
             <div
-              className={`max-w-[70%] rounded-lg px-4 py-2 text-sm leading-relaxed shadow-sm animate-fadeIn ${
+              className={`max-w-[70%] rounded-lg px-4 py-2 text-sm leading-relaxed shadow-md ${
                 msg.role === "user"
-                  ? "bg-[#252526] text-white"
-                  : "bg-[#252526] text-gray-200"
+                  ? "bg-three text-four"
+                  : "bg-two text-four"
               }`}
             >
               <p>{msg.content}</p>
-              <p className="mt-1 text-[10px] text-gray-400 text-right">
+              <p className="mt-1 text-[10px] text-[--color-four]/50 text-right">
                 {new Date(msg.timestamp).toLocaleTimeString([], {
                   hour: "2-digit",
                   minute: "2-digit",
@@ -101,8 +110,8 @@ export default function ChatbotPage() {
             </div>
 
             {msg.role === "user" && (
-              <div className="h-8 w-8 rounded-full bg-gray-600 flex items-center justify-center text-xs font-bold">
-                <User size={20}/>
+              <div className="h-8 w-8 shrink-0 rounded-full bg-six flex items-center justify-center">
+                <User size={16} className="text-black" />
               </div>
             )}
           </div>
@@ -110,10 +119,10 @@ export default function ChatbotPage() {
 
         {isTyping && (
           <div className="flex items-center gap-3">
-            <div className="h-8 w-8 rounded-full bg-cyan-600 flex items-center justify-center text-xs">
-              <BsRobot size={20}/>
+            <div className="h-8 w-8 rounded-full bg-six flex items-center justify-center">
+              <BsRobot size={18} className="text-black" />
             </div>
-            <div className="bg-[#252526] rounded-lg px-4 py-2 text-sm text-gray-300">
+            <div className="bg-two rounded-lg px-4 py-2 text-sm text-[--color-four]/70">
               <span className="animate-pulse">Typing…</span>
             </div>
           </div>
@@ -122,7 +131,8 @@ export default function ChatbotPage() {
         <div ref={bottomRef} />
       </div>
 
-      <div className="border-t border-gray-700 bg-[#1f1f1f] px-4 py-3 flex gap-3">
+      {/* ───────── Input Area ───────── */}
+      <div className="border-t border-three px-4 py-3 flex gap-3">
         <textarea
           value={input}
           rows={1}
@@ -134,12 +144,12 @@ export default function ChatbotPage() {
             }
           }}
           placeholder="Ask iBotrix..."
-          className="flex-1 resize-none rounded-md border border-gray-600 bg-[#252526] px-4 py-2 text-sm outline-none transition focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/40"
+          className="flex-1 resize-none rounded-md border border-three  px-4 py-2 text-sm outline-none focus:border-[--color-five] focus:ring-1 focus:ring-[--color-five]/40"
         />
         <button
           onClick={sendMessage}
           disabled={!input.trim()}
-          className="rounded-md px-4 py-2 text-sm font-medium text-white bg-cyan-600 hover:bg-cyan-500 disabled:opacity-40 disabled:cursor-not-allowed transition"
+          className="rounded-md px-5 py-2 text-sm font-medium text-white bg-six hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed transition"
         >
           Send
         </button>
