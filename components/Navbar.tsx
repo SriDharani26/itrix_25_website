@@ -8,47 +8,65 @@ import GitGraph from "./GitGraph";
 import { ActiveTabType, changeActiveTab, defaultActiveTab } from "@/utils/NavbarUtils";
 import Explorer from "./Explorer";
 import EventsTab from "./EventsTab";
+import usePageStore from "@/stores/pageStore";
 
 const Navbar = () => {
 
     const [activeTab, setActiveTab] = useState<ActiveTabType[]>(defaultActiveTab)
 
+    const updatePageStore = usePageStore((state) => state.update)
+
     return (
-        <aside className="h-full w-full flex bg-black/30 backdrop-blur-3xl text-[#cccccc] border-r border-white/50">
-            <div className="w-16 bg-black/50 border-r border-[#2f2f2f] flex flex-col items-center py-3 gap-8">
-                <Link className="text-[#c5c5c5]"
+        <aside className="h-full w-full flex backdrop-blur-3xl border-r border-three">
+            <div className="w-16 border-r flex flex-col items-center py-3 gap-8 bg-one border-three">
+                <Link className="text-seven"
                         href='/'
-                        onClick={() => setActiveTab(prev => changeActiveTab(prev, 'Explorer'))}
+                        onClick={() => {
+                            setActiveTab(prev => changeActiveTab(prev, 'Explorer'))
+                            updatePageStore('Home', '/')
+                        }}
                 >
                     <Files size={24} />
                 </Link>
-                <Link className="text-[#858585] hover:text-[#c5c5c5] transition-colors"
+                <Link className="text-seven"
                         href='/contact'
+                        onClick={() => {
+                            updatePageStore('Contact', '/contact')
+                        }}
                 >
                     <Search size={24}/>
                 </Link>
-                <Link className="text-[#858585] hover:text-[#c5c5c5] transition-colors" 
+                <Link className="text-seven" 
                         href='/team'
-                        onClick={() => setActiveTab(prev => changeActiveTab(prev, 'Team'))}
+                        onClick={() => {
+                            setActiveTab(prev => changeActiveTab(prev, 'Team'))
+                            updatePageStore('Team', '/team')
+                        }}
                 >
                     <GitBranch size={24}/>
                 </Link>
-                <Link href='/events' className=" text-[#858585] hover:text-[#c5c5c5] transition-colors"
-                        onClick={() => setActiveTab(prev => changeActiveTab(prev, 'Events'))}
+                <Link href='/events' className="text-seven"
+                        onClick={() => {
+                            setActiveTab(prev => changeActiveTab(prev, 'Events'))
+                            updatePageStore('Events', '/events')
+                        }}
                 >
                     <MdOutlineEmojiEvents size={24} />
                 </Link>
-                <Link className=" text-[#858585] hover:text-[#c5c5c5] transition-colors"
+                <Link className="text-seven"
                         href='/chatbot'
+                        onClick={() => {
+                            updatePageStore('Chatbot', '/chatbot')
+                        }}
                 >
                     <BsRobot size={24}/>
                 </Link>
-                <button type="button" className="mt-auto text-[#858585] hover:text-[#c5c5c5] transition-colors">
+                <button type="button" className="mt-auto text-seven ransition-colors">
                     <Settings size={24} />
                 </button>
             </div>
 
-            <div className="flex-1 p-2 overflow-y-scroll">
+            <div className="flex-1 p-2 overflow-y-scroll  no-scrollbar">
                 
 
                 {activeTab[activeTab.findIndex(obj => obj.isActive === true)].page === 'Explorer' && <Explorer/> }

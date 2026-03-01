@@ -12,9 +12,12 @@ interface propsType {
 
 const ProfileCard = (props : propsType) => {
     return (
-        <div className='flex flex-col items-center'>
+        <div className='flex flex-col items-center mx-2'>
+            
+            <div className='h-6 border-2 w-px border-twelve'/>
+
             <div
-                className='bg-white/10 w-68 rounded-2xl
+                className='w-68 rounded-2xl bg-2-cp
                         flex flex-col items-center gap-3 p-4'
             >
                 <Image 
@@ -25,14 +28,13 @@ const ProfileCard = (props : propsType) => {
                     className=' border'
                 />
 
-                <p className='text-lg font-semibold'>{props.name}</p>
-                <p className='text-lg font-bold'>{props.profile}</p>
+                <p className='text-xl font-semibold text-five'>{props.name}</p>
+                {/* <p className='text-lg font-bold color-3-cp'>{props.position}</p> */}
                 
                 <Link href={props.profile}>
-                    <Linkedin />
+                    <Linkedin className='text-eleven'/>
                 </Link>
             </div>
-            <div className='h-6 border w-px border-white/30'/>
         </div>
     );
 }
