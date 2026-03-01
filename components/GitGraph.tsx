@@ -46,7 +46,7 @@ const GitGraph = ({
                     <div className='flex flex-col items-center self-stretch w-4'>
                         <Link
                             href={`${idx <= 2 ? domain.path === '#coordinators' ? `/team/deputies/${domain.path}`: `/team/${domain.path}` : `/team/heads/${domain.path}`}`}
-                            className='w-4 h-4 rounded-2xl border-3  cursor-pointer border-six'
+                            className='w-4 h-4 rounded-2xl border-3  cursor-crosshair border-six'
                             onClick={() => { 
                                 if(setShowExplorer) setShowExplorer(false) 
                                 updatePageStore(domain.name, domain.path)
@@ -66,7 +66,7 @@ const GitGraph = ({
                                     <div key={idx} className='flex items-center'>
                                         <Link
                                             href={`/team/${role}/${domain.path}`}
-                                            className='w-4 h-4 rounded-2xl border-4 bg-black cursor-pointer border-seven'
+                                            className='w-4 h-4 rounded-2xl border-4 bg-black cursor-crosshair border-seven'
                                             onClick={() => { 
                                                 if(setShowExplorer) setShowExplorer(false) 
                                                 updatePageStore(`${domain.name} ${role}`, `/team/${role}/${domain.path}`)

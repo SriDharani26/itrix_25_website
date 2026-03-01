@@ -66,9 +66,9 @@ export default function ContactPage() {
   );
 
   return (
-    <div className="h-full min-h-screen w-full bg-one text-gray-100 flex flex-col">
+    <div className="h-full min-h-screen w-full text-gray-100 flex flex-col">
 
-      <div className="h-14 flex items-center gap-3 px-4 border-b border-[#3c3c3c] bg-one">
+      <div className="h-14 flex items-center gap-3 px-4 border-b border-[#3c3c3c]">
         <span className="text-sm text-six">
           <span className="text-seven">Contact</span> palette
         </span>
@@ -105,7 +105,7 @@ export default function ContactPage() {
               <button
                 key={contact.id}
                 onClick={() => setActive(contact)}
-                className={`relative w-full px-4 py-2 text-left flex items-center gap-3 text-sm transition
+                className={`relative w-full px-4 py-2 text-left flex items-center gap-3 text-sm transition cursor-pointer
                   ${
                     active?.id === contact.id
                       ? "bg-seven/30"
