@@ -1,4 +1,5 @@
 import { EventsDetailsView } from "@/components/EventsTab";
+import ArcadePanel from "@/components/ArcadePanel";
 import { eventsData } from "./eventsData";
 
 type EventsPageProps = {
@@ -12,11 +13,7 @@ const EventsPage = async ({ searchParams }: EventsPageProps) => {
   const selectedEvent = eventsData.find((event) => event.id === params.event);
 
   if (!selectedEvent) {
-    return (
-      <div className="h-full min-h-[calc(100vh-4rem)] w-full bg-[#1e1e1e] text-gray-300 flex items-center justify-center">
-        Event
-      </div>
-    );
+    return <ArcadePanel />;
   }
 
   return <EventsDetailsView event={selectedEvent} />;
