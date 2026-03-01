@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { usePathname } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { eventsData as allEventsData } from "@/app/events/eventsData";
 
 type EventMode = "Online" | "Offline" | "Hybrid";
 type EventCategory = "tech" | "non-tech" | "workshops";
@@ -216,103 +217,17 @@ const DetailsPanel = ({ event, activeTab }: { event: Event; activeTab: DetailTab
 
 interface EventsTabProps {
   eventsData?: Event[];
+  setShowExplorer?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const EventsTab = ({ eventsData = [] }: EventsTabProps) => {
-  const pathname = usePathname();
+const EventsTab = ({ eventsData = allEventsData, setShowExplorer }: EventsTabProps) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [query, setQuery] = useState("");
-  const [selectedEventId, setSelectedEventId] = useState<string | null>(eventsData[0]?.id ?? null);
-  const [activeTab, setActiveTab] = useState<DetailTab>("DETAILS");
-  const [mobileExplorerOpen, setMobileExplorerOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const [isDesktopLayout, setIsDesktopLayout] = useState(false);
-  const [shareStatus, setShareStatus] = useState("");
-  const [userRatings, setUserRatings] = useState<Record<string, number>>({});
-  const [registrations, setRegistrations] = useState<Record<string, number>>({});
-  const [registered, setRegistered] = useState<Record<string, boolean>>({});
+  const selectedEventId = searchParams.get("event");
 
-  const rootRef = useRef<HTMLDivElement | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const scrollTopRef = useRef(0);
-  const hideInsideMobileExplorer = pathname === "/events" && eventsData.length === 0;
-
-  useEffect(() => {
-    const update = () => setIsMobile(window.innerWidth < 1024);
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
-
-  useEffect(() => {
-    const update = () => setIsDesktopLayout(window.innerWidth >= 800);
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
-
-  useEffect(() => {
-    if (!selectedEventId && eventsData[0]) {
-      setSelectedEventId(eventsData[0].id);
-    }
-  }, [eventsData, selectedEventId]);
-
-  useEffect(() => {
-    const parent = rootRef.current?.parentElement;
-    if (!parent) return;
-    if (hideInsideMobileExplorer) {
-      parent.style.display = "none";
-    } else {
-      parent.style.display = "";
-    }
-    return () => {
-      parent.style.display = "";
-    };
-  }, [hideInsideMobileExplorer]);
-
-  useEffect(() => {
-    if (pathname !== "/events" || !isDesktopLayout) return;
-
-    const contentPane = rootRef.current?.parentElement;
-    const layoutRoot = contentPane?.parentElement;
-    const leftPane = layoutRoot?.firstElementChild as HTMLElement | null;
-    const navbarAside = leftPane?.querySelector("aside");
-    const navbarContent = navbarAside?.children?.[1] as HTMLElement | undefined;
-
-    if (!contentPane || !leftPane) return;
-
-    const prevLeftWidth = leftPane.style.width;
-    const prevLeftMinWidth = leftPane.style.minWidth;
-    const prevLeftMaxWidth = leftPane.style.maxWidth;
-    const prevContentWidth = contentPane.style.width;
-    const prevContentFlex = contentPane.style.flex;
-    const prevContentMaxWidth = contentPane.style.maxWidth;
-    const prevNavbarContentDisplay = navbarContent?.style.display ?? "";
-    const prevNavbarContentPadding = navbarContent?.style.padding ?? "";
-
-    leftPane.style.width = "64px";
-    leftPane.style.minWidth = "64px";
-    leftPane.style.maxWidth = "64px";
-    contentPane.style.width = "";
-    contentPane.style.maxWidth = "";
-    contentPane.style.flex = "1 1 auto";
-    if (navbarContent) {
-      navbarContent.style.display = "none";
-      navbarContent.style.padding = "0";
-    }
-
-    return () => {
-      leftPane.style.width = prevLeftWidth;
-      leftPane.style.minWidth = prevLeftMinWidth;
-      leftPane.style.maxWidth = prevLeftMaxWidth;
-      contentPane.style.width = prevContentWidth;
-      contentPane.style.maxWidth = prevContentMaxWidth;
-      contentPane.style.flex = prevContentFlex;
-      if (navbarContent) {
-        navbarContent.style.display = prevNavbarContentDisplay;
-        navbarContent.style.padding = prevNavbarContentPadding;
-      }
-    };
-  }, [pathname, isDesktopLayout]);
 
   const filteredEvents = useMemo(() => {
     const normalized = query.trim().toLowerCase();
@@ -334,34 +249,73 @@ const EventsTab = ({ eventsData = [] }: EventsTabProps) => {
     [filteredEvents]
   );
 
-  const displayedEvent = filteredEvents.find((event) => event.id === selectedEventId) ?? filteredEvents[0];
-
   useEffect(() => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollTop = scrollTopRef.current;
     }
-  }, [filteredEvents, displayedEvent?.id]);
+  }, [filteredEvents, selectedEventId]);
 
   const handleSelect = (event: Event) => {
-    setSelectedEventId(event.id);
-    if (isMobile) {
-      setMobileExplorerOpen(false);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("event", event.id);
+    router.push(`/events?${params.toString()}`);
+    if (setShowExplorer) {
+      setShowExplorer(false);
     }
   };
 
-  const handleRegister = (event: Event) => {
-    if (registered[event.id]) return;
-    setRegistered((prev) => ({ ...prev, [event.id]: true }));
+  return (
+    <div className="h-full w-full bg-[#1e1e1e] text-gray-100">
+      <div className="border-b border-gray-700 p-3">
+        <input
+          type="text"
+          placeholder="Search events"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          className="w-full rounded-sm border border-gray-600 bg-[#252526] px-3 py-2 text-sm text-gray-100 outline-none transition-colors duration-200 placeholder:text-gray-400 focus:border-[rgba(6,130,165,1)]"
+        />
+      </div>
+      <div
+        ref={scrollContainerRef}
+        onScroll={(e) => {
+          scrollTopRef.current = e.currentTarget.scrollTop;
+        }}
+        className="max-h-[calc(100vh-8rem)] overflow-y-auto"
+      >
+        <SidebarSection title="TECH" items={grouped.tech} selectedId={selectedEventId ?? ""} onSelect={handleSelect} />
+        <SidebarSection title="NON-TECH" items={grouped.nonTech} selectedId={selectedEventId ?? ""} onSelect={handleSelect} />
+        <SidebarSection
+          title="WORKSHOPS"
+          items={grouped.workshops}
+          selectedId={selectedEventId ?? ""}
+          onSelect={handleSelect}
+          showDivider={false}
+        />
+      </div>
+    </div>
+  );
+};
+
+export const EventsDetailsView = ({ event }: { event: Event }) => {
+  const [activeTab, setActiveTab] = useState<DetailTab>("DETAILS");
+  const [shareStatus, setShareStatus] = useState("");
+  const [userRatings, setUserRatings] = useState<Record<string, number>>({});
+  const [registrations, setRegistrations] = useState<Record<string, number>>({});
+  const [registered, setRegistered] = useState<Record<string, boolean>>({});
+
+  const handleRegister = (selectedEvent: Event) => {
+    if (registered[selectedEvent.id]) return;
+    setRegistered((prev) => ({ ...prev, [selectedEvent.id]: true }));
     setRegistrations((prev) => ({
       ...prev,
-      [event.id]: (prev[event.id] ?? event.registrations) + 1,
+      [selectedEvent.id]: (prev[selectedEvent.id] ?? selectedEvent.registrations) + 1,
     }));
   };
 
-  const handleShare = async (event: Event) => {
+  const handleShare = async (selectedEvent: Event) => {
     const sharePayload = {
-      title: event.title,
-      text: `${event.title} by ${event.organizer}`,
+      title: selectedEvent.title,
+      text: `${selectedEvent.title} by ${selectedEvent.organizer}`,
       url: typeof window !== "undefined" ? window.location.href : "",
     };
 
@@ -379,143 +333,55 @@ const EventsTab = ({ eventsData = [] }: EventsTabProps) => {
     }
   };
 
-  if (hideInsideMobileExplorer) {
-    return null;
-  }
-
-  if (!displayedEvent) {
-    return (
-      <div ref={rootRef} className="rounded-sm border border-gray-700 bg-[#1e1e1e] p-4 text-sm text-gray-300">
-        No events loaded here. Open the `/events` page to view all events.
-      </div>
-    );
-  }
-
-  const displayedRegistrations = registrations[displayedEvent.id] ?? displayedEvent.registrations;
-  const userRating = userRatings[displayedEvent.id] ?? 0;
+  const displayedRegistrations = registrations[event.id] ?? event.registrations;
+  const userRating = userRatings[event.id] ?? 0;
 
   return (
-    <div ref={rootRef} className="h-full min-h-[calc(100vh-4rem)] w-full bg-[#1e1e1e] text-gray-100">
-      <div className="flex h-full w-full flex-col lg:flex-row">
-        <aside className="hidden w-[320px] border-r border-gray-700 lg:block">
-          <div className="border-b border-gray-700 p-3">
-            <input
-              type="text"
-              placeholder="Search events"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              className="w-full rounded-sm border border-gray-600 bg-[#252526] px-3 py-2 text-sm text-gray-100 outline-none transition-colors duration-200 placeholder:text-gray-400 focus:border-[rgba(6,130,165,1)]"
+    <div className="h-full min-h-[calc(100vh-4rem)] w-full bg-[#1e1e1e] text-gray-100">
+      <div className="h-full overflow-y-auto">
+        <div className="border-b border-gray-700">
+          <div className="h-48 w-full bg-[#252526] p-6">
+            <img
+              src={event.bannerImage}
+              alt={`${event.title} banner`}
+              className="h-full w-full rounded-sm bg-[#1e1e1e] object-contain p-4"
             />
           </div>
-          <div
-            ref={scrollContainerRef}
-            onScroll={(e) => {
-              scrollTopRef.current = e.currentTarget.scrollTop;
-            }}
-            className="max-h-[calc(100vh-4rem)] overflow-y-auto"
-          >
-            <SidebarSection title="TECH" items={grouped.tech} selectedId={displayedEvent.id} onSelect={handleSelect} />
-            <SidebarSection title="NON-TECH" items={grouped.nonTech} selectedId={displayedEvent.id} onSelect={handleSelect} />
-            <SidebarSection
-              title="WORKSHOPS"
-              items={grouped.workshops}
-              selectedId={displayedEvent.id}
-              onSelect={handleSelect}
-              showDivider={false}
-            />
-          </div>
-        </aside>
-
-        <main className="flex-1 overflow-hidden">
-          <div className="h-full overflow-y-auto">
-            <div className="border-b border-gray-700">
-              <div className="h-48 w-full bg-[#252526] p-6">
-                <img
-                  src={displayedEvent.bannerImage}
-                  alt={`${displayedEvent.title} banner`}
-                  className="h-full w-full rounded-sm bg-[#1e1e1e] object-contain p-4"
-                />
-              </div>
-              <div className="px-6 py-4">
-                <h1 className="text-2xl font-semibold text-cyan-400">{displayedEvent.title}</h1>
-                <p className="mt-1 text-sm text-gray-300">{displayedEvent.organizer}</p>
-                <div className="mt-3 flex flex-wrap items-center gap-3 text-sm text-gray-300">
-                  <span className="text-[rgba(6,130,165,1)]">{fixedFiveStars}</span>
-                  <span>{displayedEvent.rating.toFixed(1)}</span>
-                  <span>({displayedEvent.reviewCount} reviews)</span>
-                  <span className="text-gray-500">|</span>
-                  <span>{displayedRegistrations} Registrations</span>
-                </div>
-                <div className="mt-3 flex items-center gap-2">
-                  <span className="text-xs text-gray-300">Your Rating:</span>
-                  <UserStars
-                    value={userRating}
-                    onRate={(value) => setUserRatings((prev) => ({ ...prev, [displayedEvent.id]: value }))}
-                  />
-                </div>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  <button
-                    type="button"
-                    onClick={() => handleRegister(displayedEvent)}
-                    className="rounded-sm px-4 py-2 text-sm font-medium text-white transition-colors duration-200"
-                    style={{ backgroundColor: accentColor }}
-                  >
-                    {registered[displayedEvent.id] ? "Registered" : "Register"}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => void handleShare(displayedEvent)}
-                    className="rounded-sm border border-gray-600 px-4 py-2 text-sm text-gray-200 transition-colors duration-200 hover:border-[rgba(6,130,165,1)] hover:text-[rgba(6,130,165,1)]"
-                  >
-                    {shareStatus || "Share"}
-                  </button>
-                </div>
-              </div>
+          <div className="px-6 py-4">
+            <h1 className="text-2xl font-semibold text-cyan-400">{event.title}</h1>
+            <p className="mt-1 text-sm text-gray-300">{event.organizer}</p>
+            <div className="mt-3 flex flex-wrap items-center gap-3 text-sm text-gray-300">
+              <span className="text-[rgba(6,130,165,1)]">{fixedFiveStars}</span>
+              <span>{event.rating.toFixed(1)}</span>
+              <span>({event.reviewCount} reviews)</span>
+              <span className="text-gray-500">|</span>
+              <span>{displayedRegistrations} Registrations</span>
             </div>
-            <DetailsTabs activeTab={activeTab} setActiveTab={setActiveTab} />
-            <DetailsPanel event={displayedEvent} activeTab={activeTab} />
-          </div>
-        </main>
-      </div>
-
-      <div className="pointer-events-none fixed bottom-14 left-0 right-0 z-40 lg:hidden">
-        <div className="pointer-events-auto w-full border-t border-gray-700 bg-[#1f1f1f]">
-          <button
-            type="button"
-            onClick={() => setMobileExplorerOpen((prev) => !prev)}
-            className={`w-full border-b border-gray-700 text-left transition-all duration-200 ${
-              mobileExplorerOpen ? "px-3 py-2 text-sm text-gray-200" : "h-[20px] px-3 text-[11px] text-gray-300"
-            }`}
-          >
-            Event Explorer
-          </button>
-          <div
-            className={`overflow-hidden transition-[max-height] duration-200 ${
-              mobileExplorerOpen ? "max-h-[62vh]" : "max-h-0"
-            }`}
-          >
-            <div className="border-b border-gray-700 p-3">
-              <input
-                type="text"
-                placeholder="Search events"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                className="w-full rounded-sm border border-gray-600 bg-[#252526] px-3 py-2 text-sm text-gray-100 outline-none transition-colors duration-200 placeholder:text-gray-400 focus:border-[rgba(6,130,165,1)]"
-              />
+            <div className="mt-3 flex items-center gap-2">
+              <span className="text-xs text-gray-300">Your Rating:</span>
+              <UserStars value={userRating} onRate={(value) => setUserRatings((prev) => ({ ...prev, [event.id]: value }))} />
             </div>
-            <div className="max-h-[52vh] overflow-y-auto">
-              <SidebarSection title="TECH" items={grouped.tech} selectedId={displayedEvent.id} onSelect={handleSelect} />
-              <SidebarSection title="NON-TECH" items={grouped.nonTech} selectedId={displayedEvent.id} onSelect={handleSelect} />
-              <SidebarSection
-                title="WORKSHOPS"
-                items={grouped.workshops}
-                selectedId={displayedEvent.id}
-                onSelect={handleSelect}
-                showDivider={false}
-              />
+            <div className="mt-4 flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => handleRegister(event)}
+                className="rounded-sm px-4 py-2 text-sm font-medium text-white transition-colors duration-200"
+                style={{ backgroundColor: accentColor }}
+              >
+                {registered[event.id] ? "Registered" : "Register"}
+              </button>
+              <button
+                type="button"
+                onClick={() => void handleShare(event)}
+                className="rounded-sm border border-gray-600 px-4 py-2 text-sm text-gray-200 transition-colors duration-200 hover:border-[rgba(6,130,165,1)] hover:text-[rgba(6,130,165,1)]"
+              >
+                {shareStatus || "Share"}
+              </button>
             </div>
           </div>
         </div>
+        <DetailsTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+        <DetailsPanel event={event} activeTab={activeTab} />
       </div>
     </div>
   );
