@@ -362,7 +362,7 @@ export const EventsDetailsView = ({ event }: { event: Event }) => {
         <div className="border-b" style={{ borderColor: theme.three }}>
           <div className="h-48 w-full p-6" style={{ backgroundColor: theme.two }}>
             <img
-              src="/itrix'26-logo.png"
+              src="/itrix'26-logo.png"  
               alt={`${event.title} banner`}
               className="h-full w-full rounded-sm object-contain p-4"
               style={{ backgroundColor: theme.one }}
