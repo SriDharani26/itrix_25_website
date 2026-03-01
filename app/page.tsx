@@ -36,7 +36,7 @@ export default function Home() {
 					alt="Itrix About Us Image"
 				/>
 				<p className="text-lg">
-					<span className="text-xl text-ten font-bold">ITRIX </span> stands as Anna University's Department of Information Science and 
+					<span className="text-base sm:text-xl text-ten font-bold">ITRIX </span> stands as Anna University's Department of Information Science and 
 					Technology's flagship inter-college symposium, held annually in March at the College of Engineering, Guindy. 
 					With a robust turnout of nearly 4000 participants, ITRIX serves as a melting pot of talent and ideas, 
 					offering a diverse array of technical and non-technical events, workshops, and competitions. 

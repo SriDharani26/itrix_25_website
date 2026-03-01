@@ -1,6 +1,7 @@
 import { EventsDetailsView } from "@/components/EventsTab";
-import ArcadePanel from "@/components/ArcadePanel";
+// import ArcadePanel from "@/components/ArcadePanel";
 import { eventsData } from "./eventsData";
+import SnakeGameDev from "@/components/ArcadePanel";
 
 type EventsPageProps = {
   searchParams: Promise<{
@@ -13,7 +14,7 @@ const EventsPage = async ({ searchParams }: EventsPageProps) => {
   const selectedEvent = eventsData.find((event) => event.id === params.event);
 
   if (!selectedEvent) {
-    return <ArcadePanel />;
+    return <SnakeGameDev />;
   }
 
   return <EventsDetailsView event={selectedEvent} />;

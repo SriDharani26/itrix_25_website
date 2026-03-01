@@ -9,6 +9,7 @@ import GitGraph from "./GitGraph";
 import Explorer from "./Explorer";
 import EventsTab from "./EventsTab";
 import usePageStore from "@/stores/pageStore";
+import { ArrowBigUpDash } from 'lucide-react';
 
 const MobileNavbar = () => {
     const [openEventsExplorer ,setOpenEventsExplorer] = useState<boolean>(false);
@@ -81,44 +82,28 @@ const MobileNavbar = () => {
                     {activeTab[activeTab.findIndex(obj => obj.isActive === true)].page === 'Team' &&
                         <GitGraph setShowExplorer={setShowExplorer} />
                     }
+
+                    {activeTab[activeTab.findIndex(obj => obj.isActive === true)].page === 'Events' && (
+                        <>
+                            <div 
+                                className="flex justify-center gap-4"
+                                onClick={() => setOpenEventsExplorer(prev => !prev)}
+                            >
+                                <ArrowBigUpDash className={`${openEventsExplorer ? "rotate-180": ""}`}/>
+                                Explore
+                            </div>
+
+                            {openEventsExplorer && (
+                                <div className="mt-2">
+                                    <EventsTab setShowExplorer={setShowExplorer} />
+                                </div>
+                            )}
+                        </>
+                    )}
                 </div>
             )}
-
-            {showExplorer &&
-    activeTab[activeTab.findIndex(obj => obj.isActive === true)].page === 'Events' && (
-        <div className="flex flex-col bg-one/10 overflow-y-scroll max-h-[500px] backdrop-blur-xl p-2">
-
-            <div
-                onClick={() => setOpenEventsExplorer(prev => !prev)}
-                className="cursor-pointer p-4 bg-one/20 hover:bg-one/30 
-                           rounded-md border border-three transition-all 
-                           flex items-center justify-between"
-            >
-                <h2 className="text-seven font-semibold text-lg">
-                    Events Explorer
-                </h2>
-                <span
-                    className={`text-six text-sm transition-transform duration-200 ${
-                        openEventsExplorer ? "rotate-90" : ""
-                    }`}
-                >
-                    ▶
-                </span>
-            </div>
-
-            {openEventsExplorer && (
-                <div className="mt-2">
-                    <EventsTab setShowExplorer={setShowExplorer} />
-                </div>
-            )}
-
-        </div>
-    )
-}
-
         </div>
     );
 }
 
 export default MobileNavbar;
-
