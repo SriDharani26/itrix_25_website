@@ -1,13 +1,12 @@
 'use client'
 import Countdown from "@/components/Countdown";
 import Image from "next/image";
-import { useParams } from "next/navigation";
 
 export default function Home() {
 
 	
 	return (
-		<div className="p-4 min-h-screen w-full gap-4 pb-20">
+		<div className="p-4 min-h-screen w-full gap-4 pb-20 flex flex-col">
 
 			{/* Home */}
 			<div className="w-full min-h-screen flex flex-col gap-8 items-center justify-center">
