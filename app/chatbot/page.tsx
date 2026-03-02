@@ -107,7 +107,7 @@ export default function ChatbotPage() {
   }
 
   return (
-    <div className="h-[calc(100%-1rem)] max-[800px]:mb-[-5rem] min-h-0 w-full bg-one flex flex-col overflow-hidden relative isolate">
+    <div className="h-[calc(100%-1rem)] min-[800px]:h-[calc(100vh-6rem)] min-[800px]:max-h-[calc(100vh-6rem)] max-[800px]:mb-[-5rem] min-h-0 w-full bg-one flex flex-col overflow-hidden relative isolate">
       <div className="pointer-events-none absolute inset-0 opacity-35 [background-image:radial-gradient(circle_at_20%_18%,rgba(148,163,184,0.20)_1px,transparent_1.4px),radial-gradient(circle_at_78%_30%,rgba(56,189,248,0.16)_1px,transparent_1.3px),radial-gradient(circle_at_30%_72%,rgba(99,102,241,0.14)_1px,transparent_1.2px)] [background-size:28px_28px,34px_34px,32px_32px]" />
       <div className="pointer-events-none absolute inset-0 opacity-20 [background-image:linear-gradient(90deg,rgba(148,163,184,0.14)_1px,transparent_1px),linear-gradient(rgba(148,163,184,0.14)_1px,transparent_1px)] [background-size:48px_48px]" />
       <div className="pointer-events-none absolute -right-16 top-20 h-44 w-44 rounded-full border border-seven/25" />
