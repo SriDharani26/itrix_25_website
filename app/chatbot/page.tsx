@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { BsRobot } from "react-icons/bs";
 import { User } from "lucide-react";
+import MarkdownPreview from "@uiw/react-markdown-preview";
 
 type Message = {
   id: string;
@@ -137,7 +138,15 @@ export default function ChatbotPage() {
                   : "bg-two text-four"
               }`}
             >
-              <p>{msg.content}</p>
+              {msg.role === "assistant" ? (
+                <MarkdownPreview
+                  source={msg.content}
+                  wrapperElement={{ "data-color-mode": "light" }}
+                  className="!bg-transparent !text-inherit prose prose-sm max-w-none"
+                />
+              ) : (
+                <p>{msg.content}</p>
+              )}
               <p className="mt-1 text-[10px] text-[--color-four]/50 text-right">
                 {new Date(msg.timestamp).toLocaleTimeString([], {
                   hour: "2-digit",

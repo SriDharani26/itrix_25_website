@@ -24,17 +24,36 @@ export async function POST(req: Request) {
     const safeMessages = Array.isArray(messages) ? messages : [];
 
     const completion = await groq.chat.completions.create({
-      model: "llama3-8b-8192",
+      model: "moonshotai/kimi-k2-instruct-0905",
       messages: [{ role: "system", content: FINAL_SYSTEM_PROMPT }, ...safeMessages],
     });
 
     return Response.json({
       reply: completion.choices[0]?.message?.content ?? "",
     });
-  } catch {
+  } catch (error: unknown) {
+    const maybeError = error as {
+      status?: number;
+      message?: string;
+      error?: { message?: string };
+    };
+    const status =
+      typeof maybeError?.status === "number" && maybeError.status >= 400
+        ? maybeError.status
+        : 500;
+    const message =
+      maybeError?.error?.message ??
+      maybeError?.message ??
+      "Failed to generate response";
+
+    console.error("Groq chat error:", {
+      status,
+      message,
+    });
+
     return Response.json(
-      { error: "Failed to generate response" },
-      { status: 500 }
+      { error: message },
+      { status }
     );
   }
 }
