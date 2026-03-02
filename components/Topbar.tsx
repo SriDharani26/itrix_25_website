@@ -9,7 +9,7 @@ const Topbar = () => {
 
   return (
     <div className="w-full h-10 sticky top-0 z-20 flex items-center backdrop-blur-3xl border-b border-three
-                    overflow-x-auto gap-1">
+                    overflow-x-auto gap-1 no-scrollbar">
 
 		{store.map((item) => (
 			<div
