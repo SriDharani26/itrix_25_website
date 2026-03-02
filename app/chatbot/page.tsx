@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useRef, useState } from "react";
 import { BsRobot } from "react-icons/bs";
@@ -21,10 +21,24 @@ export default function ChatbotPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [isOverflowing, setIsOverflowing] = useState(false);
   const bottomRef = useRef<HTMLDivElement | null>(null);
+  const messagesRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, isTyping]);
+
+  useEffect(() => {
+    const updateOverflow = () => {
+      const node = messagesRef.current;
+      if (!node) return;
+      setIsOverflowing(node.scrollHeight > node.clientHeight);
+    };
+
+    updateOverflow();
+    window.addEventListener("resize", updateOverflow);
+    return () => window.removeEventListener("resize", updateOverflow);
   }, [messages, isTyping]);
 
   async function sendMessage() {
@@ -93,8 +107,8 @@ export default function ChatbotPage() {
   }
 
   return (
-    <div className="h-full w-full bg-one flex flex-col">
-      <div className="h-10 mt-10 sticky top-10 z-30 border-b border-three bg-[--color-two] px-3 sm:px-4 flex items-center justify-between">
+    <div className="h-[calc(100%-1rem)] max-[800px]:mb-[-5rem] min-h-0 w-full bg-one flex flex-col overflow-hidden">
+      <div className="h-10 sticky top-0 z-30 border-b border-three bg-[--color-two] px-3 sm:px-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="text-sm sm:text-base text-seven font-semibold tracking-wide">
             iBotrix
@@ -102,18 +116,23 @@ export default function ChatbotPage() {
           <span className="text-xs text-six">Chat</span>
         </div>
         <span className="text-[10px] sm:text-[11px] text-seven">
-          {isTyping ? "iBotrix is typing…" : "Ready"}
+          {isTyping ? "iBotrix is typing..." : "Ready"}
         </span>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-6 space-y-4 sm:space-y-6">
+      <div
+        ref={messagesRef}
+        className={`flex-1 min-h-0 px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-6 space-y-4 sm:space-y-6 ${
+          isOverflowing ? "overflow-y-auto" : "overflow-y-hidden"
+        }`}
+      >
         {messages.length === 0 && (
           <div className="flex h-full flex-col items-center justify-center text-center px-2">
             <BsRobot size={36} className="mb-3 sm:mb-4 text-seven sm:size-12" />
             <p className="text-xs sm:text-sm text-four/70 px-2">
               Ask{" "}
               <span className="font-medium text-seven">iBotrix</span>{" "}
-              to get started…
+              to get started...
             </p>
           </div>
         )}
@@ -169,7 +188,7 @@ export default function ChatbotPage() {
               <BsRobot size={14} className="text-black sm:size-[18px]" />
             </div>
             <div className="bg-two rounded-lg px-3 sm:px-4 py-2 text-xs sm:text-sm text-[--color-four]/70">
-              <span className="animate-pulse">Typing…</span>
+              <span className="animate-pulse">Typing...</span>
             </div>
           </div>
         )}
