@@ -11,6 +11,11 @@ type Message = {
   timestamp: number;
 };
 
+type ChatMessage = {
+  role: "user" | "assistant";
+  content: string;
+};
+
 export default function ChatbotPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -21,37 +26,73 @@ export default function ChatbotPage() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isTyping]);
 
-  function sendMessage() {
+  async function sendMessage() {
     if (!input.trim()) return;
 
+    const trimmedInput = input.trim();
     const userMessage: Message = {
       id: crypto.randomUUID(),
       role: "user",
-      content: input,
+      content: trimmedInput,
       timestamp: Date.now(),
     };
 
-    setMessages((prev) => [...prev, userMessage]);
+    const updatedMessages = [...messages, userMessage];
+
+    setMessages(updatedMessages);
     setInput("");
     setIsTyping(true);
 
-    setTimeout(() => {
-      setMessages((prev) => [
-        ...prev,
+    try {
+      const chatHistory: ChatMessage[] = updatedMessages.map(
+        ({ role, content }) => ({
+          role,
+          content,
+        })
+      );
+
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: chatHistory }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch chatbot response");
+      }
+
+      const data = await res.json();
+      const reply =
+        typeof data?.reply === "string" && data.reply.trim()
+          ? data.reply
+          : "Sorry, I could not generate a response right now.";
+
+      setMessages([
+        ...updatedMessages,
         {
           id: crypto.randomUUID(),
           role: "assistant",
-          content: "iBotrix response placeholder...",
+          content: reply,
           timestamp: Date.now(),
         },
       ]);
+    } catch {
+      setMessages([
+        ...updatedMessages,
+        {
+          id: crypto.randomUUID(),
+          role: "assistant",
+          content: "Sorry, I could not generate a response right now.",
+          timestamp: Date.now(),
+        },
+      ]);
+    } finally {
       setIsTyping(false);
-    }, 900);
+    }
   }
 
   return (
     <div className="h-full w-full bg-one flex flex-col">
-
       <div className="h-10 mt-10 sticky top-10 z-30 border-b border-three bg-[--color-two] px-3 sm:px-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="text-sm sm:text-base text-seven font-semibold tracking-wide">
@@ -70,9 +111,7 @@ export default function ChatbotPage() {
             <BsRobot size={36} className="mb-3 sm:mb-4 text-seven sm:size-12" />
             <p className="text-xs sm:text-sm text-four/70 px-2">
               Ask{" "}
-              <span className="font-medium text-seven">
-                iBotrix
-              </span>{" "}
+              <span className="font-medium text-seven">iBotrix</span>{" "}
               to get started…
             </p>
           </div>
