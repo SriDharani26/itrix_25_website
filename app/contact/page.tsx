@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { type MouseEvent, useState } from "react";
 import { Phone, User, Briefcase } from "lucide-react";
 
 type Contact = {
@@ -56,12 +56,39 @@ const CONTACTS: Contact[] = [
 ];
 
 export default function ContactPage() {
-  const [previewTheme, setPreviewTheme] = useState<"light" | "dark">("light");
+  const [previewTheme, setPreviewTheme] = useState<"light" | "dark">("dark");
+  const [previewReloadKey, setPreviewReloadKey] = useState(0);
+  const [isPreviewReloading, setIsPreviewReloading] = useState(false);
+  const [menu, setMenu] = useState({ open: false, x: 0, y: 0 });
+
+  const openContextMenu = (e: MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    setMenu({ open: true, x: e.clientX, y: e.clientY });
+  };
+
+  const closeContextMenu = () => {
+    if (menu.open) setMenu({ open: false, x: 0, y: 0 });
+  };
+
+  const runPreviewReload = () => {
+    if (isPreviewReloading) return;
+    setIsPreviewReloading(true);
+    window.setTimeout(() => {
+      setPreviewReloadKey((prev) => prev + 1);
+      setIsPreviewReloading(false);
+    }, 1000);
+  };
 
   return (
-    <div className="min-h-screen bg-[#1e1e1e] text-[#d4d4d4] px-2 sm:px-2 md:px-3 py-1.5">
+    <div
+      className="min-h-screen bg-[#1e1e1e] text-[#d4d4d4] px-2 sm:px-2 md:px-3 py-1.5"
+      onClick={closeContextMenu}
+    >
       <div className="h-[calc(100vh-1.5rem)] border border-[#2d2d2d] rounded-md overflow-hidden grid grid-cols-1 xl:grid-cols-2 w-full min-h-0">
-        <section className="order-2 xl:order-1 h-[42vh] xl:h-full bg-[#1e1e1e] xl:border-r border-[#2d2d2d] border-t xl:border-t-0 flex flex-col min-w-0 min-h-0">
+        <section
+          className="order-2 xl:order-1 h-[42vh] xl:h-full bg-[#1e1e1e] xl:border-r border-[#2d2d2d] border-t xl:border-t-0 flex flex-col min-w-0 min-h-0"
+          onContextMenu={openContextMenu}
+        >
           <div className="grow overflow-y-scroll [scrollbar-gutter:stable] font-mono text-sm [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:rounded [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-[#161616] [&::-webkit-scrollbar-thumb]:bg-[#3b3b3b]">
             <div className="grid grid-cols-[48px_1fr] leading-7 min-w-[720px] xl:min-w-0">
               <span className="text-[#858585] px-3">1</span>
@@ -146,32 +173,12 @@ export default function ContactPage() {
                 <span className="text-[#d4d4d4]">=</span>
                 <span className="text-[#ce9178]">&quot;text-4xl font-bold&quot;</span>
                 <span className="text-[#569cd6]">&gt;</span>
-                <span className="text-[#d4d4d4]">Contact palette</span>
+                <span className="text-[#d4d4d4]">Contact Details</span>
                 <span className="text-[#569cd6]">&lt;/h1&gt;</span>
               </div>
               <span className="text-[#858585] px-3">17</span>
-              <div>
-                <span className="text-[#569cd6]">&lt;p</span>{" "}
-                <span className="text-[#9cdcfe]">className</span>
-                <span className="text-[#d4d4d4]">=</span>
-                <span className="text-[#ce9178]">&quot;text-gray-600&quot;</span>
-                <span className="text-[#569cd6]">&gt;</span>
-                <span className="text-[#d4d4d4]">Search contacts by name or role</span>
-                <span className="text-[#569cd6]">&lt;/p&gt;</span>
-              </div>
-              <span className="text-[#858585] px-3">18</span>
               <div className="text-[#569cd6]">&lt;/header&gt;</div>
-              <span className="text-[#858585] px-3">19</span>
-              <div>
-                <span className="text-[#569cd6]">&lt;h2</span>{" "}
-                <span className="text-[#9cdcfe]">className</span>
-                <span className="text-[#d4d4d4]">=</span>
-                <span className="text-[#ce9178]">&quot;text-2xl font-semibold&quot;</span>
-                <span className="text-[#569cd6]">&gt;</span>
-                <span className="text-[#d4d4d4]">Contact Details</span>
-                <span className="text-[#569cd6]">&lt;/h2&gt;</span>
-              </div>
-              <span className="text-[#858585] px-3">20</span>
+              <span className="text-[#858585] px-3">18</span>
               <div>
                 <span className="text-[#569cd6]">&lt;div</span>{" "}
                 <span className="text-[#9cdcfe]">className</span>
@@ -179,7 +186,7 @@ export default function ContactPage() {
                 <span className="text-[#ce9178]">&quot;grid grid-cols-1 sm:grid-cols-2 gap-4&quot;</span>
                 <span className="text-[#569cd6]">&gt;</span>
               </div>
-              <span className="text-[#858585] px-3">21</span>
+              <span className="text-[#858585] px-3">19</span>
               <div>
                 <span className="text-[#d4d4d4]">{"{"}</span>
                 <span className="text-[#9cdcfe]">CONTACTS</span>
@@ -187,7 +194,7 @@ export default function ContactPage() {
                 <span className="text-[#9cdcfe]">contact</span>
                 <span className="text-[#d4d4d4]">) =&gt; ({"{"}</span>
               </div>
-              <span className="text-[#858585] px-3">22</span>
+              <span className="text-[#858585] px-3">20</span>
               <div>
                 <span className="text-[#569cd6]">&lt;article</span>{" "}
                 <span className="text-[#9cdcfe]">key</span>
@@ -199,7 +206,7 @@ export default function ContactPage() {
                 <span className="text-[#ce9178]">&quot;rounded-lg border p-4 space-y-3&quot;</span>
                 <span className="text-[#569cd6]">&gt;</span>
               </div>
-              <span className="text-[#858585] px-3">23</span>
+              <span className="text-[#858585] px-3">21</span>
               <div>
                 <span className="text-[#569cd6]">&lt;p</span>{" "}
                 <span className="text-[#9cdcfe]">className</span>
@@ -211,7 +218,7 @@ export default function ContactPage() {
                 <span className="text-[#d4d4d4]">.name{"}"}</span>
                 <span className="text-[#569cd6]">&lt;/p&gt;</span>
               </div>
-              <span className="text-[#858585] px-3">24</span>
+              <span className="text-[#858585] px-3">22</span>
               <div>
                 <span className="text-[#569cd6]">&lt;p</span>{" "}
                 <span className="text-[#9cdcfe]">className</span>
@@ -223,7 +230,7 @@ export default function ContactPage() {
                 <span className="text-[#d4d4d4]">.role{"}"}</span>
                 <span className="text-[#569cd6]">&lt;/p&gt;</span>
               </div>
-              <span className="text-[#858585] px-3">25</span>
+              <span className="text-[#858585] px-3">23</span>
               <div>
                 <span className="text-[#569cd6]">&lt;p</span>{" "}
                 <span className="text-[#9cdcfe]">className</span>
@@ -235,19 +242,21 @@ export default function ContactPage() {
                 <span className="text-[#d4d4d4]">.phone{"}"}</span>
                 <span className="text-[#569cd6]">&lt;/p&gt;</span>
               </div>
-              <span className="text-[#858585] px-3">26</span>
+              <span className="text-[#858585] px-3">24</span>
               <div className="text-[#569cd6]">&lt;/article&gt;</div>
-              <span className="text-[#858585] px-3">27</span>
+              <span className="text-[#858585] px-3">25</span>
               <div className="text-[#d4d4d4]">)){"}"}</div>
-              <span className="text-[#858585] px-3">28</span>
+              <span className="text-[#858585] px-3">26</span>
               <div className="text-[#569cd6]">&lt;/div&gt;</div>
-              <span className="text-[#858585] px-3">29</span>
+              <span className="text-[#858585] px-3">27</span>
               <div className="text-[#569cd6]">&lt;/section&gt;</div>
-              <span className="text-[#858585] px-3">30</span>
+              <span className="text-[#858585] px-3">28</span>
               <div className="text-[#569cd6]">&lt;/main&gt;</div>
-              <span className="text-[#858585] px-3">31</span>
+              <span className="text-[#858585] px-3">29</span>
+              <div />
+              <span className="text-[#858585] px-3">30</span>
               <div>  );</div>
-              <span className="text-[#858585] px-3">32</span>
+              <span className="text-[#858585] px-3">31</span>
               <div>{"}"}</div>
             </div>
           </div>
@@ -285,88 +294,129 @@ export default function ContactPage() {
                 : "bg-[#0d1117] [&::-webkit-scrollbar-track]:bg-[#161b22] [&::-webkit-scrollbar-thumb]:bg-[#30363d]"
             }`}
           >
-            <div
-              className={`max-w-5xl mx-auto rounded-xl p-6 md:p-8 space-y-6 border ${
-                previewTheme === "light"
-                  ? "bg-white border-gray-300 shadow-[0_10px_30px_rgba(15,23,42,0.08)]"
-                  : "bg-[#010409] border-[#30363d] shadow-[0_12px_40px_rgba(0,0,0,0.45)]"
-              }`}
-            >
-              <header className="space-y-2">
+            {isPreviewReloading ? (
+              <div
+                className={`max-w-5xl mx-auto rounded-xl p-6 md:p-8 space-y-6 border animate-pulse ${
+                  previewTheme === "light"
+                    ? "bg-white border-gray-300"
+                    : "bg-[#010409] border-[#30363d]"
+                }`}
+              >
+                <div className="h-10 w-64 mx-auto rounded bg-gray-300/60 dark:bg-gray-700/60" />
+                <div className="h-7 w-44 rounded bg-gray-300/60 dark:bg-gray-700/60" />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {Array.from({ length: 6 }).map((_, i) => (
+                    <div
+                      key={`sk-${i}`}
+                      className={`rounded-lg border p-4 space-y-3 ${
+                        previewTheme === "light"
+                          ? "border-gray-300 bg-white"
+                          : "border-[#30363d] bg-[#0d1117]"
+                      }`}
+                    >
+                      <div className="h-5 w-40 rounded bg-gray-300/60 dark:bg-gray-700/60" />
+                      <div className="h-4 w-32 rounded bg-gray-300/60 dark:bg-gray-700/60" />
+                      <div className="h-4 w-36 rounded bg-gray-300/60 dark:bg-gray-700/60" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div
+                key={previewReloadKey}
+                className={`max-w-5xl mx-auto rounded-xl p-6 md:p-8 space-y-6 border ${
+                  previewTheme === "light"
+                    ? "bg-white border-gray-300 shadow-[0_10px_30px_rgba(15,23,42,0.08)]"
+                    : "bg-[#010409] border-[#30363d] shadow-[0_12px_40px_rgba(0,0,0,0.45)]"
+                }`}
+              >
+                <header className="space-y-2">
                 <h1
                   className={`text-3xl md:text-5xl font-bold text-center ${
                     previewTheme === "light" ? "text-black" : "text-[#f0f6fc]"
                   }`}
                 >
-                  Contact palette
-                </h1> 
+                    Contact Details
+                </h1>
               </header>
 
-              <h2
-                className={`text-xl md:text-2xl font-semibold ${
-                  previewTheme === "light" ? "text-black" : "text-[#f0f6fc]"
-                }`}
-              >
-                Contact Details
-              </h2>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {CONTACTS.map((contact) => (
-                  <article
-                    key={contact.id}
-                    className={`rounded-lg p-4 space-y-3 border ${
-                      previewTheme === "light"
-                        ? "border-gray-300 bg-white"
-                        : "border-[#30363d] bg-[#0d1117]"
-                    }`}
-                  >
-                    <div
-                      className={`flex items-start gap-3 min-w-0 ${
-                        previewTheme === "light" ? "text-black" : "text-[#f0f6fc]"
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {CONTACTS.map((contact) => (
+                    <article
+                      key={contact.id}
+                      className={`rounded-lg p-4 space-y-3 border ${
+                        previewTheme === "light"
+                          ? "border-gray-300 bg-white"
+                          : "border-[#30363d] bg-[#0d1117]"
                       }`}
                     >
-                      <User
-                        size={16}
-                        className={`mt-0.5 shrink-0 ${
-                          previewTheme === "light" ? "text-blue-600" : "text-[#58a6ff]"
-                        }`}
-                      />
-                      <span
-                        className={`font-semibold break-words ${
-                          previewTheme === "light" ? "text-black" : "text-[#58a6ff]"
+                      <div
+                        className={`flex items-start gap-3 min-w-0 ${
+                          previewTheme === "light" ? "text-black" : "text-[#f0f6fc]"
                         }`}
                       >
-                        {contact.name}
-                      </span>
-                    </div>
-                    <div
-                      className={`flex items-center gap-3 min-w-0 text-sm ${
-                        previewTheme === "light" ? "text-gray-700" : "text-[#8b949e]"
-                      }`}
-                    >
-                      <Briefcase size={14} className="shrink-0" />
-                      <span className="break-words">{contact.role}</span>
-                    </div>
-                    <div
-                      className={`flex items-center gap-3 min-w-0 text-sm ${
-                        previewTheme === "light" ? "text-gray-700" : "text-[#8b949e]"
-                      }`}
-                    >
-                      <Phone size={14} className="shrink-0" />
-                      <a
-                        href={`tel:${contact.phone.replace(/\s+/g, "")}`}
-                        className="break-words hover:underline underline-offset-2"
+                        <User
+                          size={16}
+                          className={`mt-0.5 shrink-0 ${
+                            previewTheme === "light" ? "text-blue-600" : "text-[#58a6ff]"
+                          }`}
+                        />
+                        <span
+                          className={`font-semibold break-words ${
+                            previewTheme === "light" ? "text-black" : "text-[#58a6ff]"
+                          }`}
+                        >
+                          {contact.name}
+                        </span>
+                      </div>
+                      <div
+                        className={`flex items-center gap-3 min-w-0 text-sm ${
+                          previewTheme === "light" ? "text-gray-700" : "text-[#8b949e]"
+                        }`}
                       >
-                        {contact.phone}
-                      </a>
-                    </div>
-                  </article>
-                ))}
+                        <Briefcase size={14} className="shrink-0" />
+                        <span className="break-words">{contact.role}</span>
+                      </div>
+                      <div
+                        className={`flex items-center gap-3 min-w-0 text-sm ${
+                          previewTheme === "light" ? "text-gray-700" : "text-[#8b949e]"
+                        }`}
+                      >
+                        <Phone size={14} className="shrink-0" />
+                        <a
+                          href={`tel:${contact.phone.replace(/\s+/g, "")}`}
+                          className="break-words hover:underline underline-offset-2"
+                        >
+                          {contact.phone}
+                        </a>
+                      </div>
+                    </article>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </section>
       </div>
+
+      {menu.open && (
+        <div
+          className="fixed z-50 min-w-44 rounded-md border border-[#3b3b3b] bg-[#252526] py-1 shadow-xl"
+          style={{ left: menu.x, top: menu.y }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <button
+            type="button"
+            className="w-full px-3 py-2 text-left text-sm text-[#d4d4d4] hover:bg-[#094771]"
+            onClick={() => {
+              runPreviewReload();
+              closeContextMenu();
+            }}
+          >
+            Show Preview
+          </button>
+        </div>
+      )}
     </div>
   );
 }
