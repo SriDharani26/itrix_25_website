@@ -46,7 +46,7 @@ export default function ChatbotPage() {
 
     const trimmedInput = input.trim();
     const userMessage: Message = {
-      id: crypto.randomUUID(),
+      id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
       role: "user",
       content: trimmedInput,
       timestamp: Date.now(),
@@ -85,7 +85,7 @@ export default function ChatbotPage() {
       setMessages([
         ...updatedMessages,
         {
-          id: crypto.randomUUID(),
+          id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
           role: "assistant",
           content: reply,
           timestamp: Date.now(),
@@ -95,7 +95,7 @@ export default function ChatbotPage() {
       setMessages([
         ...updatedMessages,
         {
-          id: crypto.randomUUID(),
+          id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
           role: "assistant",
           content: "Sorry, I could not generate a response right now.",
           timestamp: Date.now(),
@@ -221,3 +221,6 @@ export default function ChatbotPage() {
     </div>
   );
 }
+
+
+
