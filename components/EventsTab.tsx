@@ -94,10 +94,10 @@ const SidebarEventItem = ({
     className={`w-full border-l-2 px-3 py-3 text-left transition-all duration-200 ${
       isSelected ? "border-l-[rgba(6,130,165,1)] bg-[#2a2d2e]" : "border-l-transparent hover:bg-[#2a2d2e]"
     }`}
-    style={{ borderLeftColor: isSelected ? theme.twelve : "transparent", backgroundColor: isSelected ? theme.two : undefined }}
+    style={{ borderLeftColor: isSelected ? theme.twelve : "transparent" }}
   >
     <div className="flex gap-3">
-      <img src="/itrix'26-logo.png" alt={event.title} className="h-10 w-10 rounded-sm p-1" style={{ backgroundColor: theme.one }} />
+      <img src="/itrix'26-logo.png" alt={event.title} className="h-10 w-10 rounded-sm p-1 bg-one" />
       <div className="min-w-0 flex-1">
         <p className="truncate text-sm font-semibold" style={{ color: theme.five }}>{event.title}</p>
         <p className="truncate text-xs" style={{ color: theme.four }}>{event.organizer}</p>
@@ -209,7 +209,7 @@ const DetailsPanel = ({ event, activeTab }: { event: Event; activeTab: DetailTab
           </div>
         </div>
 
-        <aside className="h-fit rounded-sm border p-4" style={{ borderColor: theme.three, backgroundColor: theme.two }}>
+        <aside className="h-fit rounded-sm border p-4 bg-two" style={{ borderColor: theme.three }}>
           <h3 className="mb-3 text-sm font-semibold" style={{ color: theme.seven }}>
             EVENT METADATA
           </h3>
@@ -227,7 +227,7 @@ const DetailsPanel = ({ event, activeTab }: { event: Event; activeTab: DetailTab
         </aside>
       </div>
     ) : (
-      <div className="rounded-sm border p-5 text-sm" style={{ borderColor: theme.three, backgroundColor: theme.two, color: theme.four }}>
+      <div className="rounded-sm border p-5 text-sm" style={{ borderColor: theme.three, color: theme.four }}>
         {activeTab} content placeholder.
       </div>
     )}
@@ -284,15 +284,15 @@ const EventsTab = ({ eventsData = allEventsData, setShowExplorer }: EventsTabPro
   };
 
   return (
-    <div className="h-full w-full" style={{ backgroundColor: theme.one, color: theme.four }}>
+    <div className="-m-2 h-[calc(100%+1rem)] min-h-0 w-[calc(100%+1rem)] bg-one flex flex-col" style={{ color: theme.four }}>
       <div className="border-b p-3" style={{ borderColor: theme.three }}>
         <input
           type="text"
           placeholder="Search events"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="w-full rounded-sm border px-3 py-2 text-sm outline-none transition-colors duration-200 placeholder:text-gray-400 focus:border-[rgba(6,130,165,1)]"
-          style={{ borderColor: theme.three, backgroundColor: theme.two, color: theme.four }}
+          className="w-full rounded-sm border px-3 py-2 text-sm outline-none transition-colors duration-200 placeholder:text-gray-400 focus:border-[rgba(6,130,165,1)] bg-two"
+          style={{ borderColor: theme.three, color: theme.four }}
         />
       </div>
       <div
@@ -300,7 +300,7 @@ const EventsTab = ({ eventsData = allEventsData, setShowExplorer }: EventsTabPro
         onScroll={(e) => {
           scrollTopRef.current = e.currentTarget.scrollTop;
         }}
-        className="max-h-[calc(100vh-8rem)] overflow-y-auto"
+        className="flex-1 min-h-0 overflow-y-auto no-scrollbar bg-one"
       >
         <SidebarSection title="TECH" items={grouped.tech} selectedId={selectedEventId ?? ""} onSelect={handleSelect} />
         <SidebarSection title="NON-TECH" items={grouped.nonTech} selectedId={selectedEventId ?? ""} onSelect={handleSelect} />
@@ -360,11 +360,11 @@ export const EventsDetailsView = ({ event }: { event: Event }) => {
     <div className="h-full min-h-[calc(100vh-4rem)] w-full" style={{  color: theme.four }}>
       <div className="h-full overflow-y-auto">
         <div className="border-b" style={{ borderColor: theme.three }}>
-          <div className="h-48 w-full p-6" style={{ backgroundColor: theme.two }}>
+          <div className="h-48 w-full p-6 bg-two">
             <img
               src="/itrix'26-logo.png"  
               alt={`${event.title} banner`}
-              className="h-full w-full rounded-sm object-contain p-4"
+              className="h-full w-full rounded-sm object-cover bg-one"
               style={{ backgroundColor: theme.one }}
             />
           </div>
