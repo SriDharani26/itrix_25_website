@@ -81,7 +81,11 @@ export default function IntroOverlay({ onComplete }: IntroOverlayProps) {
     if (!visible ) {
       return;
     }
-    
+    if (hasStarted.current) {
+      return;
+    }
+    hasStarted.current = true;
+
     let cancelled = false;
 
     const finish = async () => {
@@ -218,7 +222,7 @@ export default function IntroOverlay({ onComplete }: IntroOverlayProps) {
     return () => {
       cancelled = true;
     };
-  }, [isMobile, onComplete, sequence, visible]);
+  }, [ visible]);
 
   if (!mounted) {
     return null;
