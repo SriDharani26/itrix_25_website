@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState,useRef } from "react";
 
 type IntroOverlayProps = {
   onComplete: () => void;
@@ -31,17 +31,15 @@ export default function IntroOverlay({ onComplete }: IntroOverlayProps) {
   const [mobileStatus, setMobileStatus] = useState("Booting iTRIX'26");
   const [mobileDotCount, setMobileDotCount] = useState(0);
   const [typingOnPrompt, setTypingOnPrompt] = useState(false);
-
+  const hasStarted =useRef(false);
   const sequence = useMemo<TerminalStep[]>(
     () => [
-      { text: "Launching iTRIX'26...", pauseAfter: 300 },
-      { text: "Initializing modules", dotLoader: true, pauseAfter: 230 },
-      { text: "Loading components", dotLoader: true, pauseAfter: 230 },
-      { text: "Application started successfully.", pauseAfter: 300 },
-      { text: "", pauseAfter: 220 },
-      { text: "iTRIX'26", pauseAfter: 170 },
-      { text: "© ISTA", pauseAfter: 170 },
-      { text: "Developed by Web Dev Team", pauseAfter: 420 },
+      { text: "Launching iTRIX'26...", pauseAfter: 140 },
+      { text: "Initializing modules", dotLoader: true, pauseAfter: 80 },
+      { text: "Loading components", dotLoader: true, pauseAfter: 80 },
+      { text: "Application started successfully.", pauseAfter: 140 },
+      { text: "", pauseAfter: 70 },
+
     ],
     []
   );
@@ -80,10 +78,10 @@ export default function IntroOverlay({ onComplete }: IntroOverlayProps) {
   }, [visible, isMobile]);
 
   useEffect(() => {
-    if (!visible) {
+    if (!visible ) {
       return;
     }
-
+    
     let cancelled = false;
 
     const finish = async () => {
