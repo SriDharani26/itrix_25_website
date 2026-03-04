@@ -107,8 +107,19 @@ export default function ChatbotPage() {
   }
 
   return (
-    <div className="h-[calc(100%-1rem)] max-[800px]:mb-[-5rem] min-h-0 w-full bg-one flex flex-col overflow-hidden">
-      <div className="h-10 sticky top-0 z-30 border-b border-three bg-[--color-two] px-3 sm:px-4 flex items-center justify-between">
+    <div className="h-[calc(100%-1rem)] min-[800px]:h-[calc(100vh-6rem)] min-[800px]:max-h-[calc(100vh-6rem)] max-[800px]:mb-[-5rem] min-h-0 w-full bg-one flex flex-col overflow-hidden relative isolate">
+      <div className="pointer-events-none absolute inset-0 opacity-35 [background-image:radial-gradient(circle_at_20%_18%,rgba(148,163,184,0.20)_1px,transparent_1.4px),radial-gradient(circle_at_78%_30%,rgba(56,189,248,0.16)_1px,transparent_1.3px),radial-gradient(circle_at_30%_72%,rgba(99,102,241,0.14)_1px,transparent_1.2px)] [background-size:28px_28px,34px_34px,32px_32px]" />
+      <div className="pointer-events-none absolute inset-0 opacity-20 [background-image:linear-gradient(90deg,rgba(148,163,184,0.14)_1px,transparent_1px),linear-gradient(rgba(148,163,184,0.14)_1px,transparent_1px)] [background-size:48px_48px]" />
+      <div className="pointer-events-none absolute -right-16 top-20 h-44 w-44 rounded-full border border-seven/25" />
+      <div className="pointer-events-none absolute right-24 top-32 h-2 w-20 bg-seven/20 rounded-full rotate-12" />
+      <div className="pointer-events-none absolute left-10 bottom-24 h-28 w-28 rounded-xl border border-six/20 rotate-6" />
+      <div className="pointer-events-none absolute left-20 bottom-36 h-2 w-16 bg-six/20 rounded-full -rotate-12" />
+      <div className="pointer-events-none absolute right-10 bottom-28 h-16 w-16 rounded-lg border border-seven/20 rotate-12" />
+      <div className="pointer-events-none absolute right-36 bottom-20 h-10 w-10 rounded-md border border-six/20 -rotate-6" />
+      <div className="pointer-events-none absolute left-1/3 top-24 h-12 w-12 rounded-md border border-four/20 rotate-45" />
+      <div className="pointer-events-none absolute left-[18%] top-40 h-8 w-20 rounded-sm border border-four/15 -rotate-12" />
+
+      <div className="h-10 sticky top-0 z-30 border-b border-three bg-[--color-two]/90 backdrop-blur-sm px-3 sm:px-4 flex items-center justify-between relative">
         <div className="flex items-center gap-2">
           <span className="text-sm sm:text-base text-seven font-semibold tracking-wide">
             iBotrix
@@ -122,7 +133,7 @@ export default function ChatbotPage() {
 
       <div
         ref={messagesRef}
-        className={`flex-1 min-h-0 px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-6 space-y-4 sm:space-y-6 ${
+        className={`flex-1 min-h-0 px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-6 space-y-4 sm:space-y-6 relative z-10 ${
           isOverflowing ? "overflow-y-auto" : "overflow-y-hidden"
         }`}
       >
@@ -196,7 +207,7 @@ export default function ChatbotPage() {
         <div ref={bottomRef} />
       </div>
 
-      <div className="border-t border-three px-3 sm:px-4 py-2 sm:py-3 flex gap-2 sm:gap-3">
+      <div className="border-t border-three px-3 sm:px-4 py-2 sm:py-3 flex gap-2 sm:gap-3 relative z-10 bg-[--color-one]/70 backdrop-blur-sm">
         <textarea
           value={input}
           rows={1}
