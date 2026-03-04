@@ -402,24 +402,30 @@ export default function ContactPage() {
           type="button"
           onClick={() => setIsMobileScriptVisible((prev) => !prev)}
           className={`xl:hidden fixed right-3 ${
-            isMobileScriptVisible ? "bottom-[calc(38vh+4rem)]" : "bottom-16"
-          } z-50 h-11 w-11 rounded-full border border-[#2d2d2d] bg-[#1e1e1e]/95 text-[#d4d4d4] shadow-lg backdrop-blur flex items-center justify-center`}
+            isMobileScriptVisible
+              ? "bottom-[calc(38vh+4rem)] min-[800px]:bottom-[calc(44vh+1.25rem)] min-[1024px]:bottom-[calc(44vh+4.5rem)]"
+              : "bottom-16 min-[800px]:bottom-20"
+          } z-50 h-11 w-11 min-[800px]:h-16 min-[800px]:w-16 min-[1024px]:h-14 min-[1024px]:w-14 rounded-full border ${
+            isMobileScriptVisible
+              ? "border-[#d1d5db] bg-white text-[#4b5563]"
+              : "border-[#3b3b3b] bg-[#2d2d2d] text-white"
+          } shadow-lg backdrop-blur flex items-center justify-center`}
           aria-label="Script viewer"
           title="Script viewer"
         >
           <ArrowBigUpDash
-            size={18}
-            className={`${isMobileScriptVisible ? "rotate-180" : ""} transition-transform duration-150`}
+            size={20}
+            className={`${isMobileScriptVisible ? "rotate-180" : ""} h-5 w-5 min-[800px]:h-7 min-[800px]:w-7 min-[1024px]:h-6 min-[1024px]:w-6 transition-transform duration-150`}
           />
         </button>
 
         {isMobileScriptVisible && (
           <section
-            className="xl:hidden fixed inset-x-2 bottom-14 z-40 h-[38vh] bg-[#1e1e1e] border border-[#2d2d2d] rounded-md overflow-hidden flex flex-col min-w-0 min-h-0"
+            className="xl:hidden fixed inset-x-2 min-[800px]:left-[calc(30%+0.5rem)] min-[1024px]:left-[calc(25%+0.5rem)] bottom-14 min-[800px]:bottom-3 z-40 h-[38vh] min-[800px]:h-[44vh] min-[1024px]:bottom-16 bg-[#1e1e1e] border border-[#2d2d2d] rounded-md min-[800px]:rounded-lg overflow-hidden flex flex-col min-w-0 min-h-0"
             onContextMenu={openContextMenu}
           >
-            <div className="grow overflow-y-scroll no-scrollbar [scrollbar-gutter:stable] font-mono text-sm">
-              <div className="grid grid-cols-[48px_1fr] leading-7 min-w-[720px]">
+            <div className="grow overflow-y-scroll no-scrollbar [scrollbar-gutter:stable] font-mono text-sm min-[800px]:text-base">
+              <div className="grid grid-cols-[48px_1fr] min-[800px]:grid-cols-[56px_1fr] leading-7 min-[800px]:leading-8 min-w-[720px] min-[800px]:min-w-[780px]">
                 <span className="text-[#858585] px-3">1</span>
                 <div>
                   <span className="text-[#c586c0]">import</span>{" "}

@@ -3,11 +3,13 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { eventsData as allEventsData } from "@/app/events/eventsData";
+import { Star } from "lucide-react";
 
 type EventMode = "Online" | "Offline" | "Hybrid";
 type EventCategory = "tech" | "non-tech" | "workshops";
 type DifficultyLevel = "Beginner" | "Intermediate" | "Advanced";
 type DetailTab = "DETAILS" | "SCHEDULE";
+type UserRating = 4 | 5;
 
 export interface Event {
   id: string;
@@ -72,6 +74,30 @@ const getEventStatus = (eventDate: string): "Upcoming" | "Live" | "Completed" =>
 };
 
 const fixedFiveStars = "*****";
+const USER_ID_STORAGE_KEY = "itrix-event-user-id-session";
+const USER_RATINGS_STORAGE_KEY = "itrix-event-ratings-session";
+
+const isAllowedRating = (value: number): value is UserRating => value === 4 || value === 5;
+
+const getOrCreateUserId = () => {
+  const existing = window.sessionStorage.getItem(USER_ID_STORAGE_KEY);
+  if (existing) return existing;
+
+  const generated =
+    globalThis.crypto?.randomUUID?.() ?? `user-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+  window.sessionStorage.setItem(USER_ID_STORAGE_KEY, generated);
+  return generated;
+};
+
+const sanitizeRatings = (value: unknown): Record<string, UserRating> => {
+  if (!value || typeof value !== "object") return {};
+  return Object.entries(value).reduce<Record<string, UserRating>>((acc, [eventId, rating]) => {
+    if (rating === 4 || rating === 5) {
+      acc[eventId] = rating;
+    }
+    return acc;
+  }, {});
+};
 
 const SectionHeader = ({ label }: { label: string }) => (
   <div className="px-4 py-2 text-[11px] font-semibold tracking-wider uppercase" style={{ color: theme.seven }}>
@@ -176,26 +202,56 @@ const UserStars = ({
 }: {
   value: number;
   onRate: (value: number) => void;
-}) => (
-  <div className="flex items-center gap-1">
-    {[1, 2, 3, 4, 5].map((star) => (
-      <button
-        key={star}
-        type="button"
-        onClick={() => onRate(star)}
-        className={`rounded-sm border px-2 py-1 text-xs transition-colors duration-150 ${
-          star <= value ? "border-[rgba(6,130,165,1)] text-[rgba(6,130,165,1)]" : "border-gray-600"
-        }`}
-        style={{
-          borderColor: star <= value ? theme.twelve : theme.three,
-          color: star <= value ? theme.twelve : theme.four,
-        }}
-      >
-        *
-      </button>
-    ))}
-  </div>
-);
+}) => {
+  const [hoveredStar, setHoveredStar] = useState<number | null>(null);
+  const [isHovering, setIsHovering] = useState(false);
+  const effectiveValue = hoveredStar ?? (isHovering ? Math.max(value, 4) : value);
+
+  return (
+    <div
+      className="flex items-center gap-1"
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => {
+        setIsHovering(false);
+        setHoveredStar(null);
+      }}
+    >
+      {[1, 2, 3, 4, 5].map((star) => {
+        const isFilled = star <= effectiveValue;
+
+        return (
+          <button
+            key={star}
+            type="button"
+            onMouseEnter={() => {
+              setHoveredStar(Math.max(star, 4));
+            }}
+            onFocus={() => {
+              setHoveredStar(Math.max(star, 4));
+            }}
+            onBlur={() => setHoveredStar(null)}
+            onClick={() => {
+              onRate(Math.max(star, 4));
+            }}
+            className="rounded-sm border p-1 transition-colors duration-150 cursor-pointer"
+            style={{
+              borderColor: isFilled ? theme.twelve : theme.three,
+              color: isFilled ? theme.twelve : theme.four,
+              backgroundColor: isFilled ? "rgba(0,255,159,0.1)" : "transparent",
+            }}
+            aria-label={`${star} star${star > 1 ? "s" : ""}`}
+            title={`${Math.max(star, 4)} stars`}
+          >
+            <Star
+              size={14}
+              className={isFilled ? "fill-current" : ""}
+            />
+          </button>
+        );
+      })}
+    </div>
+  );
+};
 
 const DetailsPanel = ({ event, activeTab }: { event: Event; activeTab: DetailTab }) => (
   <div className="px-6 py-5">
@@ -319,17 +375,97 @@ const EventsTab = ({ eventsData = allEventsData, setShowExplorer }: EventsTabPro
 export const EventsDetailsView = ({ event }: { event: Event }) => {
   const [activeTab, setActiveTab] = useState<DetailTab>("DETAILS");
   const [shareStatus, setShareStatus] = useState("");
-  const [userRatings, setUserRatings] = useState<Record<string, number>>({});
-  const [registrations, setRegistrations] = useState<Record<string, number>>({});
+  const [ratingStatus, setRatingStatus] = useState("");
+  const [globalStatsByEvent, setGlobalStatsByEvent] = useState<
+    Record<string, { averageRating: number; reviewCount: number }>
+  >({});
+  const [userRatings, setUserRatings] = useState<Record<string, UserRating>>(() => {
+    if (typeof window === "undefined") return {};
+    const cachedRatings = window.sessionStorage.getItem(USER_RATINGS_STORAGE_KEY);
+    if (!cachedRatings) return {};
+    try {
+      const parsed = JSON.parse(cachedRatings) as unknown;
+      return sanitizeRatings(parsed);
+    } catch {
+      window.sessionStorage.removeItem(USER_RATINGS_STORAGE_KEY);
+      return {};
+    }
+  });
   const [registered, setRegistered] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    const resolvedUserId = getOrCreateUserId();
+
+    const hydrateFromApi = async () => {
+      try {
+        const response = await fetch(`/api/event?userId=${encodeURIComponent(resolvedUserId)}`, {
+          method: "GET",
+          cache: "no-store",
+        });
+        if (!response.ok) return;
+        const payload = (await response.json()) as { ratings?: unknown };
+        const apiRatings = sanitizeRatings(payload.ratings);
+        setUserRatings((prev) => {
+          const merged = { ...prev, ...apiRatings };
+          window.sessionStorage.setItem(USER_RATINGS_STORAGE_KEY, JSON.stringify(merged));
+          return merged;
+        });
+      } catch {
+        // Keep local cache as fallback when API sync fails.
+      }
+    };
+
+    void hydrateFromApi();
+  }, []);
+
+  useEffect(() => {
+    window.sessionStorage.setItem(USER_RATINGS_STORAGE_KEY, JSON.stringify(userRatings));
+  }, [userRatings]);
+
+  useEffect(() => {
+    const hydrateGlobalStats = async () => {
+      try {
+        const response = await fetch(`/api/event?eventId=${encodeURIComponent(event.id)}`, {
+          method: "GET",
+          cache: "no-store",
+        });
+        if (!response.ok) return;
+        const payload = (await response.json()) as {
+          averageRating?: number | null;
+          reviewCount?: number;
+        };
+        if (typeof payload.reviewCount !== "number" || typeof payload.averageRating !== "number") return;
+        setGlobalStatsByEvent((prev) => ({
+          ...prev,
+          [event.id]: {
+            reviewCount: payload.reviewCount,
+            averageRating: payload.averageRating,
+          },
+        }));
+      } catch {
+        // Keep initial event values if stats fetch fails.
+      }
+    };
+
+    void hydrateGlobalStats();
+  }, [event.id]);
 
   const handleRegister = (selectedEvent: Event) => {
     if (registered[selectedEvent.id]) return;
     setRegistered((prev) => ({ ...prev, [selectedEvent.id]: true }));
-    setRegistrations((prev) => ({
-      ...prev,
-      [selectedEvent.id]: (prev[selectedEvent.id] ?? selectedEvent.registrations) + 1,
-    }));
+    setGlobalStatsByEvent((prev) => {
+      const current = prev[selectedEvent.id] ?? {
+        averageRating: selectedEvent.rating,
+        reviewCount: selectedEvent.reviewCount,
+      };
+      return {
+        ...prev,
+        [selectedEvent.id]: {
+          ...current,
+          reviewCount: current.reviewCount + 1,
+        },
+      };
+    });
   };
 
   const handleShare = async (selectedEvent: Event) => {
@@ -353,12 +489,60 @@ export const EventsDetailsView = ({ event }: { event: Event }) => {
     }
   };
 
-  const displayedRegistrations = registrations[event.id] ?? event.registrations;
   const userRating = userRatings[event.id] ?? 0;
+  const globalStats = globalStatsByEvent[event.id];
+  const displayedAverageRating = globalStats?.averageRating ?? event.rating;
+  const displayedReviewCount = globalStats?.reviewCount ?? event.reviewCount;
+  const displayedRegistrations = displayedReviewCount;
+
+  const handleRate = async (selectedEvent: Event, value: number) => {
+    if (!isAllowedRating(value)) {
+      setRatingStatus("Only 4 or 5 stars are allowed");
+      window.setTimeout(() => setRatingStatus(""), 1200);
+      return;
+    }
+
+    setUserRatings((prev) => ({ ...prev, [selectedEvent.id]: value }));
+    setRatingStatus("Saved");
+    window.setTimeout(() => setRatingStatus(""), 1200);
+
+    const resolvedUserId = getOrCreateUserId();
+
+    try {
+      await fetch("/api/event", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: resolvedUserId,
+          eventId: selectedEvent.id,
+          rating: value,
+        }),
+      }).then(async (response) => {
+        if (!response.ok) return null;
+        return (await response.json()) as {
+          averageRating?: number | null;
+          reviewCount?: number;
+        };
+      }).then((payload) => {
+        if (!payload) return;
+        if (typeof payload.reviewCount !== "number" || typeof payload.averageRating !== "number") return;
+        setGlobalStatsByEvent((prev) => ({
+          ...prev,
+          [selectedEvent.id]: {
+            reviewCount: payload.reviewCount,
+            averageRating: payload.averageRating,
+          },
+        }));
+      });
+    } catch {
+      setRatingStatus("Saved locally");
+      window.setTimeout(() => setRatingStatus(""), 1200);
+    }
+  };
 
   return (
     <div className="h-full min-h-[calc(100vh-4rem)] w-full" style={{  color: theme.four }}>
-      <div className="h-full overflow-y-auto">
+      <div className="h-full overflow-y-auto no-scrollbar">
         <div className="border-b" style={{ borderColor: theme.three }}>
           <div className="h-48 w-full p-6 bg-two">
             <img
@@ -373,14 +557,16 @@ export const EventsDetailsView = ({ event }: { event: Event }) => {
             <p className="mt-1 text-sm" style={{ color: theme.four }}>{event.organizer}</p>
             <div className="mt-3 flex flex-wrap items-center gap-3 text-sm" style={{ color: theme.four }}>
               <span style={{ color: theme.twelve }}>{fixedFiveStars}</span>
-              <span>{event.rating.toFixed(1)}</span>
-              <span>({event.reviewCount} reviews)</span>
+              <span>{displayedAverageRating.toFixed(1)}</span>
+              <span>({displayedReviewCount} reviews)</span>
               <span style={{ color: theme.three }}>|</span>
               <span>{displayedRegistrations} Registrations</span>
             </div>
             <div className="mt-3 flex items-center gap-2">
               <span className="text-xs" style={{ color: theme.four }}>Your Rating:</span>
-              <UserStars value={userRating} onRate={(value) => setUserRatings((prev) => ({ ...prev, [event.id]: value }))} />
+              <UserStars value={userRating} onRate={(value) => void handleRate(event, value)} />
+              <span className="text-[11px]" style={{ color: theme.three }}>Only 4 or 5 stars</span>
+              {ratingStatus ? <span className="text-[11px]" style={{ color: theme.twelve }}>{ratingStatus}</span> : null}
             </div>
             <div className="mt-4 flex flex-wrap gap-2">
               <button
