@@ -278,8 +278,6 @@ export default function ContactPage() {
               {previewTheme === "light" ? "Dark" : "Light"} Mode
             </button>
           </div>
-        </section>
-
           <div className="min-h-10 bg-[#252526] border-b border-[#3b3b3b] px-2.5 py-1.5 flex items-center gap-1.5">
             <span className="text-[#8b949e] text-xs sm:text-sm px-1">&lt;</span>
             <span className="text-[#8b949e] text-xs sm:text-sm px-1">&gt;</span>
