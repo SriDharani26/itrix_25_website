@@ -74,7 +74,7 @@ const MobileNavbar = () => {
 
             
             {showExplorer && (
-                <div className="flex flex-col bg-one/10 overflow-y-scroll max-h-[500px] backdrop-blur-xl p-2">
+                <div className="flex flex-col bg-one/10 overflow-y-scroll max-h-[300px] backdrop-blur-xl p-2">
                     {activeTab[activeTab.findIndex(obj => obj.isActive === true)].page === 'Explorer' &&
                         <Explorer setShowExplorer={setShowExplorer} />
                     }

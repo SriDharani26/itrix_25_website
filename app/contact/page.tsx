@@ -82,7 +82,7 @@ export default function ContactPage() {
 
   return (
     <div
-      className=" min-h-screen bg-[#1e1e1e] text-[#d4d4d4] px-2 sm:px-2 md:px-3 py-1.5"
+      className=" min-h-screen bg-[#1e1e1e] text-[#d4d4d4] px-2 sm:px-2 md:px-3 py-1.5 max-[800px]:mt-10"
       onClick={closeContextMenu}
     >
       <div className="h-[calc(100vh-1.5rem)] border border-[#2d2d2d] rounded-md overflow-hidden grid grid-cols-1 xl:grid-cols-2 w-full min-h-0">

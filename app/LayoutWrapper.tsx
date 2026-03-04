@@ -7,6 +7,7 @@ import Topbar from '@/components/Topbar';
 import Menubar from '@/components/Menubar';
 import IntroOverlay from '@/components/IntroOverlay';
 import SkeletonLoader from '@/components/SkeletonLoader';
+import { useRouter } from 'next/navigation';
 
 const LayoutWrapper = ({
     children
@@ -17,6 +18,11 @@ const LayoutWrapper = ({
     const [introComplete, setIntroComplete] = useState(false);
     const [contentReady, setContentReady] = useState(false);
     const pathname = usePathname();
+    const router = useRouter()
+
+    useEffect(() => {
+        router.replace('/')
+    }, [router])
 
     useEffect(() => {
         const updateWidth = () => setWidth(window.innerWidth);
@@ -97,7 +103,7 @@ const LayoutWrapper = ({
                                 <Navbar />
                             </div>
                         }
-                        <div className={`overflow-y-scroll min-[800px]:w-[70%] min-[1024px]:w-[75%] w-full ${pathname === '/contact' ? 'max-[800px]:pb-0' : 'max-[800px]:pb-20'}`}>
+                        <div className={`overflow-y-scroll min-[800px]:w-[70%] min-[1024px]:w-[75%] w-full ${pathname === '/contact' ? 'max-[800px]:pb-0' : 'max-[800px]:pb-20'} min-[800px]:pt-10`}>
                             <Topbar />
                             {children}
                         </div>

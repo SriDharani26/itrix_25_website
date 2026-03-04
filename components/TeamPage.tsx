@@ -16,7 +16,7 @@ interface propsType {
 
 const TeamPageHelper = (props : propsType) => {
     return (
-        <div className="flex flex-col py-6 px-3">
+        <div className="flex flex-col py-6 px-3 max-[800px]:mt-10">
 
             {props.sections.map((section, idx) => (
                 <div key={section.id} className="flex gap-6 ">

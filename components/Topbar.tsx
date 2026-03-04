@@ -8,7 +8,7 @@ const Topbar = () => {
   const { store, remove } = usePageStore()
 
   return (
-    <div className="w-full h-10 sticky top-0 z-20 flex items-center backdrop-blur-3xl border-b border-three
+    <div className="w-full h-10 fixed min-[800px]:top-14 z-50 flex items-center backdrop-blur-3xl border-b border-three
                     overflow-x-auto gap-1 no-scrollbar">
 
 		{store.map((item) => (

@@ -45,10 +45,10 @@ export default function Home() {
 				</p>
 			</div>
 
-			{/* Sponsors  */}
-			{/* <div id="sponsor" className="border" >
+			{/* Sponsors  */} 
+			<div id="sponsor" className="flex gap-5 max-w-5xl mx-auto items-center flex-col" >
 				Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam ut aliquid saepe, quae hic vero soluta non cupiditate error nobis cum maiores quaerat consequuntur repellendus voluptatibus officiis corrupti aliquam autem!
-			</div> */}
+			</div>
 
 			{/* Accomadation  */}
 			{/* <div id="accomodation" className="border">
