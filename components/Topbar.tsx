@@ -8,7 +8,7 @@ const Topbar = () => {
   const { store, remove } = usePageStore()
 
   return (
-    <div className="w-full h-10 sticky top-0 z-20 flex items-center backdrop-blur-3xl border-b border-three
+    <div className="w-full h-10 fixed min-[800px]:top-14 z-50 flex items-center backdrop-blur-3xl border-b border-three
                     overflow-x-auto gap-1 no-scrollbar">
 
 		{store.map((item) => (
@@ -26,16 +26,15 @@ const Topbar = () => {
 			</Link>
 
 			{item.path !== '/' && (
-				<button
-				onClick={(e) => {
-					e.preventDefault()
-					e.stopPropagation()
-					remove(item.path)
-				}}
-				className="px-2 text-ten hover:text-five transition cursor-crosshair"
+				<Link
+					onClick={() => {
+						remove(item.path)
+					}}
+					href='/'
+					className="px-2 text-ten hover:text-five transition cursor-crosshair"
 				>
 					X
-				</button>
+				</Link>
 			)}
 			</div>
 		))}

@@ -155,7 +155,7 @@ const SnakeGameDev: React.FC = () => {
   const cellSize = 100 / GRID_SIZE;
 
   return (
-    <div className="min-h-screen text-four flex flex-col items-center px-4 py-6 font-mono">
+    <div className="min-h-screen text-four flex flex-col items-center px-4 py-6 font-mono mt-10">
 
       <div className="w-full max-w-md bg-two border border-three rounded-sm shadow-xl">
 

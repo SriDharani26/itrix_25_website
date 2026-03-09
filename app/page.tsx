@@ -1,13 +1,12 @@
 'use client'
 import Countdown from "@/components/Countdown";
 import Image from "next/image";
-import { useParams } from "next/navigation";
 
 export default function Home() {
 
 	
 	return (
-		<div className="p-4 min-h-screen w-full gap-4 pb-20">
+		<div className="p-4 min-h-screen w-full gap-4 pb-20 flex flex-col">
 
 			{/* Home */}
 			<div className="w-full min-h-screen flex flex-col gap-8 items-center justify-center">
@@ -44,17 +43,20 @@ export default function Home() {
 					testing the limits of knowledge, creativity, and 
 					innovation in the ever-evolving landscape of Information Science and Technology.
 				</p>
+				<iframe src="/itrix_26_brochure.pdf" width="100%" height="1000px"></iframe>
 			</div>
 
-			{/* Sponsors  */}
-			{/* <div id="sponsor" className="border" >
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam ut aliquid saepe, quae hic vero soluta non cupiditate error nobis cum maiores quaerat consequuntur repellendus voluptatibus officiis corrupti aliquam autem!
-			</div> */}
+			{/* Sponsors  */} 
+			<div id="sponsor" className="flex gap-5 max-w-5xl mx-auto items-center flex-col" >
+				<p className="text-3xl text-six font-bold">Our Sponsors</p>
+				<p>Sponsors will be announced soon</p>
+			</div>
 
 			{/* Accomadation  */}
-			{/* <div id="accomodation" className="border">
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam ut aliquid saepe, quae hic vero soluta non cupiditate error nobis cum maiores quaerat consequuntur repellendus voluptatibus officiis corrupti aliquam autem!
-			</div> */}
+			<div id="accomodation" className="flex gap-5 max-w-5xl mx-auto items-center flex-col" >
+				<p className="text-3xl text-six font-bold">Accomadation</p>
+				<p>Details we will be announced soon</p>
+			</div>
 		</div>
 	);
 }

@@ -357,7 +357,7 @@ export const EventsDetailsView = ({ event }: { event: Event }) => {
   const userRating = userRatings[event.id] ?? 0;
 
   return (
-    <div className="h-full min-h-[calc(100vh-4rem)] w-full" style={{  color: theme.four }}>
+    <div className="h-full min-h-[calc(100vh-4rem)] max-[800px]:mt-10 w-full" style={{  color: theme.four }}>
       <div className="h-full overflow-y-auto">
         <div className="border-b" style={{ borderColor: theme.three }}>
           <div className="h-48 w-full p-6 bg-two">

@@ -2,11 +2,18 @@ import ProfileCard from '@/components/ProfileCard';
 import Link from 'next/link';
 import React from 'react';
 
+type peopleType = {
+    name: string;
+    profile: string | undefined | null;
+    image: string | undefined | null;
+    domain : string;
+    position?:string
+};
 
 type sectionType = {
     id : string,
     title : string,
-    profiles : Array<number>
+    profiles : Array<peopleType>
 }
 
 interface propsType {
@@ -16,43 +23,47 @@ interface propsType {
 
 const TeamPageHelper = (props : propsType) => {
     return (
-        <div className="flex flex-col py-6 px-3">
+        <div className="flex flex-col py-6 px-3 max-[800px]:mt-10">
 
             {props.sections.map((section, idx) => (
                 <div key={section.id} className="flex gap-6 ">
+                    {section.profiles.length > 0 && 
+                        <>
+                            <div className="flex flex-col items-center w-6">
 
-                    <div className="flex flex-col items-center w-6">
+                                <div className="w-4 h-4 rounded-full border-4 bg-black z-10 border-six" />
 
-                        <div className="w-4 h-4 rounded-full border-4 bg-black z-10 border-six" />
+                                {idx !== props.sections.length && (
+                                    <div className="flex-1 w-px border-2 rounded-2xl bg-transparent backdrop-blur-2xl border-twelve" />
+                                )}
 
-                        {idx !== props.sections.length && (
-                            <div className="flex-1 w-px border-2 rounded-2xl bg-transparent backdrop-blur-2xl border-twelve" />
-                        )}
+                            </div>
 
-                    </div>
+                            <div
+                                id={section.id}
+                                className="flex flex-col pb-12"
+                            >
+                                <p className="text-xl font-semibold mb-4 text-ten">
+                                    {section.title}
+                                </p>
 
-                    <div
-                        id={section.id}
-                        className="flex flex-col pb-12"
-                    >
-                        <p className="text-xl font-semibold mb-4 text-ten">
-                            {section.title}
-                        </p>
+                                <div className='border-2 rounded-r-2xl relative -left-8.5 border-twelve'/>
+                                
+                                <div className="flex flex-wrap">
+                                    {section.profiles.map((s, i) => (
+                                        <ProfileCard
+                                            key={i}
+                                            path={s.image}
+                                            name={s.name}
+                                            profile={s.profile}
+                                            position={s.position}
+                                            />
+                                    ))}
+                                </div>
 
-                        <div className='border-2 rounded-r-2xl relative -left-8.5 border-twelve'/>
-                        
-                        <div className="flex flex-wrap">
-                            {section.profiles.map((_, i) => (
-                                <ProfileCard
-                                    key={i}
-                                    name="Gogul"
-                                    profile="hello"
-                                    position="President"
-                                />
-                            ))}
-                        </div>
-
-                    </div>
+                            </div>
+                        </>
+                    }
                 </div>
             ))}
 

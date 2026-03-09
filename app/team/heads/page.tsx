@@ -4,65 +4,87 @@ import TeamPageHelper from '@/components/TeamPage';
 type sectionType = {
     id : string,
     title : string,
-    profiles : Array<number>
+    profiles : Array<peopleType>
 }
+
+type peopleType = {
+    name: string;
+    profile: string | undefined | null;
+    image: string | undefined | null;
+    domain : string;
+    position?:string
+
+};
 
 const sections : Array<sectionType> = [
     {
         id: "events",
         title: "Events",
-        profiles: [1, 2, 3, 4]
+        profiles: []
     },
     {
         id: "marketin-and-media",
-        title: "Marketing & Media",
-        profiles: [1, 2, 3, 4]
+        title: "Marketing and Media",
+        profiles: []
     },
     {
         id: "web-development",
         title: "Web Development",
-        profiles: [1, 2]
+        profiles: []
     },
     {
         id: "design",
         title: "Design",
-        profiles: [1, 2]
+        profiles: []
     },
     {
         id: "external-relations",
         title: "External Relations",
-        profiles: [1, 2, 3, 4]
+        profiles: []
     },
     {
         id: "courses",
         title: "Courses",
-        profiles: [1, 2, 3]
+        profiles: []
     },
     {
         id: "contents",
         title: "Contents",
-        profiles: [1, 2, 3, 4]
+        profiles: []
     },
     {
         id: "placement-training-coordinators",
         title: "Placement Training Coordinators",
-        profiles: [1, 2]
+        profiles: []
     },
     {
         id: "internship-training-coordinators",
         title: "Internship Training Coordinators",
-        profiles: [1, 2]
+        profiles: []
     },
     {
         id: "logistics",
         title: "Logistics",
-        profiles: [1, 2]
+        profiles: []
     },
 ];
 
-const Page = () => {
+const Page = async () => {
+
+    
+
+    const res = await fetch("http://localhost:3000/api/forms?position=heads", {
+        cache: "no-store",
+    })
+
+    const data = await res.json()
+    const updatedSections = sections.map((sec) => ({
+        ...sec,
+        profiles : data.filter((d : peopleType) => d.domain.toLowerCase() === sec.title.toLowerCase())
+    }))
+
     return (
-        <TeamPageHelper sections={sections} path='Associates' />
+        <TeamPageHelper sections={updatedSections} path='Associates' />
     );
 }
 

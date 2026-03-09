@@ -4,10 +4,10 @@ import { Linkedin } from 'lucide-react';
 import Link from 'next/link';
 
 interface propsType {
-    path ?: string,
+    path ?: string | null | undefined,
     name : string,
-    profile : string,
-    position : string
+    profile : string | null | undefined,
+    position ?: string
 }
 
 const ProfileCard = (props : propsType) => {
@@ -23,17 +23,19 @@ const ProfileCard = (props : propsType) => {
                 <Image 
                     src={props.path ?? '/vercel.svg'}
                     alt="Profile"
-                    width={150}
-                    height={150}
-                    className=' border'
+                    width={250}
+                    height={250}
+                    className=' border rounded-2xl'
                 />
 
                 <p className='text-xl font-semibold text-five'>{props.name}</p>
-                {/* <p className='text-lg font-bold color-3-cp'>{props.position}</p> */}
+                {props.position && <p className='text-lg font-bold color-3-cp'>{props.position}</p> }
                 
-                <Link href={props.profile}>
-                    <Linkedin className='text-eleven'/>
-                </Link>
+                {props.profile && 
+                    <Link href={props.profile}>
+                        <Linkedin className='text-eleven'/>
+                    </Link>
+                }
             </div>
         </div>
     );
