@@ -14,7 +14,11 @@ export async function GET(request: NextRequest) {
     const position = request.nextUrl.searchParams.get("position");
 
     const auth = new google.auth.GoogleAuth({
-        keyFile: path.join(process.cwd(), "public", "service-account.json"),
+        credentials: {
+            client_email: process.env.GOOGLE_CLIENT_EMAIL,
+            private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+            project_id: process.env.GOOGLE_PROJECT_ID
+        },
         scopes: [
             "https://www.googleapis.com/auth/forms.responses.readonly",
             "https://www.googleapis.com/auth/drive.readonly"

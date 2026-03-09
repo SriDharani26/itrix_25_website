@@ -24,7 +24,7 @@ const sections : Array<sectionType> = [
     },
     {
         id: "marketin-and-media",
-        title: "Marketing & Media",
+        title: "Marketing and Media",
         profiles: []
     },
     {
