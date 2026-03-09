@@ -26,16 +26,15 @@ const Topbar = () => {
 			</Link>
 
 			{item.path !== '/' && (
-				<button
-				onClick={(e) => {
-					e.preventDefault()
-					e.stopPropagation()
-					remove(item.path)
-				}}
-				className="px-2 text-ten hover:text-five transition cursor-crosshair"
+				<Link
+					onClick={() => {
+						remove(item.path)
+					}}
+					href='/'
+					className="px-2 text-ten hover:text-five transition cursor-crosshair"
 				>
 					X
-				</button>
+				</Link>
 			)}
 			</div>
 		))}
