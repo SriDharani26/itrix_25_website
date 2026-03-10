@@ -1,6 +1,5 @@
 import { google } from "googleapis";
 import { NextRequest } from "next/server";
-import path from "path";
 
 type peopleType = {
     name: string;
