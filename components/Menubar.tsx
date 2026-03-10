@@ -30,8 +30,8 @@ const Menubar = () => {
                     <Image
                         src='/ista-logo.png'
                         alt='Ista-Logo'
-                        width={50}
-                        height={50}
+                        width={40}
+                        height={40}
                     />
                 </Link>
             </div>
